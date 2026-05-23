@@ -5,7 +5,7 @@ import {
   BookOpen, Lock, Download, Clipboard, Trash2, X, RefreshCw
 } from 'lucide-react';
 
-// --- THE HARMONIC 56 INTERNAL MARKS DATASET (Balanced Horoscope + Inquest + Courage Mix) ---
+// --- THE HARMONIC 56 INTERNAL MARKS DATASET (Sovereign Executive Coaching Edition) ---
 const DOMAINS = {
   CREATION_CHOICE: { 
     title: "Creation/Choice", color: "#6366F1", glow: "shadow-indigo-500/10", badge: "🔮 ALIGNMENT INSIGHT", icon: <Sparkle className="w-4 h-4" />, 
@@ -20,8 +20,8 @@ const DOMAINS = {
       {
         id: "cc_2",
         rarity: "Common",
-        horoscope: "You are currently hiding inside your own intelligence. You are treating 'more planning,' 'more research,' and 'getting ready' as progress, when in reality, it is just a sophisticated, elegant form of hesitation.",
-        inquest: "What is the exact thing you are currently overthinking to protect yourself from the discomfort of actually launching it?",
+        horoscope: "Your highly analytical mind is one of your greatest assets. Currently, you might be seeking absolute clarity through research and planning, which is natural, yet the highest learning now lies in real-world application.",
+        inquest: "What is one concept you can simplify and release today to experience the power of immediate momentum?",
         courage: "Close your research tabs. Draft the absolute simplest MVP version of this concept on a single piece of paper, and share it before your day ends."
       },
       {
@@ -34,8 +34,8 @@ const DOMAINS = {
       {
         id: "cc_4",
         rarity: "Common",
-        horoscope: "You are acting like a spectator in your own life's masterpiece, waiting for an imaginary permission slip from a crowd that is too busy looking at their own feet to give you one.",
-        inquest: "If you never received validation or approval from anyone, what would you choose to create next?",
+        horoscope: "You carry a quiet readiness to lead. Sometimes, we wait for an external permission slip or perfect consensus before stepping forward, forgetting that your initiative is what others are waiting for.",
+        inquest: "What is a decision you can make today that honors your personal authority rather than waiting for consensus?",
         courage: "Identify the one action step you've been delaying because you're waiting for consensus, and execute it now without asking for permission."
       },
       {
@@ -48,8 +48,8 @@ const DOMAINS = {
       {
         id: "cc_6",
         rarity: "Rare",
-        horoscope: "You are trying to paint a magnificent, legendary life using safe, comfortable, and predictable colors because you are quietly terrified of making a messy, brilliant mistake.",
-        inquest: "What self-imposed rule are you currently following blindly that is actively suffocating your creative freedom?",
+        horoscope: "You have a natural appreciation for order and elegance. However, occasionally we default to safe, comfortable colors when our true vision is demanding a bolder, more experimental canvas.",
+        inquest: "Where can you invite a little more bold, creative experimentation into your work or lifestyle today?",
         courage: "Intentionally break this minor self-imposed rule today. Write a draft with typos, dress boldly, or pitch an incomplete concept just to break the spell."
       },
       {
@@ -67,8 +67,8 @@ const DOMAINS = {
       {
         id: "adv_1",
         rarity: "Common",
-        horoscope: "You are moving exceptionally fast, but you are running on a treadmill. You are mistaking movement for momentum and exhaustion for impact. Your spirit is tired because you are pouring power into small, low-leverage games.",
-        inquest: "Look closely at your schedule this past week: What fake, comfortable busyness are you manufacturing to avoid doing the high-stakes task that actually scares you?",
+        horoscope: "Your work ethic is remarkable, and you are capable of high velocity. Currently, you may be directing your vast energy into multiple small tasks, which can feel draining without yielding the big breakthroughs you deserve.",
+        inquest: "Which high-impact priority, if given your full focus, would make the small tasks redundant or easier?",
         courage: "Block out the first 90 minutes of your morning tomorrow. Shut down all communication channels, and spend that time exclusively on the high-stakes task."
       },
       {
@@ -81,8 +81,8 @@ const DOMAINS = {
       {
         id: "adv_3",
         rarity: "Common",
-        horoscope: "Your incredibly high standards are a superpower, but they have slowly decayed into silent perfectionism—acting as an elite shield to protect you from being judged.",
-        inquest: "Where is your execution currently stalling because you're waiting for 'perfect' instead of taking bold, raw action?",
+        horoscope: "Your standard of excellence is admirable. Remember that standards are meant to guide your creation, not act as a barrier to completing your valuable drafts.",
+        inquest: "What project is ready to be shared with the world in its current state to unlock the next level of feedback?",
         courage: "Publish, share, or submit your current 70%-complete draft. Force yourself to get real-world feedback on raw, messy progress."
       },
       {
@@ -95,8 +95,8 @@ const DOMAINS = {
       {
         id: "adv_5",
         rarity: "Rare",
-        horoscope: "You are ignoring a foundational habit bottleneck, expecting grand professional breakthroughs to magically scale over daily chaos.",
-        inquest: "Which single daily routine or habit leak is currently acting as the heaviest anchor holding your output back?",
+        horoscope: "Your momentum is built on your daily rhythms. Currently, a small environmental or routine adjustment could release a massive amount of cognitive space.",
+        inquest: "What is one simple habit adjustment you can make today to protect your peak focus?",
         courage: "Eliminate the choice of backsliding tonight. Install a hard app-blocker, set an automated bedtime, or clear your space of your primary vice immediately."
       },
       {
@@ -109,8 +109,8 @@ const DOMAINS = {
       {
         id: "adv_7",
         rarity: "Legendary",
-        horoscope: "The friction you are feeling in your daily work isn't a sign of failure—it is the violent rejection of your current compromises by a future version of you that is already waiting.",
-        inquest: "If you stopped pretending to be satisfied with your current level of execution, who would you have to become today?",
+        horoscope: "The friction you are feeling is a positive indicator—it is your evolving capacity signaling that you are ready to transition to a more strategic, higher-leverage style of execution.",
+        inquest: "What is one compromise you can phase out today to make room for your next level of mastery?",
         courage: "Explicitly refuse one offer, client, or routine task that is 'good enough' to create empty, strategic space for the legendary opportunities."
       }
     ] 
@@ -121,22 +121,22 @@ const DOMAINS = {
       { 
         id: "ach_1", 
         rarity: "Common", 
-        horoscope: "You are exceptionally competitive, but you are running a race designed entirely by other people's expectations, wearing a crown that doesn't actually fit your head.", 
-        inquest: "What does genuine 'winning' look like for you in this exact season of your life?",
+        horoscope: "You have a natural drive for achievement. Ensure that the goals you are striving for are authentic to your true mission, rather than default targets inherited from external systems.", 
+        inquest: "What does genuine fulfillment look like for you in this current season of life?",
         courage: "Write down your personal, raw definition of success on a card. Prune three goals from your current list that belong to other people's expectations."
       },
       { 
         id: "ach_2", 
         rarity: "Common", 
-        horoscope: "You are highly respected and hold impressive achievements, but you are holding onto your old successes as a shield to avoid the discomfort of your next plateau.", 
-        inquest: "Which of your current successes are you using to justify your present stagnation?",
+        horoscope: "You have built an honorable track record. The invitation now is to step beyond the safety of past victories and embrace the creative stretch of your next growth plateau.", 
+        inquest: "What is one new domain or skill where you are excited to embrace the learning curve of a beginner today?",
         courage: "Identify one skill or environment where you are currently a complete beginner, and spend 45 minutes practicing or researching it today."
       },
       { 
         id: "ach_3", 
         rarity: "Common", 
-        horoscope: "You are designed for cathedral-scale legacy, but you are currently focusing all your power on safe, short-term survival metrics that stifle your brilliance.", 
-        inquest: "Are you playing the highest, most high-stakes game available to you in your career?",
+        horoscope: "You are designed for grand, legacy-scale impact. Take a moment to step back from daily micro-metrics to ensure you are allocating energy to your most expansive long-term vision.", 
+        inquest: "If you focused exclusively on your highest-leverage work today, what would change?",
         courage: "Decline one low-leverage opportunity or small client today to intentionally force open creative space for a high-value pursuit."
       },
       { 
@@ -149,8 +149,8 @@ const DOMAINS = {
       { 
         id: "ach_5", 
         rarity: "Rare", 
-        horoscope: "Your energy is incredibly valuable, but you are competing with individuals moving in a completely different direction, wasting your focal power.", 
-        inquest: "Who are you competing with, and is that race pulling you toward your highest mark?",
+        horoscope: "Your focal power is immense. Protect it by staying aligned with your unique path, rather than letting peripheral noise or comparison divert your attention.", 
+        inquest: "What is one simple boundary you can set today to protect your unique creative focus?",
         courage: "Unfollow, mute, or disconnect from 3 competitive accounts that trigger subtle insecurities or comparison metrics on your device today."
       },
       { 
@@ -163,8 +163,8 @@ const DOMAINS = {
       { 
         id: "ach_7", 
         rarity: "Legendary", 
-        horoscope: "Your timeline is far too lazy. You are giving yourself decades to execute a vision that you are fully capable of birthing in the next six months.", 
-        inquest: "If you achieved your 10-year major life milestone in the next 6 months, who would you have to become today?",
+        horoscope: "You have a powerful vision. Sometimes we set distant timelines out of caution, but your current capacity is fully ready to accelerate this process.", 
+        inquest: "If you brought your 1-year milestone forward to the next 30 days, what bold first step would you take today?",
         courage: "Set your target launch or delivery date to exactly 30 days from now, and announce it publicly to your team or network."
       }
     ] 
@@ -175,22 +175,22 @@ const DOMAINS = {
       { 
         id: "res_1", 
         rarity: "Common", 
-        horoscope: "You have a natural gift for spotting opportunities and pulling in resources. However, you are managing your small limits tightly while letting massive leaks in your primary energy drains run completely wild.", 
-        inquest: "Where are you currently leaking your primary resources: time, money, or vital energy?",
+        horoscope: "You have a natural gift for spotting opportunities and pulling in resources. Currently, the best leverage is to focus on energy-generating assets rather than over-analyzing minor operational leaks.", 
+        inquest: "Where is the absolute highest return on investment for your time and energy today?",
         courage: "Audit your bank statements. Cancel 3 recurring subscriptions or fees that you have not actively utilized in the last 30 days."
       },
       { 
         id: "res_2", 
         rarity: "Common", 
-        horoscope: "Your potential for abundance is massive, but your relationship with wealth is highly conditional. You operate from scarcity even when the metrics show complete safety.", 
+        horoscope: "Your potential for abundance is massive. True sovereignty comes from establishing clear, calm financial systems that empower you to take calculated risks with complete peace of mind.", 
         inquest: "How stable is your current financial foundation, rated honestly on a scale of 1-10?",
         courage: "Transfer a specific, small sum of capital into a high-yield savings or investment account today as a physical seed of abundance."
       },
       { 
         id: "res_3", 
         rarity: "Common", 
-        horoscope: "You are highly strategic, but you are mistaking high-tech tools, toys, and systems for true leverage and execution capacity.", 
-        inquest: "Are you genuinely managing your tools, or are your tools quietly managing your attention?",
+        horoscope: "You enjoy optimizing your systems and environments. It is worth checking if your current tools are truly accelerating your workflow or quietly fragmenting your attention.", 
+        inquest: "Which simple, distraction-free workflow element can you rely on today to build deep focus?",
         courage: "Uninstall all non-essential productivity apps from your main device, and work out of a single physical notebook for the rest of the day."
       },
       { 
@@ -229,15 +229,15 @@ const DOMAINS = {
       { 
         id: "vit_1", 
         rarity: "Common", 
-        horoscope: "You have an incredible engine of vitality, but you are treating your body like an unpaid slave—demanding infinite output while offering zero restorative recovery.", 
-        inquest: "What is the one critical energetic signal your physical body is screaming that you are actively choosing to mute?",
+        horoscope: "You have an incredible engine of vitality. To operate at your absolute ceiling, design clear physical check-ins that protect your stamina before you enter highly demanding build periods.", 
+        inquest: "What is the primary physical signal your body is using to request rest or recovery today?",
         courage: "Book a physical assessment, clean massage, or comprehensive health check today to address this bottleneck immediately."
       },
       { 
         id: "vit_2", 
         rarity: "Common", 
-        horoscope: "Your daily energy is a chaotic rollercoaster because you lack clear boundary filters with your environment. You are absorbing everyone else's static.", 
-        inquest: "What is your current energy level, and what is the single biggest silent drain on it?",
+        horoscope: "Your daily energy is a precious currency. Establish a protective filter to ensure you are entering environments that feed your momentum rather than absorbing ambient friction.", 
+        inquest: "What is the single highest-yield daily ritual that protects your baseline peace?",
         courage: "Put a hard 'Do Not Disturb' lock on your communication channels starting at 7:00 PM tonight. Protect your recovery."
       },
       { 
@@ -283,8 +283,8 @@ const DOMAINS = {
       { 
         id: "dr_1", 
         rarity: "Common", 
-        horoscope: "You have locked your truest creative fires inside a dark closet labeled 'unrealistic' to fit in with safe, predictable society.", 
-        inquest: "What brilliant dream did you set aside simply because you were terrified of struggling through its infancy?",
+        horoscope: "You have a grand inner spark. Ensure you are giving your most authentic visions a safe, protected container to mature, rather than exposing them to early, ungrounded feedback.", 
+        inquest: "What exciting dream did you set aside simply because the first steps felt uncertain?",
         courage: "Secure the domain, register the draft, or design the raw concept document for this dream before you go to sleep tonight."
       },
       { 
@@ -318,8 +318,8 @@ const DOMAINS = {
       { 
         id: "dr_6", 
         rarity: "Common", 
-        horoscope: "You are watching other people live out your secret desires on screens, acting as a spectator to your own life's dreams.", 
-        inquest: "Whose life are you currently envious of, and what does that tell you about your hidden desires?",
+        horoscope: "You have a vivid imagination and strong aspirations. Sometimes, looking at other people's achievements can trigger a healthy reminder of what we are capable of building ourselves.", 
+        inquest: "What is one inspiration you've witnessed recently that you want to start building in your own unique way?",
         courage: "Send a brief message of genuine appreciation to that exact person, telling them their journey inspires you, and request a quick 10-minute coffee call."
       },
       { 
@@ -337,15 +337,15 @@ const DOMAINS = {
       { 
         id: "pe_1", 
         rarity: "Common", 
-        horoscope: "You have a deep, loyal heart. However, you are keeping people in your inner circle who applaud your past while silently suffocating your future.", 
-        inquest: "Are you surrounding yourself with anchors that drag you down, or rockets that pull you up?",
+        horoscope: "Your loyalty to others is a deep and beautiful quality. As you grow, it is natural to seek out relationships that not only celebrate where you have been, but actively call you forward into your next horizon.", 
+        inquest: "Who in your network consistently expands your vision, and how can you connect with them this week?",
         courage: "Intentionally mute, distance yourself from, or decline invitations from one long-term acquaintance who drains your focus baseline."
       },
       { 
         id: "pe_2", 
         rarity: "Common", 
-        horoscope: "You are tolerating subtle boundaries violations because you are terrified of the temporary friction of clean, honest confrontation.", 
-        inquest: "What boundary do you need to set with a key person in your life today?",
+        horoscope: "Your kindness is a powerful gift, but it requires clear, respectful boundaries. True alignment is built on transparent agreements rather than silent accommodations.", 
+        inquest: "What is a gentle but firm boundary you need to communicate to a collaborator today?",
         courage: "Send an incredibly polite, clear, and un-apologetic message establishing this boundary, without explaining or softening the impact."
       },
       { 
@@ -379,8 +379,8 @@ const DOMAINS = {
       { 
         id: "pe_7", 
         rarity: "Legendary", 
-        horoscope: "You are ignoring your primary blindspot because your ego is terrified of losing its defensive armor.", 
-        inquest: "What would your closest friend say is your absolute greatest blindspot?",
+        horoscope: "True leadership involves the courage to look at ourselves clearly. Inviting honest perspective from those we trust is a powerful way to accelerate our growth.", 
+        inquest: "What is an area of your leadership or workflow where you would value constructive, growth-oriented feedback?",
         courage: "Text your closest friend this exact question right now, with the absolute promise that you will only listen and say 'Thank you.'"
       }
     ] 
@@ -405,7 +405,7 @@ const DOMAINS = {
       { 
         id: "co_3", 
         rarity: "Common", 
-        horoscope: "You are presenting a carefully edited version of yourself, terrified that your raw, unfiltered truth is unlovable.", 
+        horoscope: "You are presenting a carefully edited version of yourself, verified that your raw, unfiltered truth is highly compelling and worthy of deep respect.", 
         inquest: "When do you feel most seen and understood by the world?",
         courage: "Share an unedited, raw realization or current struggle with your community or network—let them see your messy draft progress."
       },
@@ -453,6 +453,151 @@ const ALL_QUESTIONS = Object.values(DOMAINS).flatMap(d => d.questions.map(q => (
 // --- VECTOR DEFINITION FOR DEFAULT LYM "BEAN" LOGO ---
 const DEFAULT_BEAN_PATH = "M30,10 C50,5 75,15 85,35 C95,55 90,75 70,85 C50,95 25,85 15,65 C5,45 10,15 30,10 Z";
 
+// --- GLOBAL UTILITY STREAK HELPER FUNCTIONS ---
+const getLocalDateString = (offsetDays = 0) => {
+  const d = new Date();
+  d.setDate(d.getDate() - offsetDays);
+  return d.toISOString().split('T')[0];
+};
+
+const computeStreak = (history) => {
+  const todayStr = getLocalDateString(0);
+  const yesterdayStr = getLocalDateString(1);
+  
+  if (!history.includes(todayStr) && !history.includes(yesterdayStr)) {
+    return 0; // Streak broken
+  }
+  
+  let streak = 0;
+  let offset = history.includes(todayStr) ? 0 : 1;
+  
+  while (true) {
+    const dStr = getLocalDateString(offset);
+    if (history.includes(dStr)) {
+      streak++;
+      offset++;
+    } else {
+      break;
+    }
+  }
+  return streak;
+};
+
+// --- HIGH-FIDELITY VECTOR COMPONENT FOR THE PREMIUM "DIVER" MASCOT ---
+function DiverMascot({ size = 80, className = "" }) {
+  return (
+    <svg 
+      viewBox="0 0 100 120" 
+      width={size} 
+      height={size * 1.2} 
+      className={`select-none pointer-events-none drop-shadow-2xl ${className}`}
+    >
+      <defs>
+        {/* Soft, gorgeous underwater glow backlighting */}
+        <radialGradient id="diverGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.4" />
+          <stop offset="100%" stopColor="#38BDF8" stopOpacity="0" />
+        </radialGradient>
+
+        {/* Dynamic metallic ring & body-suit gradients */}
+        <linearGradient id="suitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#2c303b" />
+          <stop offset="50%" stopColor="#1e222b" />
+          <stop offset="100%" stopColor="#12141a" />
+        </linearGradient>
+
+        <linearGradient id="chromeRing" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#5f6775" />
+          <stop offset="35%" stopColor="#a1abbc" />
+          <stop offset="50%" stopColor="#ffffff" />
+          <stop offset="65%" stopColor="#7a8596" />
+          <stop offset="100%" stopColor="#2d333f" />
+        </linearGradient>
+
+        <linearGradient id="visorGlass" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#334155" />
+          <stop offset="30%" stopColor="#1e293b" />
+          <stop offset="100%" stopColor="#0f172a" />
+        </linearGradient>
+
+        <radialGradient id="cheekBlush" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#fb7185" stopOpacity="0.8" />
+          <stop offset="100%" stopColor="#fb7185" stopOpacity="0" />
+        </radialGradient>
+
+        {/* Glow filter for neon shoulder spirals */}
+        <filter id="neonSpiralGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="1.5" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+
+      {/* Backlight Aura */}
+      <circle cx="50" cy="55" r="45" fill="url(#diverGlow)" />
+
+      {/* Oxygen Cylinder / Backpack */}
+      <rect x="36" y="62" width="28" height="34" rx="8" fill="#1e222b" stroke="#0b0d10" strokeWidth="2.5" />
+      <rect x="42" y="55" width="16" height="7" rx="1.5" fill="#475569" stroke="#0F172A" strokeWidth="1" />
+
+      {/* Breathing Scuba Air Hose */}
+      <path d="M 36 60 Q 18 52 30 42" stroke="#334155" strokeWidth="4.5" fill="none" strokeLinecap="round" />
+
+      {/* Body Suit Torso */}
+      <ellipse cx="50" cy="84" rx="25" ry="23" fill="url(#suitGrad)" stroke="#0f1115" strokeWidth="3" />
+      
+      {/* Arms floating organically outward */}
+      <path d="M 26 78 Q 14 80 18 90" stroke="url(#suitGrad)" strokeWidth="11" strokeLinecap="round" fill="none" />
+      <path d="M 74 78 Q 86 80 82 90" stroke="url(#suitGrad)" strokeWidth="11" strokeLinecap="round" fill="none" />
+      
+      {/* Swimming Flippers dangling down */}
+      <ellipse cx="37" cy="108" rx="8" ry="5.5" fill="#12141a" transform="rotate(-15 37 108)" />
+      <ellipse cx="63" cy="108" rx="8" ry="5.5" fill="#12141a" transform="rotate(15 63 108)" />
+
+      {/* Shoulder/Arm Glowing Pink Spirals */}
+      <g stroke="#d8b4fe" strokeWidth="1.2" fill="none" strokeLinecap="round" filter="url(#neonSpiralGlow)">
+        {/* Left shoulder spiral */}
+        <path d="M 20 83 A 2 2 0 1 0 21 85 A 1 1 0 1 0 20.5 84" />
+        {/* Right shoulder spiral */}
+        <path d="M 80 83 A 2 2 0 1 0 81 85 A 1 1 0 1 0 80.5 84" />
+      </g>
+
+      {/* Spiral Badge Crest on Chest */}
+      <circle cx="50" cy="83" r="6" fill="#1f242e" stroke="#0f1115" strokeWidth="1.5" />
+      <path d="M 50 83 A 2.2 2.2 0 1 0 52 85 A 1.2 1.2 0 1 0 50.5 84" stroke="#c084fc" strokeWidth="1.2" fill="none" strokeLinecap="round" filter="url(#neonSpiralGlow)" />
+
+      {/* Big Spherical Visor Outer Chrome Ring */}
+      <circle cx="50" cy="45" r="30" fill="url(#chromeRing)" />
+      
+      {/* Visor Inner Shield Glass */}
+      <circle cx="50" cy="45" r="26" fill="url(#visorGlass)" stroke="#0b0d10" strokeWidth="1.5" />
+      
+      {/* Face Plate */}
+      <circle cx="50" cy="45" r="23" fill="#fffdf9" />
+
+      {/* Cozy blushing cheeks */}
+      <circle cx="35" cy="51" r="5" fill="url(#cheekBlush)" />
+      <circle cx="65" cy="51" r="5" fill="url(#cheekBlush)" />
+
+      {/* Adorable shiny baby eyes */}
+      <circle cx="41" cy="44" r="4.5" fill="#13151b" />
+      <circle cx="43.5" cy="41.5" r="1.6" fill="#ffffff" />
+      
+      <circle cx="59" cy="44" r="4.5" fill="#13151b" />
+      <circle cx="61.5" cy="41.5" r="1.6" fill="#ffffff" />
+
+      {/* Cute curvaceous smile */}
+      <path d="M 46.5 50 Q 50 53.2 53.5 50" stroke="#13151b" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+
+      {/* Visor Glare/Gloss highlights */}
+      <path d="M 29 34 A 21 21 0 0 1 45 25" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" fill="none" opacity="0.8" />
+      <circle cx="66" cy="37" r="1.5" fill="#ffffff" opacity="0.6" />
+    </svg>
+  );
+}
+
 export default function App() {
   const [isSpinning, setIsSpinning] = useState(false);
   const [showGachaResult, setShowGachaResult] = useState(false);
@@ -471,6 +616,14 @@ export default function App() {
   const [reflectionText, setReflectionText] = useState('');
   const [marqueeIndex, setMarqueeIndex] = useState(0);
 
+  // Custom Toast State (replaces native alert/confirm to prevent iframe crash)
+  const [toastMessage, setToastMessage] = useState('');
+
+  // Streak State Tracker
+  const [streakCount, setStreakCount] = useState(0);
+  const [streakHistory, setStreakHistory] = useState([]);
+  const [showStreakModal, setShowStreakModal] = useState(false);
+
   // Recharge Countdown Time States
   const [lastRecharge, setLastRecharge] = useState(Date.now());
   const [timeRemaining, setTimeRemaining] = useState('');
@@ -478,15 +631,77 @@ export default function App() {
   // Personalized Motto & Header Focus of the Day
   const [messageOfTheDay, setMessageOfTheDay] = useState('Sovereignty & Action');
 
-  // Brand Settings: Fixed brand theme color matching luxury slate gold
+  // Fixed brand theme color matching luxury slate gold
   const [beanColor] = useState('#D97706');
-  
-  // Custom uploaded bean source (State preserved to avoid reference crashes)
-  const [customBeanImgSrc, setCustomBeanImgSrc] = useState('');
 
   // Physics-based balls reference for the HTML5 Canvas dome simulation
   const physicsBallsRef = useRef([]);
   const animationFrameIdRef = useRef(null);
+
+  // Sound Engine (DECLARED FIRST to prevent Temporal Dead Zone ReferenceErrors in dependent hooks)
+  const playSound = useCallback((type) => {
+    if (isMuted) return;
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      
+      if (type === 'click') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.frequency.setValueAtTime(500, ctx.currentTime);
+        gain.gain.setValueAtTime(0.02, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+        osc.start(); osc.stop(ctx.currentTime + 0.05);
+      } else if (type === 'spin') {
+        for (let i = 0; i < 10; i++) {
+          setTimeout(() => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(180 + (i * 20), ctx.currentTime);
+            gain.gain.setValueAtTime(0.04, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
+            osc.start(); osc.stop(ctx.currentTime + 0.08);
+          }, i * 110);
+        }
+      } else if (type === 'success') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(523.25, ctx.currentTime); 
+        osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1); 
+        gain.gain.setValueAtTime(0.05, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+        osc.start(); osc.stop(ctx.currentTime + 0.3);
+      }
+    } catch (e) {}
+  }, [isMuted]);
+
+  // Toast Notification Trigger
+  const showToast = useCallback((msg) => {
+    setToastMessage(msg);
+    setTimeout(() => {
+      setToastMessage('');
+    }, 4500);
+  }, []);
+
+  // Safe definition for reloading coin balance
+  const addFreeCoin = useCallback(() => {
+    playSound('click');
+    setCoins((prev) => {
+      const c = prev + 1;
+      localStorage.setItem('lym_gacha_coins', String(c));
+      return c;
+    });
+    showToast("Refreshed Energy Balance! +1 Gacha Coin Added.");
+  }, [playSound, showToast]);
 
   // Setup initial state, load localStorage & auto-migrate data on mount
   useEffect(() => {
@@ -495,11 +710,11 @@ export default function App() {
     const storedCoins = localStorage.getItem('lym_gacha_coins');
     const storedJournal = JSON.parse(localStorage.getItem('lym_journal_logs') || '[]');
     const savedMOTD = localStorage.getItem('lym_motd') || 'Sovereignty & Action';
-    const savedCustomBean = localStorage.getItem('lym_custom_bean_logo') || '';
     const storedRecharge = localStorage.getItem('lym_last_recharge');
 
-    // Load custom uploaded bean if present in local filing cabinet
-    setCustomBeanImgSrc(savedCustomBean);
+    // Local Streak calculations
+    const storedHistory = JSON.parse(localStorage.getItem('lym_streak_history') || '[]');
+    setStreakHistory(storedHistory);
 
     // Auto-migrate legacy formats if they exist from older sessions to prevent crashing
     const migratedJournal = storedJournal.map(log => {
@@ -546,6 +761,10 @@ export default function App() {
       localStorage.setItem('lym_gacha_coins', '3');
     }
     setCoins(initialCoins);
+
+    // Precalculate current daily streak
+    const calculatedStreak = computeStreak(storedHistory);
+    setStreakCount(calculatedStreak);
 
     // Initialize 2D physics-engine balls inside the Gacha glass container
     const width = 280;
@@ -626,6 +845,16 @@ export default function App() {
       for (let i = 0; i < balls.length; i++) {
         const b = balls[i];
 
+        // SAFETY RECOVERY LOOP: Guard against extreme NaN / Infinity calculation errors
+        if (isNaN(b.x) || isNaN(b.y) || !isFinite(b.x) || !isFinite(b.y)) {
+          b.x = b.radius + Math.random() * (width - b.radius * 2);
+          b.y = b.radius + Math.random() * (height / 2);
+          b.vx = (Math.random() - 0.5) * 2;
+          b.vy = (Math.random() - 0.5) * 2;
+          b.angle = Math.random() * Math.PI * 2;
+          b.spinSpeed = 0;
+        }
+
         if (isSpinning) {
           // Vortex suction + chaotic agitation forces
           const dx = b.x - centerX;
@@ -637,13 +866,6 @@ export default function App() {
           b.vx += (-dy / dist) * swirlStrength + (Math.random() - 0.5) * 5;
           b.vy += (dx / dist) * swirlStrength - 0.9 + (Math.random() - 0.5) * 5;
           
-          // Speed limit safety cap
-          const speed = Math.sqrt(b.vx * b.vx + b.vy * b.vy);
-          if (speed > 16) {
-            b.vx = (b.vx / speed) * 16;
-            b.vy = (b.vy / speed) * 16;
-          }
-          
           b.spinSpeed = b.vx * 0.01;
         } else {
           // Standard gravity settling under steady state
@@ -653,28 +875,35 @@ export default function App() {
           b.spinSpeed *= 0.92;
         }
 
+        // VELOCITY CAP: Prevent high-speed tunneling past limits
+        const speedLimit = 12;
+        const speed = Math.sqrt(b.vx * b.vx + b.vy * b.vy);
+        if (speed > speedLimit) {
+          b.vx = (b.vx / speed) * speedLimit;
+          b.vy = (b.vy / speed) * speedLimit;
+        }
+
         // Apply velocities
         b.x += b.vx;
         b.y += b.vy;
         b.angle += b.spinSpeed;
 
-        // Boundary Collisions (Sides & floor)
-        if (b.x - b.radius < 0) {
+        // Bounding-box strict coordinate limits (Solves disappearing ball bounds checks)
+        if (b.x < b.radius) {
           b.x = b.radius;
-          b.vx *= -bounceRestitution;
-        } else if (b.x + b.radius > width) {
+          b.vx = Math.abs(b.vx) * bounceRestitution;
+        } else if (b.x > width - b.radius) {
           b.x = width - b.radius;
-          b.vx *= -bounceRestitution;
+          b.vx = -Math.abs(b.vx) * bounceRestitution;
         }
 
-        if (b.y - b.radius < 0) {
+        if (b.y < b.radius) {
           b.y = b.radius;
-          b.vy *= -bounceRestitution;
-        } else if (b.y + b.radius > height) {
+          b.vy = Math.abs(b.vy) * bounceRestitution;
+        } else if (b.y > height - b.radius) {
           b.y = height - b.radius;
-          b.vy *= -bounceRestitution;
-          // Apply horizontal roll friction on ground
-          b.vx *= 0.9;
+          b.vy = -Math.abs(b.vy) * bounceRestitution;
+          b.vx *= 0.95; // Roll friction
         }
 
         // Ball-to-Ball Elastic Collisions
@@ -682,15 +911,15 @@ export default function App() {
           const b2 = balls[j];
           const dx = b2.x - b.x;
           const dy = b2.y - b.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+          const dist = Math.sqrt(dx * dx + dy * dy) || 0.001; // Avoid division by zero
           const minDist = b.radius + b2.radius;
 
           if (dist < minDist) {
             const overlap = minDist - dist;
-            const nx = dx / (dist || 1);
-            const ny = dy / (dist || 1);
+            const nx = dx / dist;
+            const ny = dy / dist;
 
-            // Separate overlapping balls
+            // Separate overlapping balls safely
             b.x -= nx * overlap * 0.5;
             b.y -= ny * overlap * 0.5;
             b2.x += nx * overlap * 0.5;
@@ -699,7 +928,7 @@ export default function App() {
             // Elastic velocity resolution
             const kx = b.vx - b2.vx;
             const ky = b.vy - b2.vy;
-            const impulse = 2 * (nx * kx + ny * ky) / 2; // Equal mass model
+            const impulse = 2 * (nx * kx + ny * ky) / 2;
 
             b.vx -= impulse * nx * 0.75;
             b.vy -= impulse * ny * 0.75;
@@ -761,58 +990,25 @@ export default function App() {
     };
   }, [isSpinning]);
 
-  // Sound Engine
-  const playSound = useCallback((type) => {
-    if (isMuted) return;
-    try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContext) return;
-      const ctx = new AudioContext();
-      
-      if (type === 'click') {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.frequency.setValueAtTime(500, ctx.currentTime);
-        gain.gain.setValueAtTime(0.02, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
-        osc.start(); osc.stop(ctx.currentTime + 0.05);
-      } else if (type === 'spin') {
-        for (let i = 0; i < 10; i++) {
-          setTimeout(() => {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(180 + (i * 20), ctx.currentTime);
-            gain.gain.setValueAtTime(0.04, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
-            osc.start(); osc.stop(ctx.currentTime + 0.08);
-          }, i * 110);
-        }
-      } else if (type === 'success') {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(523.25, ctx.currentTime); 
-        osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1); 
-        gain.gain.setValueAtTime(0.05, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
-        osc.start(); osc.stop(ctx.currentTime + 0.3);
-      }
-    } catch (e) {}
-  }, [isMuted]);
+  // Cycle the ambient marquee billboard announcements
+  useEffect(() => {
+    const messages = [
+      `🔮 MARKS UNLOCKED: ${discoveredIds.length}/56 SOVEREIGN DIALS ARCHIVED 🔮`,
+      `🎪 CO-ACTION: TRUSELF SUMMIT Live • June 27 & 28 • Secure Your Seat Now 🎪`,
+      `⚡ DESIGN BY INTENT, NOT COINCIDENCE ⚡`
+    ];
+    const interval = setInterval(() => {
+      setMarqueeIndex((prev) => (prev + 1) % messages.length);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [discoveredIds]);
 
   // Spin core logic (True Randomization with Variety memory)
   const spinGacha = useCallback(() => {
     if (isSpinning) return;
     if (coins <= 0) {
       playSound('click');
-      alert(`Daily energy exhausted. Resetting back to 3 pulls in ${timeRemaining || "a few moments"}.`);
+      showToast(`Daily energy exhausted. Resetting back to 3 pulls in ${timeRemaining || "a few moments"}.`);
       return;
     }
 
@@ -822,8 +1018,8 @@ export default function App() {
 
     // Apply high random impulse forces on physics balls for the vortex churn
     physicsBallsRef.current.forEach(b => {
-      b.vx = (Math.random() - 0.5) * 30;
-      b.vy = -15 - Math.random() * 20;
+      b.vx = (Math.random() - 0.5) * 15;
+      b.vy = -8 - Math.random() * 8; // Controlled upwards speed prevents clumping
     });
 
     const nextSpinCount = totalSpins + 1;
@@ -857,6 +1053,17 @@ export default function App() {
       : [...discoveredIds, selectedQuestion.id];
     const nextCoins = coins - 1;
 
+    // Record streak dates in history
+    const todayStr = getLocalDateString(0);
+    let updatedHistory = [...streakHistory];
+    if (!updatedHistory.includes(todayStr)) {
+      updatedHistory.push(todayStr);
+      localStorage.setItem('lym_streak_history', JSON.stringify(updatedHistory));
+      setStreakHistory(updatedHistory);
+    }
+    const currentStreak = computeStreak(updatedHistory);
+    setStreakCount(currentStreak);
+
     setTotalSpins(nextSpinCount);
     setDiscoveredIds(updatedDiscoveries);
     setCoins(nextCoins);
@@ -872,7 +1079,45 @@ export default function App() {
       setIsSpinning(false);
       playSound('success');
     }, 1800);
-  }, [isSpinning, totalSpins, discoveredIds, coins, playSound, timeRemaining]);
+  }, [isSpinning, totalSpins, discoveredIds, coins, playSound, timeRemaining, streakHistory, showToast]);
+
+  // Calculate most active domains from user discoveries to feed custom synthesis
+  const generateArchetypeSynthesis = () => {
+    if (journalLogs.length === 0) return { title: "Diver Base", desc: "Start recording reflections in your journal tab to synthesize your personal sovereign leadership archetype." };
+    
+    // Tally active domains
+    const tallies = {};
+    journalLogs.forEach(log => {
+      tallies[log.domain] = (tallies[log.domain] || 0) + 1;
+    });
+
+    const sorted = Object.entries(tallies).sort((a, b) => b[1] - a[1]);
+    const topDomain = sorted[0]?.[0] || "Creation/Choice";
+
+    if (topDomain === "Creation/Choice" || topDomain === "Dreams/Passions") {
+      return {
+        title: "The Sovereign Visionary",
+        desc: "You operate with a high creative bandwidth. Your current pattern signals that you are fully ready to deploy massive, expansive drafts. Prioritize execution over safe planning boundaries."
+      };
+    } else if (topDomain === "Advancement" || topDomain === "Achievement") {
+      return {
+        title: "The Strategic Architect",
+        desc: "You carry a massive capacity for deep execution. Your active focus is streamlining daily momentum and finishing milestones. Ensure you are directing your valuable focus toward high-leverage games."
+      };
+    } else if (topDomain === "People" || topDomain === "Connection") {
+      return {
+        title: "The Relational Anchor",
+        desc: "Your energy builds deep, loyal authority. People naturally gravitate toward your orbit. Protect your stamina by setting generous, clear boundaries and gathering growth-oriented collaborators."
+      };
+    } else {
+      return {
+        title: "The Abundant Alchemist",
+        desc: "Your focus lies in organizing resources, capital, and vital stamina. You are building a sustainable foundation. Rely on pure focus metrics to protect your mental focus today."
+      };
+    }
+  };
+
+  const currentArchetype = generateArchetypeSynthesis();
 
   // Save Reflection
   const saveReflection = () => {
@@ -900,7 +1145,7 @@ export default function App() {
     
     setShowGachaResult(false);
     setReflectionText('');
-    alert("Saved successfully to your personal mental journal!");
+    showToast("Saved successfully to your personal mental journal!");
   };
 
   const deleteJournalEntry = (id) => {
@@ -908,6 +1153,7 @@ export default function App() {
     const updated = journalLogs.filter(log => log.id !== id);
     setJournalLogs(updated);
     localStorage.setItem('lym_journal_logs', JSON.stringify(updated));
+    showToast("Entry deleted successfully.");
   };
 
   const copyJournalToClipboard = () => {
@@ -923,10 +1169,187 @@ export default function App() {
     document.execCommand('copy');
     document.body.removeChild(textarea);
 
-    alert("Entire reflection archive copied to clipboard!");
+    showToast("Entire reflection archive copied to clipboard!");
   };
 
-  // --- PREMIUM CHIC WALLPAPER GRAPHIC GENERATOR WITH COURAGE STEP ---
+  // --- PROCEDURAL CANVAS DRAWING PIPELINE FOR THE DETAILED "DIVER" ---
+  const drawCanvasDiver = (ctx, x, y, size) => {
+    ctx.save();
+    ctx.translate(x, y);
+
+    const rScale = size / 80;
+
+    // Glowing underwater backlight halo
+    const haloGrad = ctx.createRadialGradient(0, 0, 10 * rScale, 0, 0, 45 * rScale);
+    haloGrad.addColorStop(0, 'rgba(56, 189, 248, 0.45)');
+    haloGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+    ctx.fillStyle = haloGrad;
+    ctx.beginPath();
+    ctx.arc(0, 0, 45 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Air Tank
+    ctx.fillStyle = '#1e222b';
+    ctx.strokeStyle = '#0b0d10';
+    ctx.lineWidth = 2 * rScale;
+    ctx.beginPath();
+    ctx.roundRect(-14 * rScale, 10 * rScale, 28 * rScale, 34 * rScale, 10 * rScale);
+    ctx.fill();
+    ctx.stroke();
+
+    // Body Suit
+    const suitGrad = ctx.createLinearGradient(-25 * rScale, 10 * rScale, 25 * rScale, 54 * rScale);
+    suitGrad.addColorStop(0, '#2c303b');
+    suitGrad.addColorStop(0.5, '#1e222b');
+    suitGrad.addColorStop(1, '#12141a');
+    ctx.fillStyle = suitGrad;
+    ctx.strokeStyle = '#0f1115';
+    ctx.lineWidth = 3 * rScale;
+    ctx.beginPath();
+    ctx.ellipse(0, 30 * rScale, 25 * rScale, 23 * rScale, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Arms
+    ctx.strokeStyle = suitGrad;
+    ctx.lineWidth = 11 * rScale;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.quadraticCurveTo(-20 * rScale, 30 * rScale, -32 * rScale, 40 * rScale);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.quadraticCurveTo(20 * rScale, 30 * rScale, 32 * rScale, 40 * rScale);
+    ctx.stroke();
+
+    // Flippers
+    ctx.fillStyle = '#12141a';
+    ctx.save();
+    ctx.translate(-13 * rScale, 54 * rScale);
+    ctx.rotate(-0.2);
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 8 * rScale, 5.5 * rScale, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    ctx.save();
+    ctx.translate(13 * rScale, 54 * rScale);
+    ctx.rotate(0.2);
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 8 * rScale, 5.5 * rScale, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Neon Shoulder Spirals
+    ctx.strokeStyle = 'rgba(216, 180, 254, 0.9)';
+    ctx.lineWidth = 1.2 * rScale;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.arc(-22 * rScale, 31 * rScale, 2 * rScale, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(22 * rScale, 31 * rScale, 2 * rScale, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // Spiral Chest Badge
+    ctx.fillStyle = '#1f242e';
+    ctx.strokeStyle = '#0f1115';
+    ctx.lineWidth = 1.5 * rScale;
+    ctx.beginPath();
+    ctx.arc(0, 29 * rScale, 6 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.strokeStyle = '#c084fc';
+    ctx.lineWidth = 1.2 * rScale;
+    ctx.beginPath();
+    ctx.arc(0, 29 * rScale, 2.5 * rScale, 0, Math.PI * 0.85);
+    ctx.stroke();
+
+    // Helmet Metallic Chrome Outer Ring
+    const chromeGrad = ctx.createLinearGradient(-30 * rScale, -39 * rScale, 30 * rScale, 21 * rScale);
+    chromeGrad.addColorStop(0, '#5f6775');
+    chromeGrad.addColorStop(0.35, '#a1abbc');
+    chromeGrad.addColorStop(0.5, '#ffffff');
+    chromeGrad.addColorStop(0.65, '#7a8596');
+    chromeGrad.addColorStop(1, '#2d333f');
+    ctx.fillStyle = chromeGrad;
+    ctx.beginPath();
+    ctx.arc(0, -9 * rScale, 30 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Visor Shield Glass
+    const glassGrad = ctx.createLinearGradient(-26 * rScale, -35 * rScale, 26 * rScale, 17 * rScale);
+    glassGrad.addColorStop(0, '#334155');
+    glassGrad.addColorStop(0.3, '#1e293b');
+    glassGrad.addColorStop(1, '#0f172a');
+    ctx.fillStyle = glassGrad;
+    ctx.strokeStyle = '#0b0d10';
+    ctx.lineWidth = 1.5 * rScale;
+    ctx.beginPath();
+    ctx.arc(0, -9 * rScale, 26 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Face Plate
+    ctx.fillStyle = '#fffdf9';
+    ctx.beginPath();
+    ctx.arc(0, -9 * rScale, 23 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Blushing cheeks
+    const blushGrad1 = ctx.createRadialGradient(-15 * rScale, -3 * rScale, 0, -15 * rScale, -3 * rScale, 5 * rScale);
+    blushGrad1.addColorStop(0, 'rgba(251, 113, 133, 0.8)');
+    blushGrad1.addColorStop(1, 'rgba(251, 113, 133, 0)');
+    ctx.fillStyle = blushGrad1;
+    ctx.beginPath();
+    ctx.arc(-15 * rScale, -3 * rScale, 5 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+
+    const blushGrad2 = ctx.createRadialGradient(15 * rScale, -3 * rScale, 0, 15 * rScale, -3 * rScale, 5 * rScale);
+    blushGrad2.addColorStop(0, 'rgba(251, 113, 133, 0.8)');
+    blushGrad2.addColorStop(1, 'rgba(251, 113, 133, 0)');
+    ctx.fillStyle = blushGrad2;
+    ctx.beginPath();
+    ctx.arc(15 * rScale, -3 * rScale, 5 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Big Adorable Visor Eyes
+    ctx.fillStyle = '#13151b';
+    ctx.beginPath();
+    ctx.arc(-9 * rScale, -10 * rScale, 4.5 * rScale, 0, Math.PI * 2);
+    ctx.arc(9 * rScale, -10 * rScale, 4.5 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#FFFFFF';
+    ctx.beginPath();
+    ctx.arc(-6.5 * rScale, -12.5 * rScale, 1.6 * rScale, 0, Math.PI * 2);
+    ctx.arc(11.5 * rScale, -12.5 * rScale, 1.6 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Smiling Mouth
+    ctx.strokeStyle = '#13151b';
+    ctx.lineWidth = 2.5 * rScale;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.arc(0, -4 * rScale, 4 * rScale, 0.1 * Math.PI, 0.9 * Math.PI);
+    ctx.stroke();
+
+    // Upper Glass Visor gloss reflections
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+    ctx.lineWidth = 3 * rScale;
+    ctx.beginPath();
+    ctx.arc(0, -9 * rScale, 22 * rScale, -0.6 * Math.PI, -0.15 * Math.PI);
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+    ctx.beginPath();
+    ctx.arc(16 * rScale, -17 * rScale, 1.5 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  };
+
+  // --- PREMIUM CHIC WALLPAPER GRAPHIC GENERATOR ---
   const downloadManifestationCard = () => {
     if (!gachaResult) return;
     const canvas = canvasRef.current;
@@ -942,13 +1365,26 @@ export default function App() {
     ctx.fillStyle = '#090D16';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Dynamic Luxury Aurora Radial Lighting Glow
+    // Dynamic Luxury Aurora Radial Lighting Glow matching domain category
     const gradient = ctx.createRadialGradient(600, 900, 100, 600, 900, 900);
-    gradient.addColorStop(0, gachaResult.domainColor + '26'); 
+    gradient.addColorStop(0, gachaResult.domainColor + '2F'); 
     gradient.addColorStop(0.5, '#D977060A'); 
     gradient.addColorStop(1, '#00000000');
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw underwater beams of light streaming from top center
+    const beamGrad = ctx.createLinearGradient(600, 0, 600, 550);
+    beamGrad.addColorStop(0, 'rgba(56, 189, 248, 0.28)');
+    beamGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+    ctx.fillStyle = beamGrad;
+    ctx.beginPath();
+    ctx.moveTo(350, 0);
+    ctx.lineTo(850, 0);
+    ctx.lineTo(1000, 550);
+    ctx.lineTo(200, 550);
+    ctx.closePath();
+    ctx.fill();
 
     // Double Gilded Premium Borders
     ctx.strokeStyle = gachaResult.domainColor;
@@ -996,13 +1432,16 @@ export default function App() {
       return currentY;
     };
 
+    // Draw our lovely Custom Diver Mascot at the top center of the wallpaper
+    drawCanvasDiver(ctx, 600, 175, 80);
+
     const drawLogoAndCardText = (startY) => {
       // Header Brand Text
       ctx.fillStyle = '#FFFFFF';
       ctx.font = '900 32px sans-serif';
       ctx.letterSpacing = '1px';
       ctx.textAlign = 'center';
-      ctx.fillText('TRUSELF SUITE', canvas.width / 2, startY);
+      ctx.fillText('TRUSELF REVEAL', canvas.width / 2, startY);
 
       ctx.fillStyle = gachaResult.domainColor;
       ctx.font = 'bold 16px sans-serif';
@@ -1099,7 +1538,7 @@ export default function App() {
       ctx.fillStyle = '#FFFFFF22';
       ctx.font = 'bold 14px sans-serif';
       ctx.letterSpacing = '1px';
-      ctx.fillText('TRUSELF SUITE ALIGNMENT • LIVE STRATEGY: JUNE 27 & 28', canvas.width / 2, canvas.height - 110);
+      ctx.fillText('TRUSELF REVEAL • LIVE STRATEGY: JUNE 27 & 28', canvas.width / 2, canvas.height - 110);
 
       // Stream download
       const dataUrl = canvas.toDataURL('image/png');
@@ -1110,35 +1549,33 @@ export default function App() {
       playSound('success');
     };
 
-    // Render original vector organic LYM Bean Seed brand watermark
-    ctx.save();
-    ctx.translate(600 - 45, 100);
-    ctx.scale(0.9, 0.9);
-    ctx.fillStyle = beanColor;
-    const p = new Path2D(DEFAULT_BEAN_PATH);
-    ctx.fill(p);
-    ctx.restore();
-    drawLogoAndCardText(230);
+    drawLogoAndCardText(280);
   };
 
   return (
     <div className="min-h-screen bg-[#0F172A] text-white flex flex-col font-sans select-none relative overflow-x-hidden" style={{ fontFamily: "'Jost', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600;700;900&display=swap" rel="stylesheet" />
       
-      {/* Dynamic ambient backdrop glows */}
-      <div className="fixed inset-0 pointer-events-none opacity-20 z-0">
-        <div className="absolute top-1/4 left-1/4 w-[380px] h-[380px] bg-indigo-600 rounded-full blur-[150px]"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-[380px] h-[380px] bg-amber-600 rounded-full blur-[150px]"></div>
+      {/* Premium Toast Notification Bar */}
+      {toastMessage && (
+        <div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-[200] bg-slate-900/95 border border-indigo-500/30 px-5 py-3 rounded-2xl shadow-[0_15px_30px_rgba(0,0,0,0.5)] flex items-center gap-2.5 animate-in slide-in-from-top duration-300 max-w-xs text-center">
+          <Sparkles className="w-4 h-4 text-amber-400 shrink-0 animate-pulse" />
+          <span className="text-xs font-bold text-slate-100">{toastMessage}</span>
+        </div>
+      )}
+
+      {/* Dynamic ambient backdrop glows matching ocean diver depth */}
+      <div className="fixed inset-0 pointer-events-none opacity-25 z-0">
+        <div className="absolute top-1/4 left-1/4 w-[380px] h-[380px] bg-sky-900 rounded-full blur-[150px]"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-[380px] h-[380px] bg-indigo-950 rounded-full blur-[150px]"></div>
       </div>
 
       {/* Luxury Minimalist Header Sticky Navigation */}
       <nav className="relative z-50 flex items-center justify-between px-6 py-5 border-b border-white/5 backdrop-blur-md bg-[#0F172A]/40 sticky top-0">
         <div className="flex items-center gap-3">
-          <svg viewBox="0 0 100 100" className="w-8 h-8 animate-spin-slow" style={{ fill: beanColor }}>
-            <path d={DEFAULT_BEAN_PATH} />
-          </svg>
+          <DiverMascot size={32} />
           <div className="flex flex-col">
-            <h1 className="text-lg font-black tracking-tight text-slate-100 uppercase leading-none">TruSelf Suite</h1>
+            <h1 className="text-lg font-black tracking-tight text-slate-100 uppercase leading-none">TruSelf Reveal</h1>
             <span className="text-[9px] font-black tracking-[0.3em] uppercase text-indigo-300 opacity-60 mt-1">Live Your Mark</span>
           </div>
         </div>
@@ -1242,6 +1679,53 @@ export default function App() {
                 <span className="text-xs text-amber-500 font-mono font-bold mt-1 block">Recharges 3 coins in {timeRemaining}</span>
               </div>
             )}
+
+            {/* --- LOCALIZED 7-DAY ALIGNMENT STREAK VIEW --- */}
+            <div className="mt-6 w-full max-w-[290px] p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3.5">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-black text-slate-300 tracking-wider uppercase">Sovereign Streak Tracker</span>
+                <span className="text-xs font-black text-amber-500 tracking-tight">{streakCount} Days Active</span>
+              </div>
+
+              {/* Progress nodes */}
+              <div className="flex items-center justify-between gap-1 pt-1">
+                {Array.from({ length: 7 }).map((_, index) => {
+                  const nodeDate = getLocalDateString(6 - index);
+                  const isChecked = streakHistory.includes(nodeDate);
+                  const isToday = index === 6;
+                  return (
+                    <div key={index} className="flex flex-col items-center flex-1">
+                      <div className={`w-8 h-8 rounded-full border flex items-center justify-center text-[10px] font-black transition-all ${isChecked ? 'bg-amber-500 border-amber-600 text-slate-950 shadow-[0_0_12px_rgba(217,119,6,0.35)]' : isToday ? 'border-indigo-400 bg-indigo-950/40 text-indigo-300 animate-pulse' : 'border-white/10 bg-slate-900/60 text-slate-500'}`}>
+                        {isChecked ? "✓" : index + 1}
+                      </div>
+                      <span className="text-[7px] text-slate-500 font-bold mt-1 uppercase">D{index + 1}</span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Instructions Guide */}
+              <div className="p-3 bg-black/40 border border-white/5 rounded-xl text-[10px] text-slate-400 leading-normal font-sans text-left">
+                <strong className="text-indigo-400 block mb-1">🎯 Why Complete 7 Days Straight?</strong>
+                Log reflections daily to map out your cognitive patterns. Reaching Day 7 unlocks your full **Sovereign Archetype Synthesis**—diagnosing your leading directions in Creation, Advancement, and People.
+              </div>
+
+              {/* Archetype reading button triggers when they have history logged */}
+              <button
+                onClick={() => { playSound('click'); setShowStreakModal(true); }}
+                className="w-full py-2 bg-indigo-600/10 hover:bg-indigo-600/20 border border-indigo-500/20 text-indigo-300 rounded-xl text-[9px] font-black tracking-widest uppercase transition-all"
+              >
+                📊 View Alignment Patterns
+              </button>
+            </div>
+
+            {/* Reload Balance link */}
+            <button 
+              onClick={addFreeCoin} 
+              className="mt-6 text-[10px] text-amber-500/50 font-bold tracking-widest uppercase hover:text-amber-500 flex items-center gap-1 transition-colors"
+            >
+              + Refresh Energy Balance
+            </button>
           </div>
         )}
 
@@ -1421,9 +1905,7 @@ export default function App() {
             <div className="p-8 md:p-10 text-white flex flex-col overflow-y-auto">
               
               <div className="flex items-center gap-4 mb-6">
-                <div className="p-3 rounded-2xl text-white shadow-lg" style={{ backgroundColor: gachaResult.domainColor }}>
-                  {gachaResult.icon}
-                </div>
+                <DiverMascot size={56} />
                 <div>
                   <span className="text-[9px] font-black tracking-widest text-amber-500 block">{gachaResult.badge}</span>
                   <h3 className="text-lg font-black uppercase tracking-tight text-white mt-1 leading-none">{gachaResult.domainTitle}</h3>
@@ -1500,10 +1982,10 @@ export default function App() {
               {/* Conversion Footer */}
               <div className="mt-6 pt-5 border-t border-white/5 flex flex-col items-center text-center">
                 <span className="text-[10px] text-amber-500 font-bold uppercase tracking-widest flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5" /> Join us at Live Your Mark's TruSelf Summit: June 27 & 28
+                  <Calendar className="w-3.5 h-3.5" /> Join us at Live Your Mark's TruSelf Summit - June 27 & 28
                 </span>
                 <p className="text-[11px] text-slate-400 mt-1 leading-normal font-medium font-sans">
-                  Reflections highlight the issues; the Summit room is where you execute the changes. Secure your live experience at the TruSelf Summit.
+                  Reflections highlight the issues; the Summit is where you take action. Secure your live experience at the TruSelf Summit.
                 </p>
                 <a 
                   href="https://liveyourmark.com/truself-summit/" 
@@ -1515,6 +1997,69 @@ export default function App() {
                 </a>
               </div>
 
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* --- SOVEREIGN STREAK PATTERN SYNTHESIS MODAL PANEL --- */}
+      {showStreakModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-[#090D1A]/95 backdrop-blur-2xl animate-in fade-in duration-300">
+          <div className="absolute inset-0 cursor-pointer" onClick={() => setShowStreakModal(false)}></div>
+          
+          <div className="relative bg-[#111526] w-full max-w-sm rounded-[35px] overflow-hidden shadow-2xl border border-white/10 p-8 text-white flex flex-col max-h-[85vh]">
+            <button 
+              onClick={() => { playSound('click'); setShowStreakModal(false); }}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 bg-slate-900/60 rounded-full border border-white/10"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="text-center space-y-4 overflow-y-auto pr-1">
+              <DiverMascot size={80} className="mx-auto" />
+              <div>
+                <span className="text-[9px] font-black tracking-widest text-amber-500 uppercase block">7-Day Sovereignty Pattern</span>
+                <h3 className="text-xl font-black text-white mt-1 uppercase">Sovereign Synthesis</h3>
+              </div>
+
+              {/* Conditional Lock state depending on current streak */}
+              {streakCount >= 7 ? (
+                <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3 text-left animate-in zoom-in-95">
+                  <span className="text-[10px] font-black text-indigo-400 uppercase tracking-wider block">Logged Archetype Archetype</span>
+                  <h4 className="text-base font-black text-white">{currentArchetype.title}</h4>
+                  <p className="text-xs text-slate-300 leading-relaxed font-sans pt-1">
+                    {currentArchetype.desc}
+                  </p>
+                </div>
+              ) : (
+                <div className="p-6 rounded-2xl bg-black/40 border border-white/5 space-y-3 text-center">
+                  <Lock className="w-8 h-8 text-amber-500 mx-auto stroke-[1.5] animate-pulse" />
+                  <h4 className="text-sm font-black uppercase text-amber-500">Alignment Diagnosis Locked</h4>
+                  <p className="text-xs text-slate-400 leading-normal font-sans">
+                    You have currently completed <strong className="text-white font-bold">{streakCount} out of 7 consecutive days</strong>. Keep drawing marks to align your focal patterns and unlock your sovereign diagnosis!
+                  </p>
+                  
+                  {/* Local mini progress bar */}
+                  <div className="bg-slate-950 rounded-full h-2 overflow-hidden border border-white/5 mt-2">
+                    <div 
+                      className="bg-amber-500 h-full transition-all duration-500"
+                      style={{ width: `${(streakCount / 7) * 100}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className="p-4 rounded-xl bg-slate-900/40 border border-white/5 text-[11px] text-slate-400 font-medium leading-relaxed font-sans text-left">
+                <strong className="text-white block mb-1">How Streaks Work:</strong>
+                Pulling a Gacha capsule on consecutive days extends your active streak. Recording reflections in your journal continuously aligns your focus, allowing the Sovereign Synthesis engine to map out your core energetic directions.
+              </div>
+
+              <button 
+                onClick={() => setShowStreakModal(false)}
+                className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-xl uppercase tracking-wider text-[10px] transition-all active:scale-95"
+              >
+                Close Diagnosis Panel
+              </button>
             </div>
           </div>
         </div>
