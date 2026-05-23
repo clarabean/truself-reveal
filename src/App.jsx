@@ -1500,10 +1500,10 @@ export default function App() {
               {/* Conversion Footer */}
               <div className="mt-6 pt-5 border-t border-white/5 flex flex-col items-center text-center">
                 <span className="text-[10px] text-amber-500 font-bold uppercase tracking-widest flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5" /> Next Convergence: June 27 & 28
+                  <Calendar className="w-3.5 h-3.5" /> Join us at Live Your Mark's TruSelf Summit: June 27 & 28
                 </span>
                 <p className="text-[11px] text-slate-400 mt-1 leading-normal font-medium font-sans">
-                  Reflections highlight the issues; the physical room is where you execute. Secure your live experience at the TruSelf Summit.
+                  Reflections highlight the issues; the Summit room is where you execute the changes. Secure your live experience at the TruSelf Summit.
                 </p>
                 <a 
                   href="https://liveyourmark.com/truself-summit/" 
