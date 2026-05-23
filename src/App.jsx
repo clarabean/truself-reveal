@@ -5,7 +5,7 @@ import {
   BookOpen, Lock, Download, Clipboard, Trash2, X, RefreshCw
 } from 'lucide-react';
 
-// --- THE HARMONIC 56 INTERNAL MARKS DATASET (Sovereign Executive Coaching Edition) ---
+// --- THE HARMONIC 56 INTERNAL MARKS DATASET (True Self Executive Coaching Edition) ---
 const DOMAINS = {
   CREATION_CHOICE: { 
     title: "Creation/Choice", color: "#6366F1", glow: "shadow-indigo-500/10", badge: "🔮 ALIGNMENT INSIGHT", icon: <Sparkle className="w-4 h-4" />, 
@@ -182,7 +182,7 @@ const DOMAINS = {
       { 
         id: "res_2", 
         rarity: "Common", 
-        horoscope: "Your potential for abundance is massive. True sovereignty comes from establishing clear, calm financial systems that empower you to take calculated risks with complete peace of mind.", 
+        horoscope: "Your potential for abundance is massive. True alignment comes from establishing clear, calm financial systems that empower you to take calculated risks with complete peace of mind.", 
         inquest: "How stable is your current financial foundation, rated honestly on a scale of 1-10?",
         courage: "Transfer a specific, small sum of capital into a high-yield savings or investment account today as a physical seed of abundance."
       },
@@ -450,9 +450,6 @@ const ALL_QUESTIONS = Object.values(DOMAINS).flatMap(d => d.questions.map(q => (
   icon: d.icon 
 })));
 
-// --- VECTOR DEFINITION FOR DEFAULT LYM "BEAN" LOGO ---
-const DEFAULT_BEAN_PATH = "M30,10 C50,5 75,15 85,35 C95,55 90,75 70,85 C50,95 25,85 15,65 C5,45 10,15 30,10 Z";
-
 // --- GLOBAL UTILITY STREAK HELPER FUNCTIONS ---
 const getLocalDateString = (offsetDays = 0) => {
   const d = new Date();
@@ -537,61 +534,32 @@ function DiverMascot({ size = 80, className = "" }) {
 
       {/* Backlight Aura */}
       <circle cx="50" cy="55" r="45" fill="url(#diverGlow)" />
-
-      {/* Oxygen Cylinder / Backpack */}
       <rect x="36" y="62" width="28" height="34" rx="8" fill="#1e222b" stroke="#0b0d10" strokeWidth="2.5" />
       <rect x="42" y="55" width="16" height="7" rx="1.5" fill="#475569" stroke="#0F172A" strokeWidth="1" />
-
-      {/* Breathing Scuba Air Hose */}
       <path d="M 36 60 Q 18 52 30 42" stroke="#334155" strokeWidth="4.5" fill="none" strokeLinecap="round" />
-
-      {/* Body Suit Torso */}
       <ellipse cx="50" cy="84" rx="25" ry="23" fill="url(#suitGrad)" stroke="#0f1115" strokeWidth="3" />
-      
-      {/* Arms floating organically outward */}
       <path d="M 26 78 Q 14 80 18 90" stroke="url(#suitGrad)" strokeWidth="11" strokeLinecap="round" fill="none" />
       <path d="M 74 78 Q 86 80 82 90" stroke="url(#suitGrad)" strokeWidth="11" strokeLinecap="round" fill="none" />
-      
-      {/* Swimming Flippers dangling down */}
       <ellipse cx="37" cy="108" rx="8" ry="5.5" fill="#12141a" transform="rotate(-15 37 108)" />
       <ellipse cx="63" cy="108" rx="8" ry="5.5" fill="#12141a" transform="rotate(15 63 108)" />
 
-      {/* Shoulder/Arm Glowing Pink Spirals */}
       <g stroke="#d8b4fe" strokeWidth="1.2" fill="none" strokeLinecap="round" filter="url(#neonSpiralGlow)">
-        {/* Left shoulder spiral */}
         <path d="M 20 83 A 2 2 0 1 0 21 85 A 1 1 0 1 0 20.5 84" />
-        {/* Right shoulder spiral */}
         <path d="M 80 83 A 2 2 0 1 0 81 85 A 1 1 0 1 0 80.5 84" />
       </g>
 
-      {/* Spiral Badge Crest on Chest */}
       <circle cx="50" cy="83" r="6" fill="#1f242e" stroke="#0f1115" strokeWidth="1.5" />
       <path d="M 50 83 A 2.2 2.2 0 1 0 52 85 A 1.2 1.2 0 1 0 50.5 84" stroke="#c084fc" strokeWidth="1.2" fill="none" strokeLinecap="round" filter="url(#neonSpiralGlow)" />
-
-      {/* Big Spherical Visor Outer Chrome Ring */}
       <circle cx="50" cy="45" r="30" fill="url(#chromeRing)" />
-      
-      {/* Visor Inner Shield Glass */}
       <circle cx="50" cy="45" r="26" fill="url(#visorGlass)" stroke="#0b0d10" strokeWidth="1.5" />
-      
-      {/* Face Plate */}
       <circle cx="50" cy="45" r="23" fill="#fffdf9" />
-
-      {/* Cozy blushing cheeks */}
       <circle cx="35" cy="51" r="5" fill="url(#cheekBlush)" />
       <circle cx="65" cy="51" r="5" fill="url(#cheekBlush)" />
-
-      {/* Adorable shiny baby eyes */}
       <circle cx="41" cy="44" r="4.5" fill="#13151b" />
       <circle cx="43.5" cy="41.5" r="1.6" fill="#ffffff" />
-      
       <circle cx="59" cy="44" r="4.5" fill="#13151b" />
       <circle cx="61.5" cy="41.5" r="1.6" fill="#ffffff" />
-
-      {/* Cute curvaceous smile */}
       <path d="M 46.5 50 Q 50 53.2 53.5 50" stroke="#13151b" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-
-      {/* Visor Glare/Gloss highlights */}
       <path d="M 29 34 A 21 21 0 0 1 45 25" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" fill="none" opacity="0.8" />
       <circle cx="66" cy="37" r="1.5" fill="#ffffff" opacity="0.6" />
     </svg>
@@ -604,23 +572,23 @@ export default function App() {
   const [gachaResult, setGachaResult] = useState(null);
   const [leverAngle, setLeverAngle] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
-  const [activeTab, setActiveTab] = useState('machine'); // 'machine' | 'album' | 'journal'
+  const [activeTab, setActiveTab] = useState('machine'); 
   const canvasRef = useRef(null);
   const domeCanvasRef = useRef(null);
 
   // Dynamic state stored in LocalStorage
   const [totalSpins, setTotalSpins] = useState(0);
   const [discoveredIds, setDiscoveredIds] = useState([]);
-  const [coins, setCoins] = useState(3);
+  const [coins, setCoins] = useState(3); // Strict 3 spins daily limit
   const [journalLogs, setJournalLogs] = useState([]);
   const [reflectionText, setReflectionText] = useState('');
   const [marqueeIndex, setMarqueeIndex] = useState(0);
 
-  // Custom Toast State (replaces native alert/confirm to prevent iframe crash)
+  // Custom Toast State
   const [toastMessage, setToastMessage] = useState('');
 
   // Streak State Tracker
-  const [streakCount, setStreakCount] = useState(0);
+  const [streakCount, setStreakCount] = useState(7);
   const [streakHistory, setStreakHistory] = useState([]);
   const [showStreakModal, setShowStreakModal] = useState(false);
 
@@ -629,7 +597,7 @@ export default function App() {
   const [timeRemaining, setTimeRemaining] = useState('');
 
   // Personalized Motto & Header Focus of the Day
-  const [messageOfTheDay, setMessageOfTheDay] = useState('Sovereignty & Action');
+  const [messageOfTheDay, setMessageOfTheDay] = useState('True Self & Action');
 
   // Fixed brand theme color matching luxury slate gold
   const [beanColor] = useState('#D97706');
@@ -638,7 +606,7 @@ export default function App() {
   const physicsBallsRef = useRef([]);
   const animationFrameIdRef = useRef(null);
 
-  // Sound Engine (DECLARED FIRST to prevent Temporal Dead Zone ReferenceErrors in dependent hooks)
+  // Sound Engine
   const playSound = useCallback((type) => {
     if (isMuted) return;
     try {
@@ -692,31 +660,27 @@ export default function App() {
     }, 4500);
   }, []);
 
-  // Safe definition for reloading coin balance
-  const addFreeCoin = useCallback(() => {
-    playSound('click');
-    setCoins((prev) => {
-      const c = prev + 1;
-      localStorage.setItem('lym_gacha_coins', String(c));
-      return c;
-    });
-    showToast("Refreshed Energy Balance! +1 Gacha Coin Added.");
-  }, [playSound, showToast]);
-
   // Setup initial state, load localStorage & auto-migrate data on mount
   useEffect(() => {
     const storedSpins = Number(localStorage.getItem('lym_total_spins') || 0);
     const storedDiscoveries = JSON.parse(localStorage.getItem('lym_discovered_ids') || '[]');
     const storedCoins = localStorage.getItem('lym_gacha_coins');
     const storedJournal = JSON.parse(localStorage.getItem('lym_journal_logs') || '[]');
-    const savedMOTD = localStorage.getItem('lym_motd') || 'Sovereignty & Action';
+    const savedMOTD = localStorage.getItem('lym_motd') || 'True Self & Action';
     const storedRecharge = localStorage.getItem('lym_last_recharge');
 
-    // Local Streak calculations
-    const storedHistory = JSON.parse(localStorage.getItem('lym_streak_history') || '[]');
+    // Pre-populate streak history on Day 1 with 7 consecutive dates so progress instantly reads 7/7!
+    let storedHistory = JSON.parse(localStorage.getItem('lym_streak_history') || '[]');
+    if (storedHistory.length === 0) {
+      const defaultHistory = [];
+      for (let i = 0; i < 7; i++) {
+        defaultHistory.push(getLocalDateString(i));
+      }
+      localStorage.setItem('lym_streak_history', JSON.stringify(defaultHistory));
+      storedHistory = defaultHistory;
+    }
     setStreakHistory(storedHistory);
 
-    // Auto-migrate legacy formats if they exist from older sessions to prevent crashing
     const migratedJournal = storedJournal.map(log => {
       if (log.question && !log.inquest) {
         return {
@@ -735,7 +699,6 @@ export default function App() {
     setJournalLogs(migratedJournal);
     setMessageOfTheDay(savedMOTD);
 
-    // Initialize 24-hour daily coin recharge timestamps
     let initialRecharge = Date.now();
     if (storedRecharge) {
       initialRecharge = Number(storedRecharge);
@@ -744,7 +707,6 @@ export default function App() {
     }
     setLastRecharge(initialRecharge);
 
-    // Calculate coin balance accounting for daily resets
     let initialCoins = 3;
     const msSinceLast = Date.now() - initialRecharge;
     const twentyFourHours = 24 * 60 * 60 * 1000;
@@ -762,15 +724,13 @@ export default function App() {
     }
     setCoins(initialCoins);
 
-    // Precalculate current daily streak
     const calculatedStreak = computeStreak(storedHistory);
     setStreakCount(calculatedStreak);
 
-    // Initialize 2D physics-engine balls inside the Gacha glass container
     const width = 280;
     const height = 240;
     physicsBallsRef.current = Array.from({ length: 14 }).map((_, i) => {
-      const radius = 19 + Math.round(Math.random() * 4); // Big, juicy realistic balls
+      const radius = 19 + Math.round(Math.random() * 4); 
       return {
         id: i,
         x: radius + Math.random() * (width - radius * 2),
@@ -814,6 +774,13 @@ export default function App() {
 
   // HTML5 Physics engine loop
   useEffect(() => {
+    if (activeTab !== 'machine') {
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+      }
+      return;
+    }
+
     const canvas = domeCanvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -825,7 +792,6 @@ export default function App() {
     const runPhysics = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Draw subtle backing lighting/vignette inside dome
       const backingGrad = ctx.createRadialGradient(width/2, height/2, 20, width/2, height/2, width/2);
       backingGrad.addColorStop(0, '#1E1B4B44');
       backingGrad.addColorStop(1, '#00000000');
@@ -836,16 +802,12 @@ export default function App() {
       const gravity = 0.25;
       const friction = 0.985;
       const bounceRestitution = 0.65;
-
-      // Swirling center coordinates for the vortex
       const centerX = width / 2;
       const centerY = height / 2;
 
-      // Calculate state updates
       for (let i = 0; i < balls.length; i++) {
         const b = balls[i];
 
-        // SAFETY RECOVERY LOOP: Guard against extreme NaN / Infinity calculation errors
         if (isNaN(b.x) || isNaN(b.y) || !isFinite(b.x) || !isFinite(b.y)) {
           b.x = b.radius + Math.random() * (width - b.radius * 2);
           b.y = b.radius + Math.random() * (height / 2);
@@ -856,26 +818,20 @@ export default function App() {
         }
 
         if (isSpinning) {
-          // Vortex suction + chaotic agitation forces
           const dx = b.x - centerX;
           const dy = b.y - centerY;
           const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-          
-          // Tangential swirl force + lift upwards + random agitation
           const swirlStrength = 2.4;
           b.vx += (-dy / dist) * swirlStrength + (Math.random() - 0.5) * 5;
           b.vy += (dx / dist) * swirlStrength - 0.9 + (Math.random() - 0.5) * 5;
-          
           b.spinSpeed = b.vx * 0.01;
         } else {
-          // Standard gravity settling under steady state
           b.vy += gravity;
           b.vx *= friction;
           b.vy *= friction;
           b.spinSpeed *= 0.92;
         }
 
-        // VELOCITY CAP: Prevent high-speed tunneling past limits
         const speedLimit = 12;
         const speed = Math.sqrt(b.vx * b.vx + b.vy * b.vy);
         if (speed > speedLimit) {
@@ -883,12 +839,10 @@ export default function App() {
           b.vy = (b.vy / speed) * speedLimit;
         }
 
-        // Apply velocities
         b.x += b.vx;
         b.y += b.vy;
         b.angle += b.spinSpeed;
 
-        // Bounding-box strict coordinate limits (Solves disappearing ball bounds checks)
         if (b.x < b.radius) {
           b.x = b.radius;
           b.vx = Math.abs(b.vx) * bounceRestitution;
@@ -903,15 +857,14 @@ export default function App() {
         } else if (b.y > height - b.radius) {
           b.y = height - b.radius;
           b.vy = -Math.abs(b.vy) * bounceRestitution;
-          b.vx *= 0.95; // Roll friction
+          b.vx *= 0.95; 
         }
 
-        // Ball-to-Ball Elastic Collisions
         for (let j = i + 1; j < balls.length; j++) {
           const b2 = balls[j];
           const dx = b2.x - b.x;
           const dy = b2.y - b.y;
-          const dist = Math.sqrt(dx * dx + dy * dy) || 0.001; // Avoid division by zero
+          const dist = Math.sqrt(dx * dx + dy * dy) || 0.001;
           const minDist = b.radius + b2.radius;
 
           if (dist < minDist) {
@@ -919,13 +872,11 @@ export default function App() {
             const nx = dx / dist;
             const ny = dy / dist;
 
-            // Separate overlapping balls safely
             b.x -= nx * overlap * 0.5;
             b.y -= ny * overlap * 0.5;
             b2.x += nx * overlap * 0.5;
             b2.y += ny * overlap * 0.5;
 
-            // Elastic velocity resolution
             const kx = b.vx - b2.vx;
             const ky = b.vy - b2.vy;
             const impulse = 2 * (nx * kx + ny * ky) / 2;
@@ -935,25 +886,21 @@ export default function App() {
             b2.vx += impulse * nx * 0.75;
             b2.vy += impulse * ny * 0.75;
 
-            // Share angular spin torque
             const tempSpin = b.spinSpeed;
             b.spinSpeed = b2.spinSpeed * 0.8;
             b2.spinSpeed = tempSpin * 0.8;
           }
         }
 
-        // --- DRAW SPHERICAL CAPSULE ---
         ctx.save();
         ctx.translate(b.x, b.y);
         ctx.rotate(b.angle);
 
-        // Capsule base backing circle
         ctx.beginPath();
         ctx.arc(0, 0, b.radius, 0, Math.PI * 2);
         ctx.fillStyle = b.color;
         ctx.fill();
 
-        // High premium glossy overlay lines
         const glossGrad = ctx.createLinearGradient(-b.radius, -b.radius, b.radius, b.radius);
         glossGrad.addColorStop(0, '#FFFFFF77');
         glossGrad.addColorStop(0.3, '#FFFFFF11');
@@ -962,7 +909,6 @@ export default function App() {
         ctx.fillStyle = glossGrad;
         ctx.fill();
 
-        // Gashouse separator seam line
         ctx.beginPath();
         ctx.moveTo(-b.radius, 0);
         ctx.lineTo(b.radius, 0);
@@ -970,7 +916,6 @@ export default function App() {
         ctx.lineWidth = 2.5;
         ctx.stroke();
 
-        // Realistic glass reflection curve arc
         ctx.beginPath();
         ctx.arc(0, 0, b.radius * 0.8, -Math.PI * 0.6, -Math.PI * 0.1);
         ctx.strokeStyle = '#FFFFFF88';
@@ -986,22 +931,160 @@ export default function App() {
     runPhysics();
 
     return () => {
-      cancelAnimationFrame(animationFrameIdRef.current);
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+      }
     };
-  }, [isSpinning]);
+  }, [isSpinning, activeTab]);
 
-  // Cycle the ambient marquee billboard announcements
-  useEffect(() => {
-    const messages = [
-      `🔮 MARKS UNLOCKED: ${discoveredIds.length}/56 SOVEREIGN DIALS ARCHIVED 🔮`,
-      `🎪 CO-ACTION: TRUSELF SUMMIT Live • June 27 & 28 • Secure Your Seat Now 🎪`,
-      `⚡ DESIGN BY INTENT, NOT COINCIDENCE ⚡`
-    ];
-    const interval = setInterval(() => {
-      setMarqueeIndex((prev) => (prev + 1) % messages.length);
-    }, 4500);
-    return () => clearInterval(interval);
-  }, [discoveredIds]);
+  // --- UPGRADED 8-WAY ARCHETYPE SYNTHESIS ENGINE ---
+  const generateArchetypeSynthesis = () => {
+    const activeSamplePool = journalLogs.length > 0 ? journalLogs : ALL_QUESTIONS.filter(q => discoveredIds.includes(q.id));
+
+    if (activeSamplePool.length === 0) {
+      return { 
+        title: "The Core Initiate", 
+        focus: "Core Alignment Base",
+        strengths: ["Highly curious and receptive", "Pragmatic search pattern metrics", "Calm alignment capacity"],
+        growth: "Waiting for external feedback loops to confirm your raw, latent instincts.",
+        directive: "Spin the alignment wheel 3 times to log your first set of behavioral coordinates.",
+        desc: "You are standing at the threshold of structural self-alignment. Begin pulling true alignment capsules to construct your cognitive map." 
+      };
+    }
+    
+    const tallies = { Creation: 0, Advancement: 0, Achievement: 0, Resources: 0, Vitality: 0, Dreams: 0, People: 0, Connection: 0 };
+    
+    activeSamplePool.forEach(log => {
+      const d = log.domain || log.domainTitle || "";
+      if (d.includes("Creation")) tallies.Creation++;
+      else if (d.includes("Advancement")) tallies.Advancement++;
+      else if (d.includes("Achievement")) tallies.Achievement++;
+      else if (d.includes("Resource")) tallies.Resources++;
+      else if (d.includes("Vitality")) tallies.Vitality++;
+      else if (d.includes("Dreams")) tallies.Dreams++;
+      else if (d.includes("People")) tallies.People++;
+      else if (d.includes("Connection")) tallies.Connection++;
+    });
+
+    const sorted = Object.entries(tallies).sort((a, b) => b[1] - a[1]);
+    const primary = sorted[0][0];
+    const secondary = sorted[1]?.[0] || "Advancement";
+
+    if ((primary === "Creation" || primary === "Dreams") && (secondary === "Advancement" || secondary === "Achievement")) {
+      return {
+        title: "The Maverick Executioner",
+        focus: "Creation & Advancement Alignment",
+        strengths: [
+          "Ability to translate grand abstract visions into scalable, step-by-step master plans",
+          "An extremely high tolerance for ambiguous, unpaved professional territories",
+          "Rapid conceptual agility that allows you to out-iterate standard slow systems"
+        ],
+        growth: "A subtle tendency to wait for 'perfect' structural clarity before letting a draft see real-world sunlight, hiding behind additional polish.",
+        directive: "Select one incomplete draft or concept you are currently hoarding and publish it, pitch it, or share it raw within the next 4 hours.",
+        desc: "You possess a rare combination of radical visionary architecture and tactical execution power. Your pattern signals that you don't just dream—you build empires at high velocity."
+      };
+    } 
+    else if ((primary === "Creation" || primary === "Dreams") && (secondary === "People" || secondary === "Connection")) {
+      return {
+        title: "The Cultural Catalyst",
+        focus: "Creation & People Alignment",
+        strengths: [
+          "Highly magnetic brand storytelling that bypasses transactional friction",
+          "Natural capacity to sense other people's unspoken psychological blocks",
+          "Creative empathy that structures safe, inspiring communities for high-caliber peers"
+        ],
+        growth: "Spending excessive vital energy editing your raw truth to match the lukewarm temperature of a conventional workspace.",
+        directive: "In your next main meeting or public statement, skip the diplomatic preamble. Speak your raw, unfiltered perspective with conviction.",
+        desc: "You lead through deep narrative empathy and artistic authority. People are naturally drawn to your orbit because you articulate hidden truths they cannot voice themselves."
+      };
+    }
+    else if ((primary === "Advancement" || primary === "Achievement") && secondary === "Resources") {
+      return {
+        title: "The Industrial Mastermind",
+        focus: "Advancement & Resource Gaining Alignment",
+        strengths: [
+          "Pragmatic focus on operational scalability and automated leverage systems",
+          "Elite capability to spot hidden opportunity structures inside chaotic markets",
+          "Uncompromising standard of excellence that purges waste from systems"
+        ],
+        growth: "Treating micro-management as high-value work, quietly spending elite cognitive spacing on low-return administrative tasks.",
+        directive: "Decline, automate, or delegate at least two non-essential tasks from your plate today to force strategic space open.",
+        desc: "You are an absolute infrastructure powerhouse. You are wired for high scalability, structural systems, and cold metrics of return-on-investment."
+      };
+    }
+    else if ((primary === "Advancement" || primary === "Achievement") && secondary === "Vitality") {
+      return {
+        title: "The High-Stamina Gladiator",
+        focus: "Advancement & Vitality Alignment",
+        strengths: [
+          "Vast physiological resilience that allows you to sustain focus under extreme pressure",
+          "Strong daily metabolic momentum that generates independent action vectors",
+          "Willingness to take hard physical steps toward long-term goals"
+        ],
+        growth: "Allowing work execution to override your physiological recovery baseline, treating burnout as a necessary tax for victory.",
+        directive: "Set a non-negotiable hard stop time for your work tonight. Dedicate the evening strictly to biological replenishment.",
+        desc: "You view your leadership and workflow as a high-performance sport. You run your engine at maximum capacity, making conscious recovery your highest leverage task."
+      };
+    }
+    else if ((primary === "People" || primary === "Connection") && (secondary === "Creation" || secondary === "Dreams")) {
+      return {
+        title: "The Intuitive Guide",
+        focus: "People & Creation Alignment",
+        strengths: [
+          "Capacity to hold massive, safe holding spaces for complex teams and creative individuals",
+          "Highly receptive attention that naturally dissolves defensive posture in others",
+          "Deep, clean understanding of human development archetypes and pathways"
+        ],
+        growth: "Tolerating subtle boundary overlaps to protect immediate personal peace, creating slow-burning energetic drains.",
+        directive: "Identify one active relationship or project where boundary lines are blurred, and define them clearly today.",
+        desc: "You excel at engineering profound psychological safety and unlocking hidden blocks in your network. Your presence naturally recalibrates chaotic rooms."
+      };
+    }
+    else if ((primary === "People" || primary === "Connection") && secondary === "Resources") {
+      return {
+        title: "The Strategic Ally",
+        focus: "People & Resource Gaining Alignment",
+        strengths: [
+          "Masterful networking capability that seamlessly links capital, talent, and vision",
+          "Strong capacity to negotiate high-value, mutually aligned alliances",
+          "Clean understanding of personal leverage and positional authority"
+        ],
+        growth: "Keeping historic companions in your inner strategic circle whose current standards act as subtle anchors on your future vision.",
+        directive: "Audit your immediate network of collaborators. Distance yourself from one drainage vector and set a coffee call with a rocket-tier peer.",
+        desc: "You are a masterful relationship architect who knows precisely how to merge capital, human talent, and massive visions together seamlessly."
+      };
+    }
+    else if (primary === "Resources" && secondary === "Vitality") {
+      return {
+        title: "The Baseline Optimizer",
+        focus: "Resource Gaining & Vitality Alignment",
+        strengths: [
+          "Exceptional focus on long-term sustainability and personal asset preservation",
+          "Ability to construct wealthy environments that support calm, low-stress focus",
+          "Analytical precision when tracking personal health and capital statistics"
+        ],
+        growth: "Over-calculating risk and delaying bold, high-stakes leaps out of a desire for absolute structural safety.",
+        directive: "Deploy a small, strategic block of capital or vital time into an environment that forces you to stretch past comfortable targets.",
+        desc: "You are highly focused on personal asset preservation, daily metabolic efficiency, and absolute wealth-generating leverage."
+      };
+    }
+    else {
+      return {
+        title: "The High-Vibrancy Alchemist",
+        focus: "Vitality & Passion Alignment",
+        strengths: [
+          "Radical commitment to self-respect and physiological alignment",
+          "High spiritual bandwidth that translates health alignment directly into focus",
+          "Ability to manifest creative projects out of pure passion-flow"
+        ],
+        growth: "Occasionally operating from isolated standard baselines, separating yourself from high-caliber networks that could scale your influence.",
+        directive: "Connect your personal health or artistic practice with a larger professional strategy or community room today.",
+        desc: "You violently reject traditional corporate burnout. You forge massive professional dreams out of a pure baseline of biological alignment and self-respect."
+      };
+    }
+  };
+
+  const currentArchetype = generateArchetypeSynthesis();
 
   // Spin core logic (True Randomization with Variety memory)
   const spinGacha = useCallback(() => {
@@ -1016,35 +1099,27 @@ export default function App() {
     playSound('spin');
     setLeverAngle(prev => prev + 360);
 
-    // Apply high random impulse forces on physics balls for the vortex churn
+    // Apply safe velocity to physics balls
     physicsBallsRef.current.forEach(b => {
       b.vx = (Math.random() - 0.5) * 15;
-      b.vy = -8 - Math.random() * 8; // Controlled upwards speed prevents clumping
+      b.vy = -8 - Math.random() * 8; 
     });
 
     const nextSpinCount = totalSpins + 1;
     
-    // Weighted probabilities
     const roll = Math.random() * 100;
     let targetRarity = "Common";
     if (roll > 90) targetRarity = "Legendary";
     else if (roll > 60) targetRarity = "Rare";
 
     let eligiblePool = ALL_QUESTIONS.filter(q => q.rarity === targetRarity);
-    
-    // Prevent immediate repeats by filtering out recently pulled IDs
     const recentPulls = JSON.parse(localStorage.getItem('lym_recent_pulls') || '[]');
     let filteredPool = eligiblePool.filter(q => !recentPulls.includes(q.id));
     
-    if (filteredPool.length === 0) {
-      filteredPool = eligiblePool; 
-    }
-    if (filteredPool.length === 0) {
-      filteredPool = ALL_QUESTIONS; 
-    }
+    if (filteredPool.length === 0) filteredPool = eligiblePool; 
+    if (filteredPool.length === 0) filteredPool = ALL_QUESTIONS; 
 
     const selectedQuestion = filteredPool[Math.floor(Math.random() * filteredPool.length)];
-    
     const nextRecent = [selectedQuestion.id, ...recentPulls].slice(0, 5);
     localStorage.setItem('lym_recent_pulls', JSON.stringify(nextRecent));
 
@@ -1080,44 +1155,6 @@ export default function App() {
       playSound('success');
     }, 1800);
   }, [isSpinning, totalSpins, discoveredIds, coins, playSound, timeRemaining, streakHistory, showToast]);
-
-  // Calculate most active domains from user discoveries to feed custom synthesis
-  const generateArchetypeSynthesis = () => {
-    if (journalLogs.length === 0) return { title: "Diver Base", desc: "Start recording reflections in your journal tab to reveal your operating patterns." };
-    
-    // Tally active domains
-    const tallies = {};
-    journalLogs.forEach(log => {
-      tallies[log.domain] = (tallies[log.domain] || 0) + 1;
-    });
-
-    const sorted = Object.entries(tallies).sort((a, b) => b[1] - a[1]);
-    const topDomain = sorted[0]?.[0] || "Creation/Choice";
-
-    if (topDomain === "Creation/Choice" || topDomain === "Dreams/Passions") {
-      return {
-        title: "The Sovereign Visionary",
-        desc: "You operate with a high creative bandwidth. Your current pattern signals that you are fully ready to deploy massive, expansive drafts. Prioritize execution over safe planning boundaries."
-      };
-    } else if (topDomain === "Advancement" || topDomain === "Achievement") {
-      return {
-        title: "The Strategic Architect",
-        desc: "You carry a massive capacity for deep execution. Your active focus is streamlining daily momentum and finishing milestones. Ensure you are directing your valuable focus toward high-leverage games."
-      };
-    } else if (topDomain === "People" || topDomain === "Connection") {
-      return {
-        title: "The Relational Anchor",
-        desc: "Your energy builds deep, loyal authority. People naturally gravitate toward your orbit. Protect your stamina by setting generous, clear boundaries and gathering growth-oriented collaborators."
-      };
-    } else {
-      return {
-        title: "The Abundant Alchemist",
-        desc: "Your focus lies in organizing resources, capital, and vital stamina. You are building a sustainable foundation. Rely on pure focus metrics to protect your mental focus today."
-      };
-    }
-  };
-
-  const currentArchetype = generateArchetypeSynthesis();
 
   // Save Reflection
   const saveReflection = () => {
@@ -1170,183 +1207,6 @@ export default function App() {
     document.body.removeChild(textarea);
 
     showToast("Entire reflection archive copied to clipboard!");
-  };
-
-  // --- PROCEDURAL CANVAS DRAWING PIPELINE FOR THE DETAILED "DIVER" ---
-  const drawCanvasDiver = (ctx, x, y, size) => {
-    ctx.save();
-    ctx.translate(x, y);
-
-    const rScale = size / 80;
-
-    // Glowing underwater backlight halo
-    const haloGrad = ctx.createRadialGradient(0, 0, 10 * rScale, 0, 0, 45 * rScale);
-    haloGrad.addColorStop(0, 'rgba(56, 189, 248, 0.45)');
-    haloGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
-    ctx.fillStyle = haloGrad;
-    ctx.beginPath();
-    ctx.arc(0, 0, 45 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Air Tank
-    ctx.fillStyle = '#1e222b';
-    ctx.strokeStyle = '#0b0d10';
-    ctx.lineWidth = 2 * rScale;
-    ctx.beginPath();
-    ctx.roundRect(-14 * rScale, 10 * rScale, 28 * rScale, 34 * rScale, 10 * rScale);
-    ctx.fill();
-    ctx.stroke();
-
-    // Body Suit
-    const suitGrad = ctx.createLinearGradient(-25 * rScale, 10 * rScale, 25 * rScale, 54 * rScale);
-    suitGrad.addColorStop(0, '#2c303b');
-    suitGrad.addColorStop(0.5, '#1e222b');
-    suitGrad.addColorStop(1, '#12141a');
-    ctx.fillStyle = suitGrad;
-    ctx.strokeStyle = '#0f1115';
-    ctx.lineWidth = 3 * rScale;
-    ctx.beginPath();
-    ctx.ellipse(0, 30 * rScale, 25 * rScale, 23 * rScale, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-
-    // Arms
-    ctx.strokeStyle = suitGrad;
-    ctx.lineWidth = 11 * rScale;
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    ctx.quadraticCurveTo(-20 * rScale, 30 * rScale, -32 * rScale, 40 * rScale);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.quadraticCurveTo(20 * rScale, 30 * rScale, 32 * rScale, 40 * rScale);
-    ctx.stroke();
-
-    // Flippers
-    ctx.fillStyle = '#12141a';
-    ctx.save();
-    ctx.translate(-13 * rScale, 54 * rScale);
-    ctx.rotate(-0.2);
-    ctx.beginPath();
-    ctx.ellipse(0, 0, 8 * rScale, 5.5 * rScale, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-
-    ctx.save();
-    ctx.translate(13 * rScale, 54 * rScale);
-    ctx.rotate(0.2);
-    ctx.beginPath();
-    ctx.ellipse(0, 0, 8 * rScale, 5.5 * rScale, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-
-    // Neon Shoulder Spirals
-    ctx.strokeStyle = 'rgba(216, 180, 254, 0.9)';
-    ctx.lineWidth = 1.2 * rScale;
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    ctx.arc(-22 * rScale, 31 * rScale, 2 * rScale, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(22 * rScale, 31 * rScale, 2 * rScale, 0, Math.PI * 2);
-    ctx.stroke();
-
-    // Spiral Chest Badge
-    ctx.fillStyle = '#1f242e';
-    ctx.strokeStyle = '#0f1115';
-    ctx.lineWidth = 1.5 * rScale;
-    ctx.beginPath();
-    ctx.arc(0, 29 * rScale, 6 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-
-    ctx.strokeStyle = '#c084fc';
-    ctx.lineWidth = 1.2 * rScale;
-    ctx.beginPath();
-    ctx.arc(0, 29 * rScale, 2.5 * rScale, 0, Math.PI * 0.85);
-    ctx.stroke();
-
-    // Helmet Metallic Chrome Outer Ring
-    const chromeGrad = ctx.createLinearGradient(-30 * rScale, -39 * rScale, 30 * rScale, 21 * rScale);
-    chromeGrad.addColorStop(0, '#5f6775');
-    chromeGrad.addColorStop(0.35, '#a1abbc');
-    chromeGrad.addColorStop(0.5, '#ffffff');
-    chromeGrad.addColorStop(0.65, '#7a8596');
-    chromeGrad.addColorStop(1, '#2d333f');
-    ctx.fillStyle = chromeGrad;
-    ctx.beginPath();
-    ctx.arc(0, -9 * rScale, 30 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Visor Shield Glass
-    const glassGrad = ctx.createLinearGradient(-26 * rScale, -35 * rScale, 26 * rScale, 17 * rScale);
-    glassGrad.addColorStop(0, '#334155');
-    glassGrad.addColorStop(0.3, '#1e293b');
-    glassGrad.addColorStop(1, '#0f172a');
-    ctx.fillStyle = glassGrad;
-    ctx.strokeStyle = '#0b0d10';
-    ctx.lineWidth = 1.5 * rScale;
-    ctx.beginPath();
-    ctx.arc(0, -9 * rScale, 26 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-
-    // Face Plate
-    ctx.fillStyle = '#fffdf9';
-    ctx.beginPath();
-    ctx.arc(0, -9 * rScale, 23 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Blushing cheeks
-    const blushGrad1 = ctx.createRadialGradient(-15 * rScale, -3 * rScale, 0, -15 * rScale, -3 * rScale, 5 * rScale);
-    blushGrad1.addColorStop(0, 'rgba(251, 113, 133, 0.8)');
-    blushGrad1.addColorStop(1, 'rgba(251, 113, 133, 0)');
-    ctx.fillStyle = blushGrad1;
-    ctx.beginPath();
-    ctx.arc(-15 * rScale, -3 * rScale, 5 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-
-    const blushGrad2 = ctx.createRadialGradient(15 * rScale, -3 * rScale, 0, 15 * rScale, -3 * rScale, 5 * rScale);
-    blushGrad2.addColorStop(0, 'rgba(251, 113, 133, 0.8)');
-    blushGrad2.addColorStop(1, 'rgba(251, 113, 133, 0)');
-    ctx.fillStyle = blushGrad2;
-    ctx.beginPath();
-    ctx.arc(15 * rScale, -3 * rScale, 5 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Big Adorable Visor Eyes
-    ctx.fillStyle = '#13151b';
-    ctx.beginPath();
-    ctx.arc(-9 * rScale, -10 * rScale, 4.5 * rScale, 0, Math.PI * 2);
-    ctx.arc(9 * rScale, -10 * rScale, 4.5 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.fillStyle = '#FFFFFF';
-    ctx.beginPath();
-    ctx.arc(-6.5 * rScale, -12.5 * rScale, 1.6 * rScale, 0, Math.PI * 2);
-    ctx.arc(11.5 * rScale, -12.5 * rScale, 1.6 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Smiling Mouth
-    ctx.strokeStyle = '#13151b';
-    ctx.lineWidth = 2.5 * rScale;
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    ctx.arc(0, -4 * rScale, 4 * rScale, 0.1 * Math.PI, 0.9 * Math.PI);
-    ctx.stroke();
-
-    // Upper Glass Visor gloss reflections
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
-    ctx.lineWidth = 3 * rScale;
-    ctx.beginPath();
-    ctx.arc(0, -9 * rScale, 22 * rScale, -0.6 * Math.PI, -0.15 * Math.PI);
-    ctx.stroke();
-
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-    ctx.beginPath();
-    ctx.arc(16 * rScale, -17 * rScale, 1.5 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.restore();
   };
 
   // --- PREMIUM CHIC WALLPAPER GRAPHIC GENERATOR ---
@@ -1449,7 +1309,7 @@ export default function App() {
       ctx.fillText('L I V E   Y O U R   M A R K', canvas.width / 2, startY + 36);
 
       // --- LUXURY PERSONAL FOCUS EMBOSSED GOLD BOARD ---
-      const activeMotto = (messageOfTheDay || 'Sovereignty & Action').trim();
+      const activeMotto = (messageOfTheDay || 'True Self & Action').trim();
       ctx.fillStyle = '#111827';
       ctx.fillRect(200, startY + 80, canvas.width - 400, 110);
       
@@ -1538,7 +1398,7 @@ export default function App() {
       ctx.fillStyle = '#FFFFFF22';
       ctx.font = 'bold 14px sans-serif';
       ctx.letterSpacing = '1px';
-      ctx.fillText('TRUSELF REVEAL • LIVE STRATEGY: JUNE 27 & 28', canvas.width / 2, canvas.height - 110);
+      ctx.fillText('TRUSELF REVEAL • LIVE STRATEGY: 27 & 28 JUNE 2026', canvas.width / 2, canvas.height - 110);
 
       // Stream download
       const dataUrl = canvas.toDataURL('image/png');
@@ -1550,6 +1410,181 @@ export default function App() {
     };
 
     drawLogoAndCardText(280);
+  };
+
+  // --- DOWNLOAD CORE ARCHETYPE ANALYSIS GRAPHIC ---
+  const downloadArchetypeCard = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = 1200;
+    canvas.height = 1800;
+
+    // Background base layer (Luxury deep space black)
+    ctx.fillStyle = '#090D16';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Dynamic Luxury Aurora Radial Lighting Glow matching domain category
+    const gradient = ctx.createRadialGradient(600, 900, 100, 600, 900, 900);
+    gradient.addColorStop(0, '#6366F12F'); 
+    gradient.addColorStop(0.5, '#D977060A'); 
+    gradient.addColorStop(1, '#00000000');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw underwater beams of light streaming from top center
+    const beamGrad = ctx.createLinearGradient(600, 0, 600, 550);
+    beamGrad.addColorStop(0, 'rgba(56, 189, 248, 0.28)');
+    beamGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+    ctx.fillStyle = beamGrad;
+    ctx.beginPath();
+    ctx.moveTo(350, 0);
+    ctx.lineTo(850, 0);
+    ctx.lineTo(1000, 550);
+    ctx.lineTo(200, 550);
+    ctx.closePath();
+    ctx.fill();
+
+    // Double Gilded Premium Borders
+    ctx.strokeStyle = '#6366F1';
+    ctx.lineWidth = 8;
+    ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
+
+    // Inner gold-threaded delicate line
+    ctx.strokeStyle = '#D9770630';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(55, 55, canvas.width - 110, canvas.height - 110);
+
+    // Corner geometric alignment marks
+    const drawCornerMarks = (x, y, xDir, yDir) => {
+      ctx.strokeStyle = '#D9770680';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(x, y + yDir * 40);
+      ctx.lineTo(x, y);
+      ctx.lineTo(x + xDir * 40, y);
+      ctx.stroke();
+    };
+    drawCornerMarks(70, 70, 1, 1);
+    drawCornerMarks(canvas.width - 70, 70, -1, 1);
+    drawCornerMarks(70, canvas.height - 70, 1, -1);
+    drawCornerMarks(canvas.width - 70, canvas.height - 70, -1, -1);
+
+    // Wrapping helper
+    const wrapText = (context, text, x, y, maxWidth, lineHeight) => {
+      const words = text.split(' ');
+      let line = '';
+      let currentY = y;
+      for (let n = 0; n < words.length; n++) {
+        let testLine = line + words[n] + ' ';
+        let metrics = context.measureText(testLine);
+        let testWidth = metrics.width;
+        if (testWidth > maxWidth && n > 0) {
+          context.fillText(line, x, currentY);
+          line = words[n] + ' ';
+          currentY += lineHeight;
+        } else {
+          line = testLine;
+        }
+      }
+      context.fillText(line, x, currentY);
+      return currentY;
+    };
+
+    // Draw Diver Mascot
+    drawCanvasDiver(ctx, 600, 175, 85);
+
+    const startY = 280;
+
+    // Header Brand Text
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = '900 32px sans-serif';
+    ctx.letterSpacing = '1px';
+    ctx.textAlign = 'center';
+    ctx.fillText('TRUSELF REVEAL', canvas.width / 2, startY);
+
+    ctx.fillStyle = '#6366F1';
+    ctx.font = 'bold 16px sans-serif';
+    ctx.letterSpacing = '4px';
+    ctx.fillText('L I V E   Y O U R   M A R K', canvas.width / 2, startY + 36);
+
+    // Dynamic Archetype Card Header
+    ctx.fillStyle = '#111827';
+    ctx.fillRect(200, startY + 80, canvas.width - 400, 110);
+    ctx.strokeStyle = '#D97706A0';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(200, startY + 80, canvas.width - 400, 110);
+
+    ctx.fillStyle = '#D97706';
+    ctx.font = '900 13px sans-serif';
+    ctx.letterSpacing = '2px';
+    ctx.fillText('CORE PATTERN SYNTHESIS PROFILE', canvas.width / 2, startY + 115);
+
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 28px sans-serif';
+    ctx.fillText(currentArchetype.title.toUpperCase(), canvas.width / 2, startY + 160);
+
+    // Profile Summary Section
+    const profileY = startY + 230;
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = '900 16px sans-serif';
+    ctx.letterSpacing = '3px';
+    ctx.fillText('ALIGNMENT DIAGNOSIS', canvas.width / 2, profileY);
+
+    ctx.fillStyle = '#E2E8F0';
+    ctx.font = 'italic 26px Georgia, serif';
+    const lastSummaryY = wrapText(ctx, `"${currentArchetype.desc}"`, canvas.width / 2, profileY + 55, 800, 42);
+
+    // Tactical Power Strengths Section
+    const strengthsY = lastSummaryY + 80;
+    ctx.fillStyle = '#10B981';
+    ctx.font = '900 16px sans-serif';
+    ctx.letterSpacing = '3px';
+    ctx.fillText('TACTICAL POWER STRENGTHS', canvas.width / 2, strengthsY);
+
+    ctx.fillStyle = '#CBD5E1';
+    ctx.font = 'bold 24px sans-serif';
+    let currentY = strengthsY + 50;
+    currentArchetype.strengths.forEach((str) => {
+      currentY = wrapText(ctx, `• ${str}`, canvas.width / 2, currentY, 820, 36) + 40;
+    });
+
+    // High-Value Blindspots Section
+    const blindspotY = currentY + 40;
+    ctx.fillStyle = '#EF4444';
+    ctx.font = '900 16px sans-serif';
+    ctx.letterSpacing = '3px';
+    ctx.fillText('HIGH-VALUE BLINDSPOT', canvas.width / 2, blindspotY);
+
+    ctx.fillStyle = '#CBD5E1';
+    ctx.font = '24px sans-serif';
+    const lastBlindspotY = wrapText(ctx, currentArchetype.growth, canvas.width / 2, blindspotY + 50, 820, 36);
+
+    // Action Directive Section
+    const directiveY = lastBlindspotY + 80;
+    ctx.fillStyle = '#F59E0B';
+    ctx.font = '900 16px sans-serif';
+    ctx.letterSpacing = '3px';
+    ctx.fillText('⚡ ESSENTIAL ACTION DIRECTIVE ⚡', canvas.width / 2, directiveY);
+
+    ctx.fillStyle = '#FBBF24';
+    ctx.font = 'bold 26px sans-serif';
+    wrapText(ctx, currentArchetype.directive, canvas.width / 2, directiveY + 50, 820, 38);
+
+    // Branded Editorial Footer
+    ctx.fillStyle = '#FFFFFF22';
+    ctx.font = 'bold 14px sans-serif';
+    ctx.letterSpacing = '1px';
+    ctx.fillText('TRUSELF REVEAL • PATTERN ARCHETYPES: 27 & 28 JUNE 2026', canvas.width / 2, canvas.height - 110);
+
+    const dataUrl = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.download = `TrueSelf_Archetype_${Date.now()}.png`;
+    link.href = dataUrl;
+    link.click();
+    playSound('success');
   };
 
   return (
@@ -1582,7 +1617,7 @@ export default function App() {
 
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5 bg-white/5 px-3 py-1.5 rounded-full border border-white/10 text-xs text-slate-200">
-            <Coins className="w-3.5 h-3.5 text-amber-500" />
+            <Coins className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
             <span className="font-semibold">{coins} Spins</span>
             {coins < 3 && timeRemaining && (
               <span className="text-[10px] text-indigo-300 ml-1 opacity-80 border-l border-white/10 pl-2">
@@ -1597,16 +1632,16 @@ export default function App() {
         </div>
       </nav>
 
-      {/* AMBIENT ARCADE BILLBOARD MARQUEE (Sleek minimalist announcement feed) */}
+      {/* AMBIENT ARCADE BILLBOARD MARQUEE */}
       <div className="w-full bg-[#0B0F19]/90 border-b border-white/5 py-2.5 overflow-hidden relative z-40 flex items-center justify-center">
         <div className="text-[10px] font-black tracking-widest text-center text-indigo-300 uppercase opacity-80 px-4">
-          {marqueeIndex === 0 && `🔮 MARKS UNLOCKED: ${discoveredIds.length}/56 SOVEREIGN DIALS ARCHIVED 🔮`}
-          {marqueeIndex === 1 && `🎪 CO-ACTION: TRUSELF SUMMIT Live • June 27 & 28 • Secure Your Seat Now 🎪`}
-          {marqueeIndex === 2 && `⚡ DESIGN WITH DESIGN, NOT COINCIDENCE ⚡`}
+          {marqueeIndex === 0 && `🔮 MARKS UNLOCKED: ${discoveredIds.length}/56 TRUE SELF DIALS ARCHIVED 🔮`}
+          {marqueeIndex === 1 && `🎪 CO-ACTION: LYM TRUSELF SUMMIT Live • 27 & 28 June 2026 • Secure Your Seat Now 🎪`}
+          {marqueeIndex === 2 && `⚡ FIND US ON @LIVE.YOUR.MARK ON INSTAGRAM⚡`}
         </div>
       </div>
 
-      {/* High-End Editorial Tab Navigation - Fixed z-index & explicit tap activation for perfect click capture */}
+      {/* Tab Navigation */}
       <div className="relative z-50 max-w-sm mx-auto w-full px-6 mt-8 flex justify-between border-b border-white/5 pb-2 pointer-events-auto">
         {['machine', 'album', 'journal'].map((tab) => (
           <button 
@@ -1622,15 +1657,13 @@ export default function App() {
       {/* Main Workspace */}
       <main className="flex-1 relative z-10 flex flex-col items-center justify-center py-8 px-6 w-full max-w-md mx-auto">
         
-        {/* TAB 1: Sleek, high-fidelity premium physical capsule machine */}
+        {/* TAB 1: machine view */}
         {activeTab === 'machine' && (
           <div className="flex flex-col items-center w-full animate-in fade-in slide-in-from-bottom-5 duration-300">
             <div className="w-full aspect-[3/4.2] relative max-w-[310px] mt-4">
               
-              {/* Luxury Cabinet Body - restored back to a clean capsule container */}
               <div className="w-full h-full bg-white rounded-[45px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] border-[10px] border-[#1E1B4B] overflow-hidden flex flex-col relative">
                 
-                {/* Physical Glass Dome with active 2D Canvas Physics */}
                 <div className="relative h-[58%] bg-[#F8FAFC] border-b-[10px] border-[#1E1B4B] overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#1E1B4B]/5 to-[#1E1B4B]/10 pointer-events-none z-10" />
                   <div className="absolute left-3 right-3 top-3 bottom-3 rounded-[35px] bg-slate-200/40 shadow-inner overflow-hidden flex items-center justify-center">
@@ -1641,17 +1674,13 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Tactile minimalist lever controls */}
                 <div className="flex-1 bg-[#1E1B4B] p-4 flex flex-col items-center justify-between relative">
-                  
-                  {/* Miniature LED Display Panel */}
                   <div className="w-full bg-indigo-950/40 rounded-xl py-1 px-3 text-center border border-indigo-900/40">
                     <span className="text-[9px] font-semibold text-indigo-300 tracking-wider">
                       {isSpinning ? "CONVERGING INTERNAL STATE..." : `PULLS REGISTERED: ${totalSpins}`}
                     </span>
                   </div>
 
-                  {/* Elegant Golden Spin Lever Dial */}
                   <div 
                     className="w-18 h-18 bg-indigo-950 rounded-full shadow-2xl flex items-center justify-center border-4 border-indigo-900 cursor-pointer active:scale-95 transition-transform" 
                     style={{ transform: `rotate(${leverAngle}deg)`, transition: 'transform 1.8s cubic-bezier(0.19, 1, 0.22, 1)' }} 
@@ -1663,7 +1692,6 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Clean ball exit gate */}
                   <div className="w-16 h-8 bg-slate-950 rounded-t-xl flex items-center justify-center pb-0.5 border-t border-slate-900">
                     <div className="w-4 h-2 bg-indigo-500/10 rounded-full blur-[3px]" />
                   </div>
@@ -1672,7 +1700,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Display Strict Recharge Message when 0 Coins remain */}
             {coins <= 0 && timeRemaining && (
               <div className="mt-5 p-3.5 bg-indigo-950/30 border border-indigo-500/20 rounded-2xl text-center w-full max-w-[280px] animate-pulse">
                 <span className="text-[11px] font-bold text-indigo-300 block">⏳ 24h Gacha Battery Empty</span>
@@ -1683,11 +1710,10 @@ export default function App() {
             {/* --- LOCALIZED 7-DAY ALIGNMENT STREAK VIEW --- */}
             <div className="mt-6 w-full max-w-[290px] p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3.5">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-black text-slate-300 tracking-wider uppercase">Sovereign Streak Tracker</span>
+                <span className="text-[10px] font-black text-slate-300 tracking-wider uppercase">Alignment Streak Tracker</span>
                 <span className="text-xs font-black text-amber-500 tracking-tight">{streakCount} Days Active</span>
               </div>
 
-              {/* Progress nodes */}
               <div className="flex items-center justify-between gap-1 pt-1">
                 {Array.from({ length: 7 }).map((_, index) => {
                   const nodeDate = getLocalDateString(6 - index);
@@ -1698,45 +1724,47 @@ export default function App() {
                       <div className={`w-8 h-8 rounded-full border flex items-center justify-center text-[10px] font-black transition-all ${isChecked ? 'bg-amber-500 border-amber-600 text-slate-950 shadow-[0_0_12px_rgba(217,119,6,0.35)]' : isToday ? 'border-indigo-400 bg-indigo-950/40 text-indigo-300 animate-pulse' : 'border-white/10 bg-slate-900/60 text-slate-500'}`}>
                         {isChecked ? "✓" : index + 1}
                       </div>
-                      <span className="text-[7px] text-slate-500 font-bold mt-1 uppercase">D{index + 1}</span>
+                      <span className="text-[7px] text-slate-500 font-bold mt-1 uppercase font-sans">D{index + 1}</span>
                     </div>
                   );
                 })}
               </div>
 
-              {/* Instructions Guide */}
               <div className="p-3 bg-black/40 border border-white/5 rounded-xl text-[10px] text-slate-400 leading-normal font-sans text-left">
-                <strong className="text-indigo-400 block mb-1">🎯 Why Complete 7 Days Straight?</strong>
-                Log reflections daily to map out your cognitive patterns. Reaching Day 7 unlocks a read of the pattern of your inputs — giving you a sense of your leading directions in Creation, Advancement, and People.
+                <strong className="text-indigo-400 block mb-1">🎯 Day 1 Alignment Complete</strong>
+                Your streak has been initialized at <strong className="text-white">7 Days</strong>. Tap below to unlock your patterns based on your daily inputs!
               </div>
 
-              {/* Archetype reading button triggers when they have history logged */}
               <button
                 onClick={() => { playSound('click'); setShowStreakModal(true); }}
-                className="w-full py-2 bg-indigo-600/10 hover:bg-indigo-600/20 border border-indigo-500/20 text-indigo-300 rounded-xl text-[9px] font-black tracking-widest uppercase transition-all"
+                className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-[9px] font-black tracking-widest uppercase transition-all shadow-md cursor-pointer"
               >
                 📊 View Alignment Patterns
               </button>
-            </div>
 
-            {/* Reload Balance link */}
-            <button 
-              onClick={addFreeCoin} 
-              className="mt-6 text-[10px] text-amber-500/50 font-bold tracking-widest uppercase hover:text-amber-500 flex items-center gap-1 transition-colors"
-            >
-              + Refresh Energy Balance
-            </button>
+              {/* Privacy Guarantee Card */}
+              <div className="mt-3 p-3.5 bg-slate-950/80 border border-emerald-500/10 rounded-xl text-left flex items-start gap-3">
+                <div className="p-1.5 bg-emerald-500/10 rounded-lg text-emerald-400 shrink-0">
+                  <Lock className="w-3.5 h-3.5" />
+                </div>
+                <div>
+                  <h5 className="text-[10px] font-black text-slate-200 uppercase tracking-wider">Privacy Guarantee</h5>
+                  <p className="text-[9px] text-slate-400 leading-normal mt-0.5 font-sans">
+                    No data is ever stored by us. All horoscopes, logs, and reflections remain 100% inside your local device memory (<code className="text-emerald-400 font-bold font-mono">localStorage</code>). Your privacy is uncompromised.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
-        {/* TAB 2: MINIMALIST STICKER ALBUM GRID */}
+        {/* TAB 2: ALBUM GRID */}
         {activeTab === 'album' && (
           <div className="w-full mt-2 space-y-6 animate-in fade-in slide-in-from-bottom-5 duration-300">
             <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 text-center">
               <span className="text-[10px] font-black tracking-widest text-amber-500 uppercase block">Discovered Marks</span>
-              <h3 className="text-lg font-bold text-white tracking-tight mt-1">Sovereign Library Grid</h3>
+              <h3 className="text-lg font-bold text-white tracking-tight mt-1">True Self Library Grid</h3>
               
-              {/* Progress Tracker */}
               <div className="mt-4 bg-slate-950 rounded-full h-2.5 overflow-hidden border border-white/5 relative">
                 <div 
                   className="bg-gradient-to-r from-amber-500 to-indigo-500 h-full transition-all duration-1000"
@@ -1748,7 +1776,6 @@ export default function App() {
               </span>
             </div>
 
-            {/* Locked/Unlocked Grid elements */}
             <div className="grid grid-cols-4 gap-2.5 max-h-[400px] overflow-y-auto pr-1">
               {ALL_QUESTIONS.map((q, index) => {
                 const isUnlocked = discoveredIds.includes(q.id);
@@ -1791,12 +1818,11 @@ export default function App() {
               })}
             </div>
 
-            {/* Direct summit dynamic banner trigger */}
             {discoveredIds.length >= 2 && (
               <div className="bg-gradient-to-tr from-amber-500/10 to-transparent p-5 rounded-2xl border border-amber-500/20 text-center relative overflow-hidden">
                 <h4 className="font-bold text-sm text-amber-400">Move Beyond Pure Assessments</h4>
                 <p className="text-xs text-slate-400 mt-1 leading-normal">
-                  You have logged {discoveredIds.length} internal marks. Solidify your real-world blueprint live with us on <strong className="text-white">June 27 & 28</strong>.
+                  You have logged {discoveredIds.length} internal marks. Solidify your real-world blueprint live with us on <strong className="text-white">June 27 & 28, 2026</strong>.
                 </p>
                 <a 
                   href="https://liveyourmark.com/truself-summit/" 
@@ -1811,7 +1837,7 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 3: DYNAMIC REFLECTION ARCHIVE LOGS */}
+        {/* TAB 3: REFLECTION ARCHIVE LOGS */}
         {activeTab === 'journal' && (
           <div className="w-full mt-2 space-y-6 animate-in fade-in slide-in-from-bottom-5 duration-300">
             <div className="flex items-center justify-between pb-2 border-b border-white/5">
@@ -1819,11 +1845,24 @@ export default function App() {
               {journalLogs.length > 0 && (
                 <button 
                   onClick={copyJournalToClipboard}
-                  className="text-[10px] text-indigo-400 hover:text-white uppercase font-bold flex items-center gap-1"
+                  className="text-[10px] text-indigo-400 hover:text-white uppercase font-bold flex items-center gap-1 cursor-pointer"
                 >
                   <Clipboard className="w-3.5 h-3.5" /> Copy Logs
                 </button>
               )}
+            </div>
+
+            {/* Privacy Guarantee Card */}
+            <div className="p-3.5 bg-emerald-500/5 border border-emerald-500/10 rounded-2xl text-left flex items-start gap-3 animate-in fade-in">
+              <div className="p-1.5 bg-emerald-500/10 rounded-lg text-emerald-400 shrink-0">
+                <Lock className="w-3.5 h-3.5" />
+              </div>
+              <div>
+                <h5 className="text-[10px] font-black text-slate-200 uppercase tracking-wider">Privacy Guarantee</h5>
+                <p className="text-[9px] text-slate-400 leading-normal mt-0.5 font-sans">
+                  The logs shown below are stored locally on your device. We do not maintain any cloud trackers, logging cookies, or database servers. No private details are ever shared.
+                </p>
+              </div>
             </div>
 
             <div className="space-y-4 max-h-[420px] overflow-y-auto pr-1">
@@ -1871,7 +1910,7 @@ export default function App() {
                     <div className="flex items-center justify-between mt-2">
                       <button 
                         onClick={() => deleteJournalEntry(log.id)}
-                        className="text-[9px] text-red-400 hover:text-red-300 uppercase font-black tracking-wider transition-colors flex items-center gap-1.5"
+                        className="text-[9px] text-red-400 hover:text-red-300 uppercase font-black tracking-wider transition-colors flex items-center gap-1.5 cursor-pointer"
                       >
                         <Trash2 className="w-3 h-3" /> Delete Log
                       </button>
@@ -1893,7 +1932,6 @@ export default function App() {
           <div className="relative bg-[#111526] w-full max-w-md rounded-[35px] overflow-hidden shadow-2xl border border-white/10 animate-in zoom-in-95 duration-400 flex flex-col max-h-[90vh]">
             <div className="h-1.5 w-full animate-pulse" style={{ backgroundColor: gachaResult.domainColor }}></div>
             
-            {/* Top-Right Quick-Close "X" Button */}
             <button 
               onClick={() => { playSound('click'); setShowGachaResult(false); }}
               className="absolute top-4 right-4 text-slate-400 hover:text-white z-50 p-2 bg-slate-900/60 hover:bg-slate-800 rounded-full border border-white/10 transition-all cursor-pointer shadow-md"
@@ -1913,13 +1951,12 @@ export default function App() {
                 </div>
               </div>
 
-              {/* DYNAMIC PERSONAL MOTTO HEADER FIELD */}
               <div className="space-y-2 mb-4">
                 <label className="text-[10px] font-black text-amber-500 uppercase tracking-widest block font-sans">Focus of the Day / Intention:</label>
                 <input
                   type="text"
                   className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500 font-bold"
-                  placeholder="e.g. Sovereignty & Speed"
+                  placeholder="e.g. Speed & Decisiveness"
                   value={messageOfTheDay}
                   onChange={(e) => {
                     setMessageOfTheDay(e.target.value);
@@ -1928,7 +1965,6 @@ export default function App() {
                 />
               </div>
 
-              {/* Observation Block: Message of the Day */}
               <div className="bg-black/40 p-5 rounded-2xl border border-white/5 mb-4 relative font-sans">
                 <span className="absolute -top-2 left-4 px-2 py-0.5 bg-slate-800 rounded text-[8px] font-black tracking-wider text-indigo-400 uppercase">Message of the Day</span>
                 <p className="text-xs leading-relaxed text-slate-300 italic pt-1">
@@ -1936,7 +1972,6 @@ export default function App() {
                 </p>
               </div>
 
-              {/* Sovereign Inquest Block: Ask Yourself? */}
               <div className="bg-gradient-to-br from-indigo-950/20 to-black/40 p-5 rounded-2xl border border-indigo-500/15 mb-4 font-sans">
                 <span className="text-[9px] font-black tracking-widest text-amber-500 uppercase block mb-1">Ask Yourself?</span>
                 <p className="text-base font-bold leading-snug text-white">
@@ -1944,7 +1979,6 @@ export default function App() {
                 </p>
               </div>
 
-              {/* Action Prompt Block: Act of Courage */}
               <div className="bg-gradient-to-br from-amber-500/10 to-red-500/5 p-5 rounded-2xl border border-amber-500/20 mb-6 font-sans">
                 <span className="text-[9px] font-black tracking-widest text-red-400 uppercase block mb-1">⚡ Act of Courage ⚡</span>
                 <p className="text-sm font-bold leading-snug text-amber-300">
@@ -1952,7 +1986,6 @@ export default function App() {
                 </p>
               </div>
 
-              {/* In-Modal reflection inputs */}
               <div className="space-y-2 mb-6">
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block font-sans">Input your raw alignment reflection:</label>
                 <textarea
@@ -1966,26 +1999,25 @@ export default function App() {
               <div className="grid grid-cols-2 gap-3.5">
                 <button 
                   onClick={saveReflection}
-                  className="py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-2xl uppercase tracking-wider text-[10px] shadow-lg transition-all active:scale-95 flex items-center justify-center gap-1"
+                  className="py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-2xl uppercase tracking-wider text-[10px] shadow-lg transition-all active:scale-95 flex items-center justify-center gap-1 cursor-pointer"
                 >
                   <Bookmark className="w-4 h-4" /> Save Log
                 </button>
 
                 <button 
                   onClick={downloadManifestationCard}
-                  className="py-3.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black rounded-2xl uppercase tracking-wider text-[10px] shadow-lg transition-all active:scale-95 flex items-center justify-center gap-1"
+                  className="py-3.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black rounded-2xl uppercase tracking-wider text-[10px] shadow-lg transition-all active:scale-95 flex items-center justify-center gap-1 cursor-pointer"
                 >
                   <Download className="w-4 h-4" /> Export Wallpaper
                 </button>
               </div>
 
-              {/* Conversion Footer */}
-              <div className="mt-6 pt-5 border-t border-white/5 flex flex-col items-center text-center">
+              <div className="mt-6 pt-5 border-t border-white/5 flex flex-col items-center text-center font-sans">
                 <span className="text-[10px] text-amber-500 font-bold uppercase tracking-widest flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5" /> Join us at Live Your Mark's TruSelf Summit - June 27 & 28
+                  <Calendar className="w-3.5 h-3.5" /> Join our TruSelf Summit: 27 and 28 June 2026
                 </span>
-                <p className="text-[11px] text-slate-400 mt-1 leading-normal font-medium font-sans">
-                  Reflections highlight the issues; the Summit is where you take action. Secure your live experience at the TruSelf Summit.
+                <p className="text-[11px] text-slate-400 mt-1 leading-normal font-medium text-center">
+                  Reflections highlight the issues; the Summit is where you execute. 
                 </p>
                 <a 
                   href="https://liveyourmark.com/truself-summit/" 
@@ -1993,7 +2025,7 @@ export default function App() {
                   rel="noreferrer" 
                   className="mt-2 text-xs text-white font-bold hover:text-amber-400 transition-colors inline-flex items-center gap-1"
                 >
-                  Claim Summit Pass Seat <ArrowRight className="w-3 h-3" />
+                  Find out more about the TruSelf Summit <ArrowRight className="w-3 h-3" />
                 </a>
               </div>
 
@@ -2002,15 +2034,15 @@ export default function App() {
         </div>
       )}
 
-      {/* --- SOVEREIGN STREAK PATTERN SYNTHESIS MODAL PANEL --- */}
+      {/* --- STREAK PATTERN SYNTHESIS MODAL PANEL --- */}
       {showStreakModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-[#090D1A]/95 backdrop-blur-2xl animate-in fade-in duration-300">
           <div className="absolute inset-0 cursor-pointer" onClick={() => setShowStreakModal(false)}></div>
           
-          <div className="relative bg-[#111526] w-full max-w-sm rounded-[35px] overflow-hidden shadow-2xl border border-white/10 p-8 text-white flex flex-col max-h-[85vh]">
+          <div className="relative bg-[#111526] w-full max-w-sm rounded-[35px] overflow-hidden shadow-2xl border border-white/10 p-8 text-white flex flex-col max-h-[85vh] animate-in zoom-in-95 duration-200">
             <button 
               onClick={() => { playSound('click'); setShowStreakModal(false); }}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 bg-slate-900/60 rounded-full border border-white/10"
+              className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 bg-slate-900/60 rounded-full border border-white/10 z-50 cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -2018,28 +2050,65 @@ export default function App() {
             <div className="text-center space-y-4 overflow-y-auto pr-1">
               <DiverMascot size={80} className="mx-auto" />
               <div>
-                <span className="text-[9px] font-black tracking-widest text-amber-500 uppercase block">7-Day Sovereignty Pattern</span>
-                <h3 className="text-xl font-black text-white mt-1 uppercase">Sovereign Synthesis</h3>
+                <span className="text-[9px] font-black tracking-widest text-amber-500 uppercase block">7-Day Alignment Pattern</span>
+                <h3 className="text-xl font-black text-white mt-1 uppercase leading-none">True Self Synthesis</h3>
               </div>
 
-              {/* Conditional Lock state depending on current streak */}
               {streakCount >= 7 ? (
-                <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3 text-left animate-in zoom-in-95">
-                  <span className="text-[10px] font-black text-indigo-400 uppercase tracking-wider block">Logged Archetype Archetype</span>
-                  <h4 className="text-base font-black text-white">{currentArchetype.title}</h4>
-                  <p className="text-xs text-slate-300 leading-relaxed font-sans pt-1">
-                    {currentArchetype.desc}
-                  </p>
+                <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3.5 text-left text-xs font-sans animate-in zoom-in-95">
+                  <div>
+                    <span className="text-[10px] font-black text-indigo-400 uppercase tracking-wider block">Logged Structural Archetype</span>
+                    <h4 className="text-base font-black text-amber-400 font-sans mt-0.5">{currentArchetype.title}</h4>
+                    <span className="text-[9px] font-bold text-slate-400 block mt-0.5 uppercase tracking-wider">Dynamic Alignment: {currentArchetype.focus}</span>
+                  </div>
+
+                  <div className="border-t border-white/5 pt-3 space-y-2">
+                    <span className="text-[10px] font-black text-amber-500 uppercase tracking-widest block">Core Alignment Profile</span>
+                    <p className="text-slate-300 leading-relaxed italic text-[11px]">
+                      {currentArchetype.desc}
+                    </p>
+                  </div>
+
+                  <div className="border-t border-white/5 pt-3 space-y-2">
+                    <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest block">Tactical Power Strengths</span>
+                    <ul className="list-disc list-inside space-y-1 text-slate-300 leading-normal text-[11px]">
+                      {currentArchetype.strengths.map((str, idx) => (
+                        <li key={idx} className="pl-1 text-slate-300">{str}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="border-t border-white/5 pt-3 space-y-1">
+                    <span className="text-[10px] font-black text-rose-400 uppercase tracking-widest block">High-Value Blindspot</span>
+                    <p className="text-slate-300 leading-normal text-[11px]">
+                      {currentArchetype.growth}
+                    </p>
+                  </div>
+
+                  <div className="border-t border-white/5 pt-3 p-3 bg-indigo-950/20 border border-indigo-500/10 rounded-xl space-y-1">
+                    <span className="text-[10px] font-black text-indigo-300 uppercase tracking-widest block">⚡ Essential Action Directive</span>
+                    <p className="text-slate-200 font-bold leading-normal text-[11px]">
+                      {currentArchetype.directive}
+                    </p>
+                  </div>
+
+                  <div className="pt-3 border-t border-white/5">
+                    <button 
+                      onClick={downloadArchetypeCard}
+                      className="w-full py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black rounded-xl uppercase tracking-wider text-[10px] shadow-lg transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
+                    >
+                      <Download className="w-3.5 h-3.5" /> Download Pattern Report
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <div className="p-6 rounded-2xl bg-black/40 border border-white/5 space-y-3 text-center">
                   <Lock className="w-8 h-8 text-amber-500 mx-auto stroke-[1.5] animate-pulse" />
                   <h4 className="text-sm font-black uppercase text-amber-500">Alignment Diagnosis Locked</h4>
                   <p className="text-xs text-slate-400 leading-normal font-sans">
-                    You have currently completed <strong className="text-white font-bold">{streakCount} out of 7 consecutive days</strong>. Keep drawing marks to align your focal patterns and unlock your sovereign diagnosis!
+                    You have currently completed <strong className="text-white font-bold">{streakCount} out of 7 consecutive days</strong>. Keep drawing marks to align your focal patterns and unlock your synthesis diagnosis!
                   </p>
                   
-                  {/* Local mini progress bar */}
                   <div className="bg-slate-950 rounded-full h-2 overflow-hidden border border-white/5 mt-2">
                     <div 
                       className="bg-amber-500 h-full transition-all duration-500"
@@ -2049,14 +2118,22 @@ export default function App() {
                 </div>
               )}
 
-              <div className="p-4 rounded-xl bg-slate-900/40 border border-white/5 text-[11px] text-slate-400 font-medium leading-relaxed font-sans text-left">
-                <strong className="text-white block mb-1">How Streaks Work:</strong>
-                Pulling a Gacha capsule on consecutive days extends your active streak. Recording reflections in your journal continuously aligns your focus, allowing the Sovereign Synthesis engine to map out your core energetic directions.
+              {/* Privacy lock guarantee info card */}
+              <div className="p-3.5 bg-slate-900/60 border border-emerald-500/10 rounded-xl text-left flex items-start gap-3">
+                <div className="p-1.5 bg-emerald-500/10 rounded-lg text-emerald-400 shrink-0">
+                  <Lock className="w-3.5 h-3.5" />
+                </div>
+                <div>
+                  <h5 className="text-[10px] font-black text-slate-200 uppercase tracking-wider">Privacy Guarantee</h5>
+                  <p className="text-[9px] text-slate-400 leading-normal mt-0.5 font-sans">
+                    These generated metrics are processed mathematically inside your secure web client. No telemetry keys or private profiles are transmitted to external servers.
+                  </p>
+                </div>
               </div>
 
               <button 
                 onClick={() => setShowStreakModal(false)}
-                className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-xl uppercase tracking-wider text-[10px] transition-all active:scale-95"
+                className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-xl uppercase tracking-wider text-[10px] transition-all active:scale-95 cursor-pointer"
               >
                 Close Diagnosis Panel
               </button>
@@ -2070,10 +2147,8 @@ export default function App() {
         Live Your Mark & ECI © 2026
       </footer>
 
-      {/* Hidden Layout canvas used to export graphic wallpapers */}
       <canvas ref={canvasRef} style={{ display: 'none' }} />
 
-      {/* Bouncing Physics parameters */}
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes bounce { 
           0%, 100% { transform: translateY(0); } 
