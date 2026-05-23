@@ -542,7 +542,7 @@ function DiverMascot({ size = 80, className = "" }) {
       className={`select-none pointer-events-none drop-shadow-2xl ${className}`}
     >
       <defs>
-        {/* Soft, gorgeous underwater glow backlighting */}
+        {/* Soft underwater glow backlighting */}
         <radialGradient id="diverGlow" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.4" />
           <stop offset="100%" stopColor="#38BDF8" stopOpacity="0" />
@@ -812,6 +812,9 @@ export default function App() {
   const [reflectionText, setReflectionText] = useState('');
   const [marqueeIndex, setMarqueeIndex] = useState(0);
 
+  // Calibration Success Overlay state
+  const [isCalibrated, setIsCalibrated] = useState(false);
+
   // Quick Start Onboarding Guide Toggle
   const [showGuide, setShowGuide] = useState(() => {
     return localStorage.getItem('lym_guide_dismissed') !== 'true';
@@ -821,7 +824,7 @@ export default function App() {
   const [toastMessage, setToastMessage] = useState('');
 
   // Streak State Tracker
-  const [streakCount, setStreakCount] = useState(7);
+  const [streakCount, setStreakCount] = useState(0);
   const [streakHistory, setStreakHistory] = useState([]);
   const [showStreakModal, setShowStreakModal] = useState(false);
 
@@ -902,13 +905,8 @@ export default function App() {
     const savedMOTD = localStorage.getItem('lym_motd') || 'TruSelf & Action';
     const storedRecharge = localStorage.getItem('lym_last_recharge');
 
-    // Pre-populate streak history on Day 1 with 1 active date (D1) so left-to-right filling starts chronologically at D1!
+    // Load streak history chronologically (Starts empty for clean D1 tick after first spin!)
     let storedHistory = JSON.parse(localStorage.getItem('lym_streak_history') || '[]');
-    if (storedHistory.length === 0) {
-      const defaultHistory = [getLocalDateString(0)]; // Holds only today's date initially
-      localStorage.setItem('lym_streak_history', JSON.stringify(defaultHistory));
-      storedHistory = defaultHistory;
-    }
     setStreakHistory(storedHistory);
 
     const migratedJournal = storedJournal.map(log => {
@@ -1246,6 +1244,7 @@ export default function App() {
     setDiscoveredIds(updatedDiscoveries);
     setCoins(nextCoins);
     setReflectionText(''); 
+    setIsCalibrated(false); // Reset calibration success screen
 
     localStorage.setItem('lym_total_spins', String(nextSpinCount));
     localStorage.setItem('lym_discovered_ids', JSON.stringify(updatedDiscoveries));
@@ -1259,7 +1258,7 @@ export default function App() {
     }, 1800);
   }, [isSpinning, totalSpins, discoveredIds, coins, playSound, timeRemaining, streakHistory, showToast]);
 
-  // Save Reflection
+  // Save Reflection with immersive calibration validation feedback
   const saveReflection = () => {
     if (!gachaResult) return;
     playSound('click');
@@ -1283,9 +1282,10 @@ export default function App() {
     localStorage.setItem('lym_journal_logs', JSON.stringify(updatedLogs));
     localStorage.setItem('lym_motd', messageOfTheDay);
     
-    setShowGachaResult(false);
-    setReflectionText('');
-    showToast("Saved successfully to your personal mental journal!");
+    // Trigger immersive success validation view
+    setIsCalibrated(true);
+    playSound('success');
+    showToast("Reflection logged! TruSelf alignment validated.");
   };
 
   const deleteJournalEntry = (id) => {
@@ -1312,7 +1312,7 @@ export default function App() {
     showToast("Entire reflection archive copied to clipboard!");
   };
 
-  // --- PREMIUM CHIC WALLPAPER GRAPHIC GENERATOR ---
+  // --- PREMIUM CHIC MOBILE WALLPAPER GENERATOR ---
   const downloadManifestationCard = () => {
     if (!gachaResult) return;
     const canvas = canvasRef.current;
@@ -1320,7 +1320,7 @@ export default function App() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Ultra HD Canvas dimensions for high-fidelity mobile wallpapers
+    // Ultra HD Canvas dimensions for crisp mobile wallpapers
     canvas.width = 1200;
     canvas.height = 1800;
 
@@ -1354,7 +1354,7 @@ export default function App() {
     ctx.lineWidth = 8;
     ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
 
-    // Inner line
+    // Inner delicate gold-threaded line
     ctx.strokeStyle = '#D9770630';
     ctx.lineWidth = 2;
     ctx.strokeRect(55, 55, canvas.width - 110, canvas.height - 110);
@@ -1374,7 +1374,6 @@ export default function App() {
     drawCornerMarks(70, canvas.height - 70, 1, -1);
     drawCornerMarks(canvas.width - 70, canvas.height - 70, -1, -1);
 
-    // Wrapping helper
     const wrapText = (context, text, x, y, maxWidth, lineHeight) => {
       const words = text.split(' ');
       let line = '';
@@ -1529,7 +1528,7 @@ export default function App() {
     ctx.fillStyle = '#090D16';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Dynamic Luxury Aurora Radial Lighting Glow matching domain category
+    // Dynamic Luxury Aurora Radial Glow
     const gradient = ctx.createRadialGradient(600, 900, 100, 600, 900, 900);
     gradient.addColorStop(0, '#6366F12F'); 
     gradient.addColorStop(0.5, '#D977060A'); 
@@ -1537,7 +1536,7 @@ export default function App() {
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Draw underwater beams of light streaming from top center
+    // Draw beams of light streaming from top center
     const beamGrad = ctx.createLinearGradient(600, 0, 600, 550);
     beamGrad.addColorStop(0, 'rgba(56, 189, 248, 0.28)');
     beamGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
@@ -1555,7 +1554,7 @@ export default function App() {
     ctx.lineWidth = 8;
     ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
 
-    // Inner gold-threaded line
+    // Inner line
     ctx.strokeStyle = '#D9770630';
     ctx.lineWidth = 2;
     ctx.strokeRect(55, 55, canvas.width - 110, canvas.height - 110);
@@ -1575,7 +1574,6 @@ export default function App() {
     drawCornerMarks(70, canvas.height - 70, 1, -1);
     drawCornerMarks(canvas.width - 70, canvas.height - 70, -1, -1);
 
-    // Wrapping helper
     const wrapText = (context, text, x, y, maxWidth, lineHeight) => {
       const words = text.split(' ');
       let line = '';
@@ -1690,6 +1688,54 @@ export default function App() {
     playSound('success');
   };
 
+  // Helper dictionary delivering dynamic personalized validation responses inside the modal
+  // Scanning user typed input for key trigger words to formulate customized validation feedback
+  const getValidationMessage = (domain, text) => {
+    const rawText = (text || "").toLowerCase();
+
+    // 1. Vitality Drain Checks
+    if (rawText.includes("burnout") || rawText.includes("tired") || rawText.includes("exhausted") || rawText.includes("rest") || rawText.includes("sleep")) {
+      return "Calibration Alert: We detected deep drainage triggers in your reflection. Your physical vital engine is requesting immediate, uncompromising structural recovery. Halting your schedule to replenish is not a luxury—it is your primary operational asset.";
+    }
+
+    // 2. Schedule micro-tasking Checks
+    if (rawText.includes("busy") || rawText.includes("overwhelmed") || rawText.includes("tasks") || rawText.includes("manage") || rawText.includes("work") || rawText.includes("todo")) {
+      return "Calibration Alert: Your reflection signals high task friction. Remind yourself that packing your schedule with administrative micro-work is often a safe, subconscious shield to avoid pulling the high-stakes operational levers in your business. Pivot your focus immediately.";
+    }
+
+    // 3. Nervous system alignment checks
+    if (rawText.includes("scared") || rawText.includes("fear") || rawText.includes("doubt") || rawText.includes("worry") || rawText.includes("afraid") || rawText.includes("risk") || rawText.includes("fail")) {
+      return "Calibration Alert: Nervous system resistance detected. Do not pull back. Your fear is not a crisis of capability; it is the physiological indicator marking the exact boundary of your next major expansion phase. Step forward.";
+    }
+
+    // 4. Boundary friction checks
+    if (rawText.includes("boundary") || rawText.includes("no") || rawText.includes("difficult") || rawText.includes("person") || rawText.includes("team") || rawText.includes("client")) {
+      return "Calibration Alert: Relational friction detected. Clean leadership is not built on accommodating the average metrics of others; it is built on clear Agreements and protected spacing. Enforce your boundary cleanly today.";
+    }
+
+    // Default categorical fallback validations if no keywords are matched
+    switch (domain) {
+      case "Creation/Choice": 
+        return "Vision Calibrated. Your creative choice is anchored in your local device archive. Do not let this draft hide in isolation—bring your bold, unfiltered perspective into the light today.";
+      case "Advancement": 
+        return "Momentum Locked. Action is the ultimate clarifier. You have successfully structured your priority task—execute with zero compromise tomorrow.";
+      case "Achievement": 
+        return "Mastery Aligned. You are actively building past old comfort baselines. Honor your structural progress, play the highest stakes available, and celebrate this win.";
+      case "Resource Gaining": 
+        return "Abundance Registered. Focus and cognitive spacing are your primary assets. You have successfully mapped your leverage—allocate your resources intentionally today.";
+      case "Vitality": 
+        return "Energy Centered. Peak performance demands uncompromising biological recovery. By logging this alignment, you honor your physical vessel. Guard your rest.";
+      case "Dreams/Passions": 
+        return "Core Spark Verified. Excitement is your highest strategic compass. You have captured your enthusiasm—shield this playground of flow from daily static.";
+      case "People": 
+        return "Tribe Boundaries Established. Clean leadership is built on honest agreements and uncompromised respect. Speak your unfiltered perspective with conviction today.";
+      case "Connection": 
+        return "Truth Sealed. Empathy and self-honesty are your actual strength. You have successfully lowered your drawbridge—step forward in raw alignment.";
+      default: 
+        return "Alignment Calibrated. Your reflection has been successfully validated and logged in your secure local device memory.";
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#0F172A] text-white flex flex-col font-sans select-none relative overflow-x-hidden" style={{ fontFamily: "'Jost', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600;700;900&display=swap" rel="stylesheet" />
@@ -1781,10 +1827,10 @@ export default function App() {
                   <HelpCircle className="w-3.5 h-3.5 text-amber-500" /> Quick Start Guide
                 </h4>
                 <ul className="space-y-2 text-[10px] text-slate-300 leading-normal font-sans">
-                  <li><strong>1. Spin the Wheel:</strong> Pull the golden dial to reveal your daily assessment card. (Strictly 3 spins per day).</li>
+                  <li><strong>1. Spin the Wheel:</strong> Pull the golden dial to reveal your daily gacha assessment card. (Strictly 3 spins per day).</li>
                   <li><strong>2. Reflect & Save:</strong> Type your thoughts in the modal reflection box and click <strong>Save Log</strong> to archive your insights.</li>
                   <li><strong>3. Stickers & Journal:</strong> Track progress on the <strong>Stickers</strong> tab. Tap any unlocked card to review questions or view logs in your <strong>Journal</strong>.</li>
-                  <li><strong>4. Pattern Synthesis:</strong> Build your 7-day streak to see what it reveals about the patterns you are running in life, and download your TruSelf report!</li>
+                  <li><strong>4. Pattern Synthesis:</strong> Keep your streak going to see what it reveals about the patterns you are running in life. Reaching Day 7 unlocks your complete **TruSelf Synthesis** report!</li>
                 </ul>
               </div>
             )}
@@ -1828,13 +1874,6 @@ export default function App() {
 
               </div>
             </div>
-
-            {coins <= 0 && timeRemaining && (
-              <div className="mt-5 p-3.5 bg-indigo-950/30 border border-indigo-500/20 rounded-2xl text-center w-full max-w-[280px] animate-pulse">
-                <span className="text-[11px] font-bold text-indigo-300 block">⏳ 24h Gacha Battery Empty</span>
-                <span className="text-xs text-amber-500 font-mono font-bold mt-1 block">Recharges 3 coins in {timeRemaining}</span>
-              </div>
-            )}
 
             {/* --- LOCALIZED 7-DAY ALIGNMENT STREAK VIEW --- */}
             <div className="mt-6 w-full max-w-[290px] p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3.5">
@@ -1920,6 +1959,7 @@ export default function App() {
                       if (isUnlocked) {
                         playSound('click');
                         setGachaResult(q);
+                        setIsCalibrated(true); // Treat reopened stickers as fully aligned/calibrated for nice wallpaper exports
                         setShowGachaResult(true);
                       }
                     }}
@@ -1962,7 +2002,7 @@ export default function App() {
                   href="https://liveyourmark.com/truself-summit/" 
                   target="_blank" 
                   rel="noreferrer"
-                  className="mt-3.5 inline-block bg-amber-500 hover:bg-amber-600 text-slate-950 text-[10px] font-black uppercase px-4 py-2 rounded-xl tracking-wider transition-colors animate-pulse"
+                  className="mt-3.5 inline-block bg-amber-500 hover:bg-amber-600 text-slate-950 text-[10px] font-black uppercase px-4 py-2 rounded-xl tracking-wider transition-colors"
                 >
                   Enter Live TruSelf Summit
                 </a>
@@ -2061,110 +2101,159 @@ export default function App() {
       {/* DYNAMIC RESULTS POP-UP CARD */}
       {showGachaResult && gachaResult && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-[#090D1A]/95 backdrop-blur-2xl animate-in fade-in duration-300">
-          <div className="absolute inset-0 cursor-pointer" onClick={() => setShowGachaResult(false)}></div>
+          <div className="absolute inset-0 cursor-pointer" onClick={() => { setShowGachaResult(false); setIsCalibrated(false); }}></div>
           
           <div className="relative bg-[#111526] w-full max-w-md rounded-[35px] overflow-hidden shadow-2xl border border-white/10 animate-in zoom-in-95 duration-400 flex flex-col max-h-[90vh]">
             <div className="h-1.5 w-full animate-pulse" style={{ backgroundColor: gachaResult.domainColor }}></div>
             
             <button 
-              onClick={() => { playSound('click'); setShowGachaResult(false); }}
+              onClick={() => { playSound('click'); setShowGachaResult(false); setIsCalibrated(false); }}
               className="absolute top-4 right-4 text-slate-400 hover:text-white z-50 p-2 bg-slate-900/60 hover:bg-slate-800 rounded-full border border-white/10 transition-all cursor-pointer shadow-md"
               title="Close & Return to Machine"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="p-8 md:p-10 text-white flex flex-col overflow-y-auto">
-              
-              <div className="flex items-center gap-4 mb-6">
-                <DiverMascot size={56} />
-                <div>
-                  <span className="text-[9px] font-black tracking-widest text-amber-500 block">{gachaResult.badge}</span>
-                  <h3 className="text-lg font-black uppercase tracking-tight text-white mt-1 leading-none">{gachaResult.domainTitle}</h3>
-                  <span className="text-[9px] text-slate-400 font-mono mt-1 block uppercase">CARD INDEX #{ALL_QUESTIONS.findIndex(q => q.id === gachaResult.id) + 1}</span>
+            {/* --- REWARDING CALIBRATION VALIDATION OVERLAY SPLASH --- */}
+            {isCalibrated ? (
+              <div className="p-8 md:p-10 text-white flex flex-col items-center justify-center text-center animate-in zoom-in-95 duration-300 overflow-y-auto">
+                <div className="w-20 h-20 rounded-full bg-emerald-500/10 border-4 border-emerald-500 flex items-center justify-center shadow-[0_0_30px_rgba(16,185,129,0.3)] mb-6 animate-bounce">
+                  <Sparkles className="w-10 h-10 text-emerald-400 animate-pulse" />
+                </div>
+
+                <span className="text-[10px] font-black tracking-widest text-emerald-400 uppercase block">TruSelf Calibration Complete</span>
+                <h3 className="text-2xl font-black text-slate-100 tracking-tight mt-1 mb-4">ALIGNMENT SEALED</h3>
+
+                <div className="p-5 rounded-2xl bg-black/40 border border-white/5 max-w-sm mb-6 text-left">
+                  <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                    {getValidationMessage(gachaResult.domainTitle, reflectionText)}
+                  </p>
+                </div>
+
+                <div className="w-full grid grid-cols-2 gap-3 mb-6">
+                  <button 
+                    onClick={downloadManifestationCard}
+                    className="py-3.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black rounded-2xl uppercase tracking-wider text-[10px] shadow-lg transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <Download className="w-4 h-4" /> Export Wallpaper
+                  </button>
+                  <button 
+                    onClick={() => { playSound('click'); setShowGachaResult(false); setIsCalibrated(false); }}
+                    className="py-3.5 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 font-black rounded-2xl uppercase tracking-wider text-[10px] transition-all active:scale-95 cursor-pointer"
+                  >
+                    Done
+                  </button>
+                </div>
+
+                {/* Summit Anchor CTA */}
+                <div className="pt-4 border-t border-white/5 w-full">
+                  <span className="text-[10px] text-amber-500 font-black uppercase tracking-widest block">Join our TruSelf Summit: 27 and 28 June 2026</span>
+                  <p className="text-[10px] text-slate-400 mt-1 leading-normal font-sans">
+                    Reflections highlight the issues; the Summit is where you execute.
+                  </p>
+                  <a 
+                    href="https://liveyourmark.com/truself-summit/" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="mt-2 text-xs text-white font-bold hover:text-amber-400 transition-colors inline-flex items-center gap-1 cursor-pointer"
+                  >
+                    Find out more about the TruSelf Summit <ArrowRight className="w-3 h-3" />
+                  </a>
                 </div>
               </div>
+            ) : (
+              <div className="p-8 md:p-10 text-white flex flex-col overflow-y-auto">
+                
+                <div className="flex items-center gap-4 mb-6">
+                  <DiverMascot size={56} />
+                  <div>
+                    <span className="text-[9px] font-black tracking-widest text-amber-500 block">{gachaResult.badge}</span>
+                    <h3 className="text-lg font-black uppercase tracking-tight text-white mt-1 leading-none">{gachaResult.domainTitle}</h3>
+                    <span className="text-[9px] text-slate-400 font-mono mt-1 block uppercase">CARD INDEX #{ALL_QUESTIONS.findIndex(q => q.id === gachaResult.id) + 1}</span>
+                  </div>
+                </div>
 
-              <div className="space-y-2 mb-4">
-                <label className="text-[10px] font-black text-amber-500 uppercase tracking-widest block font-sans">Focus of the Day / Intention:</label>
-                <input
-                  type="text"
-                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500 font-bold"
-                  placeholder="e.g. Speed & Decisiveness"
-                  value={messageOfTheDay}
-                  onChange={(e) => {
-                    setMessageOfTheDay(e.target.value);
-                    localStorage.setItem('lym_motd', e.target.value);
-                  }}
-                />
+                <div className="space-y-2 mb-4">
+                  <label className="text-[10px] font-black text-amber-500 uppercase tracking-widest block font-sans">Focus of the Day / Intention:</label>
+                  <input
+                    type="text"
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500 font-bold"
+                    placeholder="e.g. Speed & Decisiveness"
+                    value={messageOfTheDay}
+                    onChange={(e) => {
+                      setMessageOfTheDay(e.target.value);
+                      localStorage.setItem('lym_motd', e.target.value);
+                    }}
+                  />
+                </div>
+
+                <div className="bg-black/40 p-5 rounded-2xl border border-white/5 mb-4 relative font-sans">
+                  <span className="absolute -top-2 left-4 px-2 py-0.5 bg-slate-800 rounded text-[8px] font-black tracking-wider text-indigo-400 uppercase">Message of the Day</span>
+                  <p className="text-xs leading-relaxed text-slate-300 italic pt-1">
+                    "{gachaResult.insight}"
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-br from-indigo-950/20 to-black/40 p-5 rounded-2xl border border-indigo-500/15 mb-4 font-sans">
+                  <span className="text-[9px] font-black tracking-widest text-amber-500 uppercase block mb-1">Ask Yourself?</span>
+                  <p className="text-base font-bold leading-snug text-white">
+                    {gachaResult.inquest}
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-br from-amber-500/10 to-red-500/5 p-5 rounded-2xl border border-amber-500/20 mb-6 font-sans">
+                  <span className="text-[9px] font-black tracking-widest text-red-400 uppercase block mb-1">⚡ Act of Courage ⚡</span>
+                  <p className="text-sm font-bold leading-snug text-amber-300">
+                    {gachaResult.courage}
+                  </p>
+                </div>
+
+                <div className="space-y-2 mb-6">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block font-sans">Input your raw alignment reflection:</label>
+                  <textarea
+                    className="w-full bg-black/40 border border-white/10 rounded-2xl p-4 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 resize-none h-18"
+                    placeholder="Your first thought is usually your highest, most honest alignment..."
+                    value={reflectionText}
+                    onChange={(e) => setReflectionText(e.target.value)}
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-3.5">
+                  <button 
+                    onClick={saveReflection}
+                    className="py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-2xl uppercase tracking-wider text-[10px] shadow-lg transition-all active:scale-95 flex items-center justify-center gap-1 cursor-pointer"
+                  >
+                    <Bookmark className="w-4 h-4" /> Save Log
+                  </button>
+
+                  <button 
+                    onClick={downloadManifestationCard}
+                    className="py-3.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black rounded-2xl uppercase tracking-wider text-[10px] shadow-lg transition-all active:scale-95 flex items-center justify-center gap-1 cursor-pointer"
+                  >
+                    <Download className="w-4 h-4" /> Export Wallpaper
+                  </button>
+                </div>
+
+                {/* Conversion Footer updating summit dates and exact CTA requirements without duplicate strings */}
+                <div className="mt-6 pt-5 border-t border-white/5 flex flex-col items-center text-center font-sans">
+                  <span className="text-[10px] text-amber-500 font-bold uppercase tracking-widest flex items-center gap-1.5">
+                    <Calendar className="w-3.5 h-3.5" /> Join our TruSelf Summit: 27 and 28 June 2026
+                  </span>
+                  <p className="text-[11px] text-slate-400 mt-1 leading-normal font-medium text-center">
+                    Reflections highlight the issues; the Summit is where you execute.
+                  </p>
+                  <a 
+                    href="https://liveyourmark.com/truself-summit/" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="mt-2 text-xs text-white font-bold hover:text-amber-400 transition-colors inline-flex items-center gap-1 cursor-pointer"
+                  >
+                    Find out more about the TruSelf Summit <ArrowRight className="w-3 h-3" />
+                  </a>
+                </div>
+
               </div>
-
-              <div className="bg-black/40 p-5 rounded-2xl border border-white/5 mb-4 relative font-sans">
-                <span className="absolute -top-2 left-4 px-2 py-0.5 bg-slate-800 rounded text-[8px] font-black tracking-wider text-indigo-400 uppercase">Message of the Day</span>
-                <p className="text-xs leading-relaxed text-slate-300 italic pt-1">
-                  "{gachaResult.insight}"
-                </p>
-              </div>
-
-              <div className="bg-gradient-to-br from-indigo-950/20 to-black/40 p-5 rounded-2xl border border-indigo-500/15 mb-4 font-sans">
-                <span className="text-[9px] font-black tracking-widest text-amber-500 uppercase block mb-1">Ask Yourself?</span>
-                <p className="text-base font-bold leading-snug text-white">
-                  {gachaResult.inquest}
-                </p>
-              </div>
-
-              <div className="bg-gradient-to-br from-amber-500/10 to-red-500/5 p-5 rounded-2xl border border-amber-500/20 mb-6 font-sans">
-                <span className="text-[9px] font-black tracking-widest text-red-400 uppercase block mb-1">⚡ Act of Courage ⚡</span>
-                <p className="text-sm font-bold leading-snug text-amber-300">
-                  {gachaResult.courage}
-                </p>
-              </div>
-
-              <div className="space-y-2 mb-6">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block font-sans">Input your raw alignment reflection:</label>
-                <textarea
-                  className="w-full bg-black/40 border border-white/10 rounded-2xl p-4 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 resize-none h-18"
-                  placeholder="Your first thought is usually your highest, most honest alignment..."
-                  value={reflectionText}
-                  onChange={(e) => setReflectionText(e.target.value)}
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3.5">
-                <button 
-                  onClick={saveReflection}
-                  className="py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-2xl uppercase tracking-wider text-[10px] shadow-lg transition-all active:scale-95 flex items-center justify-center gap-1 cursor-pointer"
-                >
-                  <Bookmark className="w-4 h-4" /> Save Log
-                </button>
-
-                <button 
-                  onClick={downloadManifestationCard}
-                  className="py-3.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black rounded-2xl uppercase tracking-wider text-[10px] shadow-lg transition-all active:scale-95 flex items-center justify-center gap-1 cursor-pointer"
-                >
-                  <Download className="w-4 h-4" /> Export Wallpaper
-                </button>
-              </div>
-
-              {/* Conversion Footer updating summit dates and exact CTA requirements without duplicate strings */}
-              <div className="mt-6 pt-5 border-t border-white/5 flex flex-col items-center text-center font-sans">
-                <span className="text-[10px] text-amber-500 font-bold uppercase tracking-widest flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5" /> Join our TruSelf Summit: 27 and 28 June 2026
-                </span>
-                <p className="text-[11px] text-slate-400 mt-1 leading-normal font-medium text-center">
-                  Reflections highlight the issues; the Summit is where you execute.
-                </p>
-                <a 
-                  href="https://liveyourmark.com/truself-summit/" 
-                  target="_blank" 
-                  rel="noreferrer" 
-                  className="mt-2 text-xs text-white font-bold hover:text-amber-400 transition-colors inline-flex items-center gap-1 cursor-pointer"
-                >
-                  Find out more about the TruSelf Summit <ArrowRight className="w-3 h-3" />
-                </a>
-              </div>
-
-            </div>
+            )}
           </div>
         </div>
       )}
