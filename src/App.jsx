@@ -532,7 +532,6 @@ function DiverMascot({ size = 80, className = "" }) {
         </filter>
       </defs>
 
-      {/* Backlight Aura */}
       <circle cx="50" cy="55" r="45" fill="url(#diverGlow)" />
       <rect x="36" y="62" width="28" height="34" rx="8" fill="#1e222b" stroke="#0b0d10" strokeWidth="2.5" />
       <rect x="42" y="55" width="16" height="7" rx="1.5" fill="#475569" stroke="#0F172A" strokeWidth="1" />
@@ -937,6 +936,184 @@ export default function App() {
     };
   }, [isSpinning, activeTab]);
 
+  // --- PROCEDURAL CANVAS DRAWING PIPELINE FOR THE DETAILED "DIVER" ---
+  // Placed in parent component scope so both wallpaper downloaders can access it safely
+  const drawCanvasDiver = (ctx, x, y, size) => {
+    ctx.save();
+    ctx.translate(x, y);
+
+    const rScale = size / 80;
+
+    // Glowing underwater backlight halo
+    const haloGrad = ctx.createRadialGradient(0, 0, 10 * rScale, 0, 0, 45 * rScale);
+    haloGrad.addColorStop(0, 'rgba(56, 189, 248, 0.45)');
+    haloGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+    ctx.fillStyle = haloGrad;
+    ctx.beginPath();
+    ctx.arc(0, 0, 45 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Air Tank
+    ctx.fillStyle = '#1e222b';
+    ctx.strokeStyle = '#0b0d10';
+    ctx.lineWidth = 2 * rScale;
+    ctx.beginPath();
+    ctx.roundRect(-14 * rScale, 10 * rScale, 28 * rScale, 34 * rScale, 10 * rScale);
+    ctx.fill();
+    ctx.stroke();
+
+    // Body Suit
+    const suitGrad = ctx.createLinearGradient(-25 * rScale, 10 * rScale, 25 * rScale, 54 * rScale);
+    suitGrad.addColorStop(0, '#2c303b');
+    suitGrad.addColorStop(0.5, '#1e222b');
+    suitGrad.addColorStop(1, '#12141a');
+    ctx.fillStyle = suitGrad;
+    ctx.strokeStyle = '#0f1115';
+    ctx.lineWidth = 3 * rScale;
+    ctx.beginPath();
+    ctx.ellipse(0, 30 * rScale, 25 * rScale, 23 * rScale, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Arms
+    ctx.strokeStyle = suitGrad;
+    ctx.lineWidth = 11 * rScale;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.quadraticCurveTo(-20 * rScale, 30 * rScale, -32 * rScale, 40 * rScale);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.quadraticCurveTo(20 * rScale, 30 * rScale, 32 * rScale, 40 * rScale);
+    ctx.stroke();
+
+    // Flippers
+    ctx.fillStyle = '#12141a';
+    ctx.save();
+    ctx.translate(-13 * rScale, 54 * rScale);
+    ctx.rotate(-0.2);
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 8 * rScale, 5.5 * rScale, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    ctx.save();
+    ctx.translate(13 * rScale, 54 * rScale);
+    ctx.rotate(0.2);
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 8 * rScale, 5.5 * rScale, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Neon Shoulder Spirals
+    ctx.strokeStyle = 'rgba(216, 180, 254, 0.9)';
+    ctx.lineWidth = 1.2 * rScale;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.arc(-22 * rScale, 31 * rScale, 2 * rScale, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(22 * rScale, 31 * rScale, 2 * rScale, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // Spiral Chest Badge
+    ctx.fillStyle = '#1f242e';
+    ctx.strokeStyle = '#0f1115';
+    ctx.lineWidth = 1.5 * rScale;
+    ctx.beginPath();
+    ctx.arc(0, 29 * rScale, 6 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.strokeStyle = '#c084fc';
+    ctx.lineWidth = 1.2 * rScale;
+    ctx.beginPath();
+    ctx.arc(0, 29 * rScale, 2.5 * rScale, 0, Math.PI * 0.85);
+    ctx.stroke();
+
+    // Helmet Metallic Chrome Outer Ring
+    const chromeGrad = ctx.createLinearGradient(-30 * rScale, -39 * rScale, 30 * rScale, 21 * rScale);
+    chromeGrad.addColorStop(0, '#5f6775');
+    chromeGrad.addColorStop(0.35, '#a1abbc');
+    chromeGrad.addColorStop(0.5, '#ffffff');
+    chromeGrad.addColorStop(0.65, '#7a8596');
+    chromeGrad.addColorStop(1, '#2d333f');
+    ctx.fillStyle = chromeGrad;
+    ctx.beginPath();
+    ctx.arc(0, -9 * rScale, 30 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Visor Shield Glass
+    const glassGrad = ctx.createLinearGradient(-26 * rScale, -35 * rScale, 26 * rScale, 17 * rScale);
+    glassGrad.addColorStop(0, '#334155');
+    glassGrad.addColorStop(0.3, '#1e293b');
+    glassGrad.addColorStop(1, '#0f172a');
+    ctx.fillStyle = glassGrad;
+    ctx.strokeStyle = '#0b0d10';
+    ctx.lineWidth = 1.5 * rScale;
+    ctx.beginPath();
+    ctx.arc(0, -9 * rScale, 26 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Face Plate
+    ctx.fillStyle = '#fffdf9';
+    ctx.beginPath();
+    ctx.arc(0, -9 * rScale, 23 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Blushing cheeks
+    const blushGrad1 = ctx.createRadialGradient(-15 * rScale, -3 * rScale, 0, -15 * rScale, -3 * rScale, 5 * rScale);
+    blushGrad1.addColorStop(0, 'rgba(251, 113, 133, 0.8)');
+    blushGrad1.addColorStop(1, 'rgba(251, 113, 133, 0)');
+    ctx.fillStyle = blushGrad1;
+    ctx.beginPath();
+    ctx.arc(-15 * rScale, -3 * rScale, 5 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+
+    const blushGrad2 = ctx.createRadialGradient(15 * rScale, -3 * rScale, 0, 15 * rScale, -3 * rScale, 5 * rScale);
+    blushGrad2.addColorStop(0, 'rgba(251, 113, 133, 0.8)');
+    blushGrad2.addColorStop(1, 'rgba(251, 113, 133, 0)');
+    ctx.fillStyle = blushGrad2;
+    ctx.beginPath();
+    ctx.arc(15 * rScale, -3 * rScale, 5 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Big Adorable Visor Eyes
+    ctx.fillStyle = '#13151b';
+    ctx.beginPath();
+    ctx.arc(-9 * rScale, -10 * rScale, 4.5 * rScale, 0, Math.PI * 2);
+    ctx.arc(9 * rScale, -10 * rScale, 4.5 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#FFFFFF';
+    ctx.beginPath();
+    ctx.arc(-6.5 * rScale, -12.5 * rScale, 1.6 * rScale, 0, Math.PI * 2);
+    ctx.arc(11.5 * rScale, -12.5 * rScale, 1.6 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Smiling Mouth
+    ctx.strokeStyle = '#13151b';
+    ctx.lineWidth = 2.5 * rScale;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.arc(0, -4 * rScale, 4 * rScale, 0.1 * Math.PI, 0.9 * Math.PI);
+    ctx.stroke();
+
+    // Upper Glass Visor gloss reflections
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+    ctx.lineWidth = 3 * rScale;
+    ctx.beginPath();
+    ctx.arc(0, -9 * rScale, 22 * rScale, -0.6 * Math.PI, -0.15 * Math.PI);
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+    ctx.beginPath();
+    ctx.arc(16 * rScale, -17 * rScale, 1.5 * rScale, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  };
+
   // --- UPGRADED 8-WAY ARCHETYPE SYNTHESIS ENGINE ---
   const generateArchetypeSynthesis = () => {
     const activeSamplePool = journalLogs.length > 0 ? journalLogs : ALL_QUESTIONS.filter(q => discoveredIds.includes(q.id));
@@ -1292,7 +1469,7 @@ export default function App() {
       return currentY;
     };
 
-    // Draw our lovely Custom Diver Mascot at the top center of the wallpaper
+    // Draw our Custom Diver Mascot at the top center of the wallpaper
     drawCanvasDiver(ctx, 600, 175, 80);
 
     const drawLogoAndCardText = (startY) => {
@@ -1636,8 +1813,8 @@ export default function App() {
       <div className="w-full bg-[#0B0F19]/90 border-b border-white/5 py-2.5 overflow-hidden relative z-40 flex items-center justify-center">
         <div className="text-[10px] font-black tracking-widest text-center text-indigo-300 uppercase opacity-80 px-4">
           {marqueeIndex === 0 && `🔮 MARKS UNLOCKED: ${discoveredIds.length}/56 TRUE SELF DIALS ARCHIVED 🔮`}
-          {marqueeIndex === 1 && `🎪 CO-ACTION: LYM TRUSELF SUMMIT Live • 27 & 28 June 2026 • Secure Your Seat Now 🎪`}
-          {marqueeIndex === 2 && `⚡ FIND US ON @LIVE.YOUR.MARK ON INSTAGRAM⚡`}
+          {marqueeIndex === 1 && `🎪 CO-ACTION: TRUSELF SUMMIT Live • 27 & 28 June 2026 • Secure Your Seat Now 🎪`}
+          {marqueeIndex === 2 && `⚡ FOLLOW US ON INSTAGRAM - @LIVE.YOUR.MARK ⚡`}
         </div>
       </div>
 
@@ -1714,11 +1891,12 @@ export default function App() {
                 <span className="text-xs font-black text-amber-500 tracking-tight">{streakCount} Days Active</span>
               </div>
 
+              {/* Progress nodes chronological layout (Filling forward D1 -> D7) */}
               <div className="flex items-center justify-between gap-1 pt-1">
                 {Array.from({ length: 7 }).map((_, index) => {
-                  const nodeDate = getLocalDateString(6 - index);
+                  const nodeDate = getLocalDateString(index); 
                   const isChecked = streakHistory.includes(nodeDate);
-                  const isToday = index === 6;
+                  const isToday = index === Math.min(6, streakCount); 
                   return (
                     <div key={index} className="flex flex-col items-center flex-1">
                       <div className={`w-8 h-8 rounded-full border flex items-center justify-center text-[10px] font-black transition-all ${isChecked ? 'bg-amber-500 border-amber-600 text-slate-950 shadow-[0_0_12px_rgba(217,119,6,0.35)]' : isToday ? 'border-indigo-400 bg-indigo-950/40 text-indigo-300 animate-pulse' : 'border-white/10 bg-slate-900/60 text-slate-500'}`}>
@@ -2017,7 +2195,7 @@ export default function App() {
                   <Calendar className="w-3.5 h-3.5" /> Join our TruSelf Summit: 27 and 28 June 2026
                 </span>
                 <p className="text-[11px] text-slate-400 mt-1 leading-normal font-medium text-center">
-                  Reflections highlight the issues; the Summit is where you execute. 
+                  Reflections highlight the issues; the Summit is where you execute.
                 </p>
                 <a 
                   href="https://liveyourmark.com/truself-summit/" 
