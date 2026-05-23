@@ -1083,7 +1083,7 @@ export default function App() {
 
   // Calculate most active domains from user discoveries to feed custom synthesis
   const generateArchetypeSynthesis = () => {
-    if (journalLogs.length === 0) return { title: "Diver Base", desc: "Start recording reflections in your journal tab to synthesize your personal sovereign leadership archetype." };
+    if (journalLogs.length === 0) return { title: "Diver Base", desc: "Start recording reflections in your journal tab to reveal your operating patterns." };
     
     // Tally active domains
     const tallies = {};
@@ -1707,7 +1707,7 @@ export default function App() {
               {/* Instructions Guide */}
               <div className="p-3 bg-black/40 border border-white/5 rounded-xl text-[10px] text-slate-400 leading-normal font-sans text-left">
                 <strong className="text-indigo-400 block mb-1">🎯 Why Complete 7 Days Straight?</strong>
-                Log reflections daily to map out your cognitive patterns. Reaching Day 7 unlocks your full **Sovereign Archetype Synthesis**—diagnosing your leading directions in Creation, Advancement, and People.
+                Log reflections daily to map out your cognitive patterns. Reaching Day 7 unlocks a read of the pattern of your inputs — giving you a sense of your leading directions in Creation, Advancement, and People.
               </div>
 
               {/* Archetype reading button triggers when they have history logged */}
