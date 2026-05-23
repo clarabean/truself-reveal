@@ -5,451 +5,6 @@ import {
   BookOpen, Lock, Download, Clipboard, Trash2, X, RefreshCw
 } from 'lucide-react';
 
-// --- THE HARMONIC 56 INTERNAL MARKS DATASET (True Self Executive Coaching Edition) ---
-const DOMAINS = {
-  CREATION_CHOICE: { 
-    title: "Creation/Choice", color: "#6366F1", glow: "shadow-indigo-500/10", badge: "🔮 ALIGNMENT INSIGHT", icon: <Sparkle className="w-4 h-4" />, 
-    questions: [
-      {
-        id: "cc_1",
-        rarity: "Rare",
-        horoscope: "You possess an exceptional, latent capacity to see patterns and pathways where others only see blank walls. Your vision is highly potent, yet you are currently waiting for external confirmation of what your intuition has already validated.",
-        inquest: "What is one creative direction you have kept quiet that deserves to be given absolute voice and action today?",
-        courage: "Write a 3-sentence summary of your most unconventional idea, and text or email it to a peer, client, or alignment partner right now."
-      },
-      {
-        id: "cc_2",
-        rarity: "Common",
-        horoscope: "Your highly analytical mind is one of your greatest assets. Currently, you might be seeking absolute clarity through research and planning, which is natural, yet the highest learning now lies in real-world application.",
-        inquest: "What is one concept you can simplify and release today to experience the power of immediate momentum?",
-        courage: "Close your research tabs. Draft the absolute simplest MVP version of this concept on a single piece of paper, and share it before your day ends."
-      },
-      {
-        id: "cc_3",
-        rarity: "Common",
-        horoscope: "You carry a rare, magnetic depth. People feel safer, calmer, and more inspired simply entering your orbit when you show up authentically. You don't need to perform; your raw presence is the contribution.",
-        inquest: "Where in your world today can you allow your natural, effortless energy to lead the room?",
-        courage: "In your next conversation or meeting, do not prepare what to say. Sit back, listen entirely, and let your raw presence command the space."
-      },
-      {
-        id: "cc_4",
-        rarity: "Common",
-        horoscope: "You carry a quiet readiness to lead. Sometimes, we wait for an external permission slip or perfect consensus before stepping forward, forgetting that your initiative is what others are waiting for.",
-        inquest: "What is a decision you can make today that honors your personal authority rather than waiting for consensus?",
-        courage: "Identify the one action step you've been delaying because you're waiting for consensus, and execute it now without asking for permission."
-      },
-      {
-        id: "cc_5",
-        rarity: "Common",
-        horoscope: "Your inner voice is remarkably sharp right now, humming with pure creative potential. The only block is the static of other people's opinions that you've allowed to crowd your quiet center.",
-        inquest: "If you carved out thirty minutes of absolute silence today, what is the first truth your spirit would whisper?",
-        courage: "Put all devices on 'Do Not Disturb' for 30 minutes, go for a walk outside, and write down the very first insight that enters your quiet mind."
-      },
-      {
-        id: "cc_6",
-        rarity: "Rare",
-        horoscope: "You have a natural appreciation for order and elegance. However, occasionally we default to safe, comfortable colors when our true vision is demanding a bolder, more experimental canvas.",
-        inquest: "Where can you invite a little more bold, creative experimentation into your work or lifestyle today?",
-        courage: "Intentionally break this minor self-imposed rule today. Write a draft with typos, dress boldly, or pitch an incomplete concept just to break the spell."
-      },
-      {
-        id: "cc_7",
-        rarity: "Legendary",
-        horoscope: "You have completely outgrown the small container of your current lifestyle. Your restlessness isn't a crisis of failure; it is your immense capacity screaming for a larger, stadium-scale challenge.",
-        inquest: "If you stopped playing small to make others comfortable, what is the most authentic, massive choice you would make before this day ends?",
-        courage: "Draw a hard line under one major compromise you have been tolerating. Explicitly say 'No' to a request or standard that does not match your true caliber."
-      }
-    ] 
-  },
-  ADVANCEMENT: { 
-    title: "Advancement", color: "#3B82F6", glow: "shadow-blue-500/10", badge: "⚠️ ALIGNMENT INSIGHT", icon: <TrendingUp className="w-4 h-4" />, 
-    questions: [
-      {
-        id: "adv_1",
-        rarity: "Common",
-        horoscope: "Your work ethic is remarkable, and you are capable of high velocity. Currently, you may be directing your vast energy into multiple small tasks, which can feel draining without yielding the big breakthroughs you deserve.",
-        inquest: "Which high-impact priority, if given your full focus, would make the small tasks redundant or easier?",
-        courage: "Block out the first 90 minutes of your morning tomorrow. Shut down all communication channels, and spend that time exclusively on the high-stakes task."
-      },
-      {
-        id: "adv_2",
-        rarity: "Common",
-        horoscope: "You are a naturally gifted builder with an incredible capacity for deep execution. When you dial into your focus state, you are an absolute force of nature. The only thing missing is a target worthy of your power.",
-        inquest: "What is one high-impact plan you can design today that matches the true scale of your execution power?",
-        courage: "Define your single most critical milestone for this quarter, write it in big letters on a note, and stick it directly behind your screen."
-      },
-      {
-        id: "adv_3",
-        rarity: "Common",
-        horoscope: "Your standard of excellence is admirable. Remember that standards are meant to guide your creation, not act as a barrier to completing your valuable drafts.",
-        inquest: "What project is ready to be shared with the world in its current state to unlock the next level of feedback?",
-        courage: "Publish, share, or submit your current 70%-complete draft. Force yourself to get real-world feedback on raw, messy progress."
-      },
-      {
-        id: "adv_4",
-        rarity: "Rare",
-        horoscope: "You have built a profound foundation of resilience. Every past trial has forged a highly adaptive, powerful mind capable of navigating any storm with total resourcefulness.",
-        inquest: "If you trusted your capacity to handle any outcome, what courageous leap would you execute right now?",
-        courage: "Make an irreversible public or financial commitment to your leap—buy the ticket, sign the contract, or announce your launch date today."
-      },
-      {
-        id: "adv_5",
-        rarity: "Rare",
-        horoscope: "Your momentum is built on your daily rhythms. Currently, a small environmental or routine adjustment could release a massive amount of cognitive space.",
-        inquest: "What is one simple habit adjustment you can make today to protect your peak focus?",
-        courage: "Eliminate the choice of backsliding tonight. Install a hard app-blocker, set an automated bedtime, or clear your space of your primary vice immediately."
-      },
-      {
-        id: "adv_6",
-        rarity: "Common",
-        horoscope: "Your future self is looking back at you with immense pride and gratitude. You are quietly and patiently laying down the hard, unglamorous bricks of a magnificent empire.",
-        inquest: "What is one silent, hidden victory from this past week that you haven't fully celebrated yet?",
-        courage: "Book a restorative, non-work-related experience for yourself this weekend to intentionally reward your hard work and recharge your vessel."
-      },
-      {
-        id: "adv_7",
-        rarity: "Legendary",
-        horoscope: "The friction you are feeling is a positive indicator—it is your evolving capacity signaling that you are ready to transition to a more strategic, higher-leverage style of execution.",
-        inquest: "What is one compromise you can phase out today to make room for your next level of mastery?",
-        courage: "Explicitly refuse one offer, client, or routine task that is 'good enough' to create empty, strategic space for the legendary opportunities."
-      }
-    ] 
-  },
-  ACHIEVEMENT: { 
-    title: "Achievement", color: "#D97706", glow: "shadow-amber-500/10", badge: "🏆 VICTORY ALIGNMENT", icon: <Trophy className="w-4 h-4" />, 
-    questions: [
-      { 
-        id: "ach_1", 
-        rarity: "Common", 
-        horoscope: "You have a natural drive for achievement. Ensure that the goals you are striving for are authentic to your true mission, rather than default targets inherited from external systems.", 
-        inquest: "What does genuine fulfillment look like for you in this current season of life?",
-        courage: "Write down your personal, raw definition of success on a card. Prune three goals from your current list that belong to other people's expectations."
-      },
-      { 
-        id: "ach_2", 
-        rarity: "Common", 
-        horoscope: "You have built an honorable track record. The invitation now is to step beyond the safety of past victories and embrace the creative stretch of your next growth plateau.", 
-        inquest: "What is one new domain or skill where you are excited to embrace the learning curve of a beginner today?",
-        courage: "Identify one skill or environment where you are currently a complete beginner, and spend 45 minutes practicing or researching it today."
-      },
-      { 
-        id: "ach_3", 
-        rarity: "Common", 
-        horoscope: "You are designed for grand, legacy-scale impact. Take a moment to step back from daily micro-metrics to ensure you are allocating energy to your most expansive long-term vision.", 
-        inquest: "If you focused exclusively on your highest-leverage work today, what would change?",
-        courage: "Decline one low-leverage opportunity or small client today to intentionally force open creative space for a high-value pursuit."
-      },
-      { 
-        id: "ach_4", 
-        rarity: "Rare", 
-        horoscope: "A past setback has made you play smaller than your stature. You have mistakenly internalized a temporary stumble as a permanent limit.", 
-        inquest: "What was a recent 'loss' that actually taught you the exact strategic lesson you need to win now?",
-        courage: "Write a detailed post-mortem of that failure. Extract 3 core golden rules, and implement one of them in your current main project today."
-      },
-      { 
-        id: "ach_5", 
-        rarity: "Rare", 
-        horoscope: "Your focal power is immense. Protect it by staying aligned with your unique path, rather than letting peripheral noise or comparison divert your attention.", 
-        inquest: "What is one simple boundary you can set today to protect your unique creative focus?",
-        courage: "Unfollow, mute, or disconnect from 3 competitive accounts that trigger subtle insecurities or comparison metrics on your device today."
-      },
-      { 
-        id: "ach_6", 
-        rarity: "Common", 
-        horoscope: "Your natural authority is preparing you for a major position of leadership. The people in your ecosystem are quietly waiting for you to step into that command.", 
-        inquest: "What grand legacy is your daily work actually building for the next generation?",
-        courage: "Spend the next hour creating a modular system, asset, or framework that can outlast your daily manual presence."
-      },
-      { 
-        id: "ach_7", 
-        rarity: "Legendary", 
-        horoscope: "You have a powerful vision. Sometimes we set distant timelines out of caution, but your current capacity is fully ready to accelerate this process.", 
-        inquest: "If you brought your 1-year milestone forward to the next 30 days, what bold first step would you take today?",
-        courage: "Set your target launch or delivery date to exactly 30 days from now, and announce it publicly to your team or network."
-      }
-    ] 
-  },
-  RESOURCE_GAINING: { 
-    title: "Resource Gaining", color: "#10B981", glow: "shadow-emerald-500/10", badge: "💰 ALIGNMENT INSIGHT", icon: <Wallet className="w-4 h-4" />, 
-    questions: [
-      { 
-        id: "res_1", 
-        rarity: "Common", 
-        horoscope: "You have a natural gift for spotting opportunities and pulling in resources. Currently, the best leverage is to focus on energy-generating assets rather than over-analyzing minor operational leaks.", 
-        inquest: "Where is the absolute highest return on investment for your time and energy today?",
-        courage: "Audit your bank statements. Cancel 3 recurring subscriptions or fees that you have not actively utilized in the last 30 days."
-      },
-      { 
-        id: "res_2", 
-        rarity: "Common", 
-        horoscope: "Your potential for abundance is massive. True alignment comes from establishing clear, calm financial systems that empower you to take calculated risks with complete peace of mind.", 
-        inquest: "How stable is your current financial foundation, rated honestly on a scale of 1-10?",
-        courage: "Transfer a specific, small sum of capital into a high-yield savings or investment account today as a physical seed of abundance."
-      },
-      { 
-        id: "res_3", 
-        rarity: "Common", 
-        horoscope: "You enjoy optimizing your systems and environments. It is worth checking if your current tools are truly accelerating your workflow or quietly fragmenting your attention.", 
-        inquest: "Which simple, distraction-free workflow element can you rely on today to build deep focus?",
-        courage: "Uninstall all non-essential productivity apps from your main device, and work out of a single physical notebook for the rest of the day."
-      },
-      { 
-        id: "res_4", 
-        rarity: "Rare", 
-        horoscope: "You are neglecting to purchase or invest in the exact foundational assets that would instantly unlock your next phase of velocity and speed.", 
-        inquest: "What is one material or environmental investment that would immediately double your productivity?",
-        courage: "Purchase, upgrade, or authorize the procurement of that exact tool or environment enhancer right now without hesitation."
-      },
-      { 
-        id: "res_5", 
-        rarity: "Rare", 
-        horoscope: "Your mind holds wealth-generating wisdom, but you are hoarding your ideas instead of letting them circulate, creating a stagnant pool of potential.", 
-        inquest: "What is your relationship with 'abundance' vs 'scarcity' right now?",
-        courage: "Package one of your highest-value proprietary frameworks, templates, or resources, and share it with your network for free today."
-      },
-      { 
-        id: "res_6", 
-        rarity: "Common", 
-        horoscope: "You are waiting for the perfect pile of resources to arrive before you take your big leap, ignoring the universal law that resources follow movement.", 
-        inquest: "What high-income skill would be the most valuable asset for your future self to possess?",
-        courage: "Book a masterclass, acquire a specialized textbook, or schedule a training session for that skill today."
-      },
-      { 
-        id: "res_7", 
-        rarity: "Legendary", 
-        horoscope: "You are spending capital on temporary comforts while starving the singular, highest-yielding asset that generates everything: your own consciousness.", 
-        inquest: "What is the absolute best, highest-leverage investment you can make in yourself this week?",
-        courage: "Dedicate an explicit budget of capital (or 10 hours of focused time) to a personal development program or mastermind workspace."
-      }
-    ] 
-  },
-  VITALITY: { 
-    title: "Vitality", color: "#EF4444", glow: "shadow-red-500/10", badge: "⚡ ALIGNMENT INSIGHT", icon: <Zap className="w-4 h-4" />, 
-    questions: [
-      { 
-        id: "vit_1", 
-        rarity: "Common", 
-        horoscope: "You have an incredible engine of vitality. To operate at your absolute ceiling, design clear physical check-ins that protect your stamina before you enter highly demanding build periods.", 
-        inquest: "What is the primary physical signal your body is using to request rest or recovery today?",
-        courage: "Book a physical assessment, clean massage, or comprehensive health check today to address this bottleneck immediately."
-      },
-      { 
-        id: "vit_2", 
-        rarity: "Common", 
-        horoscope: "Your daily energy is a precious currency. Establish a protective filter to ensure you are entering environments that feed your momentum rather than absorbing ambient friction.", 
-        inquest: "What is the single highest-yield daily ritual that protects your baseline peace?",
-        courage: "Put a hard 'Do Not Disturb' lock on your communication channels starting at 7:00 PM tonight. Protect your recovery."
-      },
-      { 
-        id: "vit_3", 
-        rarity: "Common", 
-        horoscope: "You carry a rare, magnetic glow when you are operating in peak alignment. Lately, you have settled for a diluted, safe version of your physical health.", 
-        inquest: "When was the last time you felt truly, vibrantly, and unapologetically alive in your own skin?",
-        courage: "Put on your training gear and engage in 30 minutes of high-intensity functional movement or running right now to reset your biological baseline."
-      },
-      { 
-        id: "vit_4", 
-        rarity: "Rare", 
-        horoscope: "Your physical processing space is cluttered. Your external environment is a direct, living mirror of your current internal static.", 
-        inquest: "How is your immediate physical workspace currently affecting your mental clarity?",
-        courage: "Spend 20 minutes cleaning and clearing your desk right now until only your computer, note pad, and a glass of water remain."
-      },
-      { 
-        id: "vit_5", 
-        rarity: "Rare", 
-        horoscope: "You are relying on chemical stimulants instead of designing a high-vibrancy lifestyle that naturally generates power.", 
-        inquest: "What is one daily ritual that consistently restores your physical and psychological power?",
-        courage: "Commit to going tomorrow without caffeine, processed sugar, or artificial stimulants—relying solely on deep rest and hydration."
-      },
-      { 
-        id: "vit_6", 
-        rarity: "Common", 
-        horoscope: "You are running your physical engine in the red zone, pretending that burnout is a badge of honor to prove your worth to the world.", 
-        inquest: "If your health was a professional project, would it currently be rated 'on track' or 'failing'?",
-        courage: "Block out an entire afternoon this weekend to do absolutely nothing productive—guilt-free and screen-free."
-      },
-      { 
-        id: "vit_7", 
-        rarity: "Legendary", 
-        horoscope: "You are carrying old energetic and emotional toxic loops that cloud your spiritual signal, heavily stalling your execution speed.", 
-        inquest: "What is the one thing you can stop doing today to instantly double your vital power?",
-        courage: "Purge one highly addictive app, chemical habit, or toxic content channel from your phone and immediate environment right now."
-      }
-    ] 
-  },
-  DREAMS_PASSIONS: { 
-    title: "Dreams/Passions", color: "#F59E0B", glow: "shadow-yellow-500/10", badge: "🔥 ALIGNMENT INSIGHT", icon: <HelpCircle className="w-4 h-4" />, 
-    questions: [
-      { 
-        id: "dr_1", 
-        rarity: "Common", 
-        horoscope: "You have a grand inner spark. Ensure you are giving your most authentic visions a safe, protected container to mature, rather than exposing them to early, ungrounded feedback.", 
-        inquest: "What exciting dream did you set aside simply because the first steps felt uncertain?",
-        courage: "Secure the domain, register the draft, or design the raw concept document for this dream before you go to sleep tonight."
-      },
-      { 
-        id: "dr_2", 
-        rarity: "Common", 
-        horoscope: "You are spending all your days on duty, ignoring the exact creative activities that naturally bend time around your focus.", 
-        inquest: "What activity makes you lose track of time entirely when you engage with it?",
-        courage: "Schedule a non-negotiable block of 2 hours on your calendar this week dedicated solely to this flow activity."
-      },
-      { 
-        id: "dr_3", 
-        rarity: "Common", 
-        horoscope: "You are waiting for a mentor or a savior to show you your purpose, forgetting that purpose is actively forged, not passively found.", 
-        inquest: "What is one grand contribution you want to be remembered for when your time is up?",
-        courage: "Draft your grand, lifelong mission statement in 2 bold sentences, print it, and place it directly on your workspace wall."
-      },
-      { 
-        id: "dr_4", 
-        rarity: "Rare", 
-        horoscope: "You have let survival needs completely overwrite your creative playground, leaving you dry, intellectual, and uninspired.", 
-        inquest: "If money were completely out of the equation, how would you spend your Tuesday morning?",
-        courage: "Commit to spending the first 60 minutes of your upcoming Tuesday morning executing exactly that activity."
-      },
-      { 
-        id: "dr_5", 
-        rarity: "Rare", 
-        horoscope: "You are suppressing your excitement to match the lukewarm temperature of the safe rooms you currently occupy.", 
-        inquest: "What currently makes your heart race with pure, unadulterated excitement?",
-        courage: "Reach out to one high-energy teammate or partner, and pitch a joint initiative based around this exact excitement."
-      },
-      { 
-        id: "dr_6", 
-        rarity: "Common", 
-        horoscope: "You have a vivid imagination and strong aspirations. Sometimes, looking at other people's achievements can trigger a healthy reminder of what we are capable of building ourselves.", 
-        inquest: "What is one inspiration you've witnessed recently that you want to start building in your own unique way?",
-        courage: "Send a brief message of genuine appreciation to that exact person, telling them their journey inspires you, and request a quick 10-minute coffee call."
-      },
-      { 
-        id: "dr_7", 
-        rarity: "Legendary", 
-        horoscope: "You are choosing safety because you are terrified of the sheer, massive magnitude of your wild, authentic ambitions.", 
-        inquest: "What is the most daring, high-stakes choice you have ever thought about making?",
-        courage: "Take one irreversible, physical step toward that choice today—tell a mentor, draft the resignation, or book the flight."
-      }
-    ] 
-  },
-  PEOPLE: { 
-    title: "People", color: "#EC4899", glow: "shadow-pink-500/10", badge: "👥 ALIGNMENT INSIGHT", icon: <Users className="w-4 h-4" />, 
-    questions: [
-      { 
-        id: "pe_1", 
-        rarity: "Common", 
-        horoscope: "Your loyalty to others is a deep and beautiful quality. As you grow, it is natural to seek out relationships that not only celebrate where you have been, but actively call you forward into your next horizon.", 
-        inquest: "Who in your network consistently expands your vision, and how can you connect with them this week?",
-        courage: "Intentionally mute, distance yourself from, or decline invitations from one long-term acquaintance who drains your focus baseline."
-      },
-      { 
-        id: "pe_2", 
-        rarity: "Common", 
-        horoscope: "Your kindness is a powerful gift, but it requires clear, respectful boundaries. True alignment is built on transparent agreements rather than silent accommodations.", 
-        inquest: "What is a gentle but firm boundary you need to communicate to a collaborator today?",
-        courage: "Send an incredibly polite, clear, and un-apologetic message establishing this boundary, without explaining or softening the impact."
-      },
-      { 
-        id: "pe_3", 
-        rarity: "Common", 
-        horoscope: "You are carrying old resentments like hot coals, expecting the other person to burn while you damage your own progress and focus.", 
-        inquest: "Who are you holding a grudge against, and what is that grudge costing your focus?",
-        courage: "Write a raw, unfiltered letter of forgiveness to this person. Burn or delete it. This is for your release, not their approval."
-      },
-      { 
-        id: "pe_4", 
-        rarity: "Rare", 
-        horoscope: "You are isolated, trying to carry a kingdom-scale vision entirely on your own fragile shoulders to avoid relying on others.", 
-        inquest: "Who in your immediate network is currently challenging you to grow to your absolute limit?",
-        courage: "Reach out to this exact person and ask: 'What is my greatest operational blindspot that I am currently avoiding?'"
-      },
-      { 
-        id: "pe_5", 
-        rarity: "Rare", 
-        horoscope: "You are hiding your thoughts from the people who care about you, creating an island of isolation under the guise of strength.", 
-        inquest: "What is one thing you have been meaning to say to someone close to you but haven't?",
-        courage: "Call or schedule a meet with them today. Speak your absolute raw truth with love, without wrapping it in diplomacy."
-      },
-      { 
-        id: "pe_6", 
-        rarity: "Common", 
-        horoscope: "You are hoarding your magic, refusing to be the generous leader your community desperately needs.", 
-        inquest: "Who is the most generous person you know? How can you emulate them today?",
-        courage: "Spend 25 minutes writing a detailed, unsolicited recommendation or public reference of appreciation for a peer or teammate."
-      },
-      { 
-        id: "pe_7", 
-        rarity: "Legendary", 
-        horoscope: "True leadership involves the courage to look at ourselves clearly. Inviting honest perspective from those we trust is a powerful way to accelerate our growth.", 
-        inquest: "What is an area of your leadership or workflow where you would value constructive, growth-oriented feedback?",
-        courage: "Text your closest friend this exact question right now, with the absolute promise that you will only listen and say 'Thank you.'"
-      }
-    ] 
-  },
-  CONNECTION: { 
-    title: "Connection", color: "#14B8A6", glow: "shadow-teal-500/10", badge: "❤️ RAW TRUTH", icon: <Heart className="w-4 h-4" />, 
-    questions: [
-      { 
-        id: "co_1", 
-        rarity: "Common", 
-        horoscope: "You have a rare, beautiful soul depth. However, you are confusing your public broadcast armor with authentic presence. People see your shield, not you.", 
-        inquest: "How can you develop deeper, unfiltered presence in your interactions today?",
-        courage: "Go through your next 3 major conversations without checking your phone, interrupting, or planning your reply."
-      },
-      { 
-        id: "co_2", 
-        rarity: "Common", 
-        horoscope: "You are surrounded by noise, but completely starved of genuine, quiet, soul-level communion.", 
-        inquest: "Who do you need to have a deep, completely honest conversation with right now?",
-        courage: "Call them right now and say: 'I was thinking about you, let's skip the small talk—how are you actually doing?'"
-      },
-      { 
-        id: "co_3", 
-        rarity: "Common", 
-        horoscope: "You are presenting a carefully edited version of yourself, verified that your raw, unfiltered truth is highly compelling and worthy of deep respect.", 
-        inquest: "When do you feel most seen and understood by the world?",
-        courage: "Share an unedited, raw realization or current struggle with your community or network—let them see your messy draft progress."
-      },
-      { 
-        id: "co_4", 
-        rarity: "Rare", 
-        horoscope: "You are actively blocking intimacy, using business, humor, or hyper-independence as a defense mechanism to stay safe.", 
-        inquest: "How do you currently block intimacy or deep connection when people get close?",
-        courage: "Admit one vulnerability, weakness, or struggle to someone close to you today, and explicitly ask for their support."
-      },
-      { 
-        id: "co_5", 
-        rarity: "Rare", 
-        horoscope: "You are lonely in crowded rooms because you refuse to lower your drawbridge and let anyone in.", 
-        inquest: "Where in your life are you lonely, even when people are around?",
-        courage: "Secure a seat at a curated physical mastermind, meetup, or physical workspace today where professional posturing is banned."
-      },
-      { 
-        id: "co_6", 
-        rarity: "Common", 
-        horoscope: "You are waiting for others to be vulnerable first, trapped in an emotional standoff of safety.", 
-        inquest: "What would happen if you were 10% more vulnerable today?",
-        courage: "Share an honest fear or mistake you made in a recent project with your key collaborator or partner today."
-      },
-      { 
-        id: "co_7", 
-        rarity: "Legendary", 
-        horoscope: "Your public avatar is thriving, but your private self is neglected, starved of true spiritual alignment.", 
-        inquest: "What is the main difference between your public self and your private self?",
-        courage: "Dedicate 60 minutes tonight to a completely private alignment ritual—meditation, writing, or resting—with no screens and no intent to share it."
-      }
-    ] 
-  }
-};
-
-const ALL_QUESTIONS = Object.values(DOMAINS).flatMap(d => d.questions.map(q => ({ 
-  ...q, 
-  domainTitle: d.title, 
-  domainColor: d.color, 
-  domainGlow: d.glow,
-  badge: d.badge, 
-  icon: d.icon 
-})));
-
 // --- GLOBAL UTILITY STREAK HELPER FUNCTIONS ---
 const getLocalDateString = (offsetDays = 0) => {
   const d = new Date();
@@ -479,6 +34,503 @@ const computeStreak = (history) => {
   }
   return streak;
 };
+
+// --- DYNAMIC INTUITION FOCUS PHRASE MATRIX ---
+const FOCUS_PHRASES = {
+  "Creation/Choice": [
+    "Vision & Bold Drafts",
+    "Intuitive Alignment",
+    "Unconventional Initiative",
+    "Authentic Choice"
+  ],
+  "Advancement": [
+    "High-Impact Velocity",
+    "Momentum Over Friction",
+    "Strategic Spacing",
+    "Decisiveness Today"
+  ],
+  "Achievement": [
+    "Personal Excellence",
+    "Beyond Past Wins",
+    "Legacy Priorities",
+    "Calm Mastery"
+  ],
+  "Resource Gaining": [
+    "Asset Leverage Focus",
+    "Flowing Abundance",
+    "Calm Capital Power",
+    "Focal Spacing Allocation"
+  ],
+  "Vitality": [
+    "Metabolic Stamina",
+    "Protective Recovery",
+    "Peak Physiological Baseline",
+    "Sensory Regeneration"
+  ],
+  "Dreams/Passions": [
+    "Authentic Spark Flow",
+    "Expansive Horizons",
+    "Passion Over Performance",
+    "Quiet Playground Focus"
+  ],
+  "People": [
+    "Respectful Boundaries",
+    "Loyal Authority",
+    "Growth Alliances",
+    "Clear Agreements"
+  ],
+  "Connection": [
+    "Raw Unfiltered Presence",
+    "Deep Soul Communion",
+    "Compelling Vulnerability",
+    "Uncompromised Truth"
+  ]
+};
+
+// --- THE HARMONIC 56 INTERNAL MARKS DATASET (TruSelf Executive Coaching Edition) ---
+const DOMAINS = {
+  CREATION_CHOICE: { 
+    title: "Creation/Choice", color: "#6366F1", glow: "shadow-indigo-500/10", badge: "🔮 ALIGNMENT INSIGHT", icon: <Sparkle className="w-4 h-4" />, 
+    questions: [
+      {
+        id: "cc_1",
+        rarity: "Rare",
+        insight: "You possess an exceptional, latent capacity to see patterns and pathways where others only see blank walls. Your vision is highly potent, yet you are currently waiting for external confirmation of what your intuition has already validated.",
+        inquest: "What is one creative direction you have kept quiet that deserves to be given absolute voice and action today?",
+        courage: "Write a 3-sentence summary of your most unconventional idea, and text or email it to a peer, client, or alignment partner right now."
+      },
+      {
+        id: "cc_2",
+        rarity: "Common",
+        insight: "Your highly analytical mind is one of your greatest assets. Currently, you might be seeking absolute clarity through research and planning, which is natural, yet the highest learning now lies in real-world application.",
+        inquest: "What is one concept you can simplify and release today to experience the power of immediate momentum?",
+        courage: "Close your research tabs. Draft the absolute simplest MVP version of this concept on a single piece of paper, and share it before your day ends."
+      },
+      {
+        id: "cc_3",
+        rarity: "Common",
+        insight: "You carry a rare, magnetic depth. People feel safer, calmer, and more inspired simply entering your orbit when you show up authentically. You don't need to perform; your raw presence is the contribution.",
+        inquest: "Where in your world today can you allow your natural, effortless energy to lead the room?",
+        courage: "In your next conversation or meeting, do not prepare what to say. Sit back, listen entirely, and let your raw presence command the space."
+      },
+      {
+        id: "cc_4",
+        rarity: "Common",
+        insight: "You carry a quiet readiness to lead. Sometimes, we wait for an external permission slip or perfect consensus before stepping forward, forgetting that your initiative is what others are waiting for.",
+        inquest: "What is a decision you can make today that honors your personal authority rather than waiting for consensus?",
+        courage: "Identify the one action step you've been delaying because you're waiting for consensus, and execute it now without asking for permission."
+      },
+      {
+        id: "cc_5",
+        rarity: "Common",
+        insight: "Your inner voice is remarkably sharp right now, humming with pure creative potential. The only block is the static of other people's opinions that you've allowed to crowd your quiet center.",
+        inquest: "If you carved out thirty minutes of absolute silence today, what is the first truth your spirit would whisper?",
+        courage: "Put all devices on 'Do Not Disturb' for 30 minutes, go for a walk outside, and write down the very first insight that enters your quiet mind."
+      },
+      {
+        id: "cc_6",
+        rarity: "Rare",
+        insight: "You have a natural appreciation for order and elegance. However, occasionally we default to safe, comfortable colors when our true vision is demanding a bolder, more experimental canvas.",
+        inquest: "Where can you invite a little more bold, creative experimentation into your work or lifestyle today?",
+        courage: "Intentionally break this minor self-imposed rule today. Write a draft with typos, dress boldly, or pitch an incomplete concept just to break the spell."
+      },
+      {
+        id: "cc_7",
+        rarity: "Legendary",
+        insight: "You have completely outgrown the small container of your current lifestyle. Your restlessness isn't a crisis of failure; it is your immense capacity screaming for a larger, stadium-scale challenge.",
+        inquest: "If you stopped playing small to make others comfortable, what is the most authentic, massive choice you would make before this day ends?",
+        courage: "Draw a hard line under one major compromise you have been tolerating. Explicitly say 'No' to a request or standard that does not match your true caliber."
+      }
+    ] 
+  },
+  ADVANCEMENT: { 
+    title: "Advancement", color: "#3B82F6", glow: "shadow-blue-500/10", badge: "⚠️ ALIGNMENT INSIGHT", icon: <TrendingUp className="w-4 h-4" />, 
+    questions: [
+      {
+        id: "adv_1",
+        rarity: "Common",
+        insight: "Your work ethic is remarkable, and you are capable of high velocity. Currently, you may be directing your vast energy into multiple small tasks, which can feel draining without yielding the big breakthroughs you deserve.",
+        inquest: "Which high-impact priority, if given your full focus, would make the small tasks redundant or easier?",
+        courage: "Block out the first 90 minutes of your morning tomorrow. Shut down all communication channels, and spend that time exclusively on the high-stakes task."
+      },
+      {
+        id: "adv_2",
+        rarity: "Common",
+        insight: "You are a naturally gifted builder with an incredible capacity for deep execution. When you dial into your focus state, you are an absolute force of nature. The only thing missing is a target worthy of your power.",
+        inquest: "What is one high-impact plan you can design today that matches the true scale of your execution power?",
+        courage: "Define your single most critical milestone for this quarter, write it in big letters on a note, and stick it directly behind your screen."
+      },
+      {
+        id: "adv_3",
+        rarity: "Common",
+        insight: "Your standard of excellence is admirable. Remember that standards are meant to guide your creation, not act as a barrier to completing your valuable drafts.",
+        inquest: "What project is ready to be shared with the world in its current state to unlock the next level of feedback?",
+        courage: "Publish, share, or submit your current 70%-complete draft. Force yourself to get real-world feedback on raw, messy progress."
+      },
+      {
+        id: "adv_4",
+        rarity: "Rare",
+        insight: "You have built a profound foundation of resilience. Every past trial has forged a highly adaptive, powerful mind capable of navigating any storm with total resourcefulness.",
+        inquest: "If you trusted your capacity to handle any outcome, what courageous leap would you execute right now?",
+        courage: "Make an irreversible public or financial commitment to your leap—buy the ticket, sign the contract, or announce your launch date today."
+      },
+      {
+        id: "adv_5",
+        rarity: "Rare",
+        insight: "Your momentum is built on your daily rhythms. Currently, a small environmental or routine adjustment could release a massive amount of cognitive space.",
+        inquest: "What is one simple habit adjustment you can make today to protect your peak focus?",
+        courage: "Eliminate the choice of backsliding tonight. Install a hard app-blocker, set an automated bedtime, or clear your space of your primary vice immediately."
+      },
+      {
+        id: "adv_6",
+        rarity: "Common",
+        insight: "Your future self is looking back at you with immense pride and gratitude. You are quietly and patiently laying down the hard, unglamorous bricks of a magnificent empire.",
+        inquest: "What is one silent, hidden victory from this past week that you haven't fully celebrated yet?",
+        courage: "Book a restorative, non-work-related experience for yourself this weekend to intentionally reward your hard work and recharge your vessel."
+      },
+      {
+        id: "adv_7",
+        rarity: "Legendary",
+        insight: "The friction you are feeling is a positive indicator—it is your evolving capacity signaling that you are ready to transition to a more strategic, higher-leverage style of execution.",
+        inquest: "What is one compromise you can phase out today to make room for your next level of mastery?",
+        courage: "Explicitly refuse one offer, client, or routine task that is 'good enough' to create empty, strategic space for the legendary opportunities."
+      }
+    ] 
+  },
+  ACHIEVEMENT: { 
+    title: "Achievement", color: "#D97706", glow: "shadow-amber-500/10", badge: "🏆 VICTORY ALIGNMENT", icon: <Trophy className="w-4 h-4" />, 
+    questions: [
+      { 
+        id: "ach_1", 
+        rarity: "Common", 
+        insight: "You have a natural drive for achievement. Ensure that the goals you are striving for are authentic to your true mission, rather than default targets inherited from external systems.", 
+        inquest: "What does genuine fulfillment look like for you in this current season of life?",
+        courage: "Write down your personal, raw definition of success on a card. Prune three goals from your current list that belong to other people's expectations."
+      },
+      { 
+        id: "ach_2", 
+        rarity: "Common", 
+        insight: "You have built an honorable track record. The invitation now is to step beyond the safety of past victories and embrace the creative stretch of your next growth plateau.", 
+        inquest: "What is one new domain or skill where you are excited to embrace the learning curve of a beginner today?",
+        courage: "Identify one skill or environment where you are currently a complete beginner, and spend 45 minutes practicing or researching it today."
+      },
+      { 
+        id: "ach_3", 
+        rarity: "Common", 
+        insight: "You are designed for grand, legacy-scale impact. Take a moment to step back from daily micro-metrics to ensure you are allocating energy to your most expansive long-term vision.", 
+        inquest: "If you focused exclusively on your highest-leverage work today, what would change?",
+        courage: "Decline one low-leverage opportunity or small client today to intentionally force open creative space for a high-value pursuit."
+      },
+      { 
+        id: "ach_4", 
+        rarity: "Rare", 
+        insight: "A past setback has made you play smaller than your stature. You have mistakenly internalized a temporary stumble as a permanent limit.", 
+        inquest: "What was a recent 'loss' that actually taught you the exact strategic lesson you need to win now?",
+        courage: "Write a detailed post-mortem of that failure. Extract 3 core golden rules, and implement one of them in your current main project today."
+      },
+      { 
+        id: "ach_5", 
+        rarity: "Rare", 
+        insight: "Your focal power is immense. Protect it by staying aligned with your unique path, rather than letting peripheral noise or comparison divert your attention.", 
+        inquest: "What is one simple boundary you can set today to protect your unique creative focus?",
+        courage: "Unfollow, mute, or disconnect from 3 competitive accounts that trigger subtle insecurities or comparison metrics on your device today."
+      },
+      { 
+        id: "ach_6", 
+        rarity: "Common", 
+        insight: "Your natural authority is preparing you for a major position of leadership. The people in your ecosystem are quietly waiting for you to step into that command.", 
+        inquest: "What grand legacy is your daily work actually building for the next generation?",
+        courage: "Spend the next hour creating a modular system, asset, or framework that can outlast your daily manual presence."
+      },
+      { 
+        id: "ach_7", 
+        rarity: "Legendary", 
+        insight: "You have a powerful vision. Sometimes we set distant timelines out of caution, but your current capacity is fully ready to accelerate this process.", 
+        inquest: "If you brought your 1-year milestone forward to the next 30 days, what bold first step would you take today?",
+        courage: "Set your target launch or delivery date to exactly 30 days from now, and announce it publicly to your team or network."
+      }
+    ] 
+  },
+  RESOURCE_GAINING: { 
+    title: "Resource Gaining", color: "#10B981", glow: "shadow-emerald-500/10", badge: "💰 ALIGNMENT INSIGHT", icon: <Wallet className="w-4 h-4" />, 
+    questions: [
+      { 
+        id: "res_1", 
+        rarity: "Common", 
+        insight: "You have a natural gift for spotting opportunities and pulling in resources. Currently, the best leverage is to focus on energy-generating assets rather than over-analyzing minor operational leaks.", 
+        inquest: "Where is the absolute highest return on investment for your time and energy today?",
+        courage: "Audit your bank statements. Cancel 3 recurring subscriptions or fees that you have not actively utilized in the last 30 days."
+      },
+      { 
+        id: "res_2", 
+        rarity: "Common", 
+        insight: "Your potential for abundance is massive. True alignment comes from establishing clear, calm financial systems that empower you to take calculated risks with complete peace of mind.", 
+        inquest: "How stable is your current financial foundation, rated honestly on a scale of 1-10?",
+        courage: "Transfer a specific, small sum of capital into a high-yield savings or investment account today as a physical seed of abundance."
+      },
+      { 
+        id: "res_3", 
+        rarity: "Common", 
+        insight: "You enjoy optimizing your systems and environments. It is worth checking if your current tools are truly accelerating your workflow or quietly fragmenting your attention.", 
+        inquest: "Which simple, distraction-free workflow element can you rely on today to build deep focus?",
+        courage: "Uninstall all non-essential productivity apps from your main device, and work out of a single physical notebook for the rest of the day."
+      },
+      { 
+        id: "res_4", 
+        rarity: "Rare", 
+        insight: "You are neglecting to purchase or invest in the exact foundational assets that would instantly unlock your next phase of velocity and speed.", 
+        inquest: "What is one material or environmental investment that would immediately double your productivity?",
+        courage: "Purchase, upgrade, or authorize the procurement of that exact tool or environment enhancer right now without hesitation."
+      },
+      { 
+        id: "res_5", 
+        rarity: "Rare", 
+        insight: "Your mind holds wealth-generating wisdom, but you are hoarding your ideas instead of letting them circulate, creating a stagnant pool of potential.", 
+        inquest: "What is your relationship with 'abundance' vs 'scarcity' right now?",
+        courage: "Package one of your highest-value proprietary frameworks, templates, or resources, and share it with your network for free today."
+      },
+      { 
+        id: "res_6", 
+        rarity: "Common", 
+        insight: "You are waiting for the perfect pile of resources to arrive before you take your big leap, ignoring the universal law that resources follow movement.", 
+        inquest: "What high-income skill would be the most valuable asset for your future self to possess?",
+        courage: "Book a masterclass, acquire a specialized textbook, or schedule a training session for that skill today."
+      },
+      { 
+        id: "res_7", 
+        rarity: "Legendary", 
+        insight: "You are spending capital on temporary comforts while starving the singular, highest-yielding asset that generates everything: your own consciousness.", 
+        inquest: "What is the absolute best, highest-leverage investment you can make in yourself this week?",
+        courage: "Dedicate an explicit budget of capital (or 10 hours of focused time) to a personal development program or mastermind workspace."
+      }
+    ] 
+  },
+  VITALITY: { 
+    title: "Vitality", color: "#EF4444", glow: "shadow-red-500/10", badge: "⚡ ALIGNMENT INSIGHT", icon: <Zap className="w-4 h-4" />, 
+    questions: [
+      { 
+        id: "vit_1", 
+        rarity: "Common", 
+        insight: "You have an incredible engine of vitality. To operate at your absolute ceiling, design clear physical check-ins that protect your stamina before you enter highly demanding build periods.", 
+        inquest: "What is the primary physical signal your body is using to request rest or recovery today?",
+        courage: "Book a physical assessment, clean massage, or comprehensive health check today to address this bottleneck immediately."
+      },
+      { 
+        id: "vit_2", 
+        rarity: "Common", 
+        insight: "Your daily energy is a precious currency. Establish a protective filter to ensure you are entering environments that feed your momentum rather than absorbing ambient friction.", 
+        inquest: "What is the single highest-yield daily ritual that protects your baseline peace?",
+        courage: "Put a hard 'Do Not Disturb' lock on your communication channels starting at 7:00 PM tonight. Protect your recovery."
+      },
+      { 
+        id: "vit_3", 
+        rarity: "Common", 
+        insight: "You carry a rare, magnetic glow when you are operating in peak alignment. Lately, you have settled for a diluted, safe version of your physical health.", 
+        inquest: "When was the last time you felt truly, vibrantly, and unapologetically alive in your own skin?",
+        courage: "Put on your training gear and engage in 30 minutes of high-intensity functional movement or running right now to reset your biological baseline."
+      },
+      { 
+        id: "vit_4", 
+        rarity: "Rare", 
+        insight: "Your physical processing space is cluttered. Your external environment is a direct, living mirror of your current internal static.", 
+        inquest: "How is your immediate physical workspace currently affecting your mental clarity?",
+        courage: "Spend 20 minutes cleaning and clearing your desk right now until only your computer, note pad, and a glass of water remain."
+      },
+      { 
+        id: "vit_5", 
+        rarity: "Rare", 
+        insight: "You are relying on chemical stimulants instead of designing a high-vibrancy lifestyle that naturally generates power.", 
+        inquest: "What is one daily ritual that consistently restores your physical and psychological power?",
+        courage: "Commit to going tomorrow without caffeine, processed sugar, or artificial stimulants—relying solely on deep rest and hydration."
+      },
+      { 
+        id: "vit_6", 
+        rarity: "Common", 
+        insight: "You are running your physical engine in the red zone, pretending that burnout is a badge of honor to prove your worth to the world.", 
+        inquest: "If your health was a professional project, would it currently be rated 'on track' or 'failing'?",
+        courage: "Block out an entire afternoon this weekend to do absolutely nothing productive—guilt-free and screen-free."
+      },
+      { 
+        id: "vit_7", 
+        rarity: "Legendary", 
+        insight: "You are carrying old energetic and emotional toxic loops that cloud your spiritual signal, heavily stalling your execution speed.", 
+        inquest: "What is the one thing you can stop doing today to instantly double your vital power?",
+        courage: "Purge one highly addictive app, chemical habit, or toxic content channel from your phone and immediate environment right now."
+      }
+    ] 
+  },
+  DREAMS_PASSIONS: { 
+    title: "Dreams/Passions", color: "#F59E0B", glow: "shadow-yellow-500/10", badge: "🔥 ALIGNMENT INSIGHT", icon: <HelpCircle className="w-4 h-4" />, 
+    questions: [
+      { 
+        id: "dr_1", 
+        rarity: "Common", 
+        insight: "You have a grand inner spark. Ensure you are giving your most authentic visions a safe, protected container to mature, rather than exposing them to early, ungrounded feedback.", 
+        inquest: "What exciting dream did you set aside simply because the first steps felt uncertain?",
+        courage: "Secure the domain, register the draft, or design the raw concept document for this dream before you go to sleep tonight."
+      },
+      { 
+        id: "dr_2", 
+        rarity: "Common", 
+        insight: "You are spending all your days on duty, ignoring the exact creative activities that naturally bend time around your focus.", 
+        inquest: "What activity makes you lose track of time entirely when you engage with it?",
+        courage: "Schedule a non-negotiable block of 2 hours on your calendar this week dedicated solely to this flow activity."
+      },
+      { 
+        id: "dr_3", 
+        rarity: "Common", 
+        insight: "You are waiting for a mentor or a savior to show you your purpose, forgetting that purpose is actively forged, not passively found.", 
+        inquest: "What is one grand contribution you want to be remembered for when your time is up?",
+        courage: "Draft your grand, lifelong mission statement in 2 bold sentences, print it, and place it directly on your workspace wall."
+      },
+      { 
+        id: "dr_4", 
+        rarity: "Rare", 
+        insight: "You have let survival needs completely overwrite your creative playground, leaving you dry, intellectual, and uninspired.", 
+        inquest: "If money were completely out of the equation, how would you spend your Tuesday morning?",
+        courage: "Commit to spending the first 60 minutes of your upcoming Tuesday morning executing exactly that activity."
+      },
+      { 
+        id: "dr_5", 
+        rarity: "Rare", 
+        insight: "You are suppressing your excitement to match the lukewarm temperature of the safe rooms you currently occupy.", 
+        inquest: "What currently makes your heart race with pure, unadulterated excitement?",
+        courage: "Reach out to one h-energy teammate or partner, and pitch a joint initiative based around this exact excitement."
+      },
+      { 
+        id: "dr_6", 
+        rarity: "Common", 
+        insight: "You have a vivid imagination and strong aspirations. Sometimes, looking at other people's achievements can trigger a healthy reminder of what we are capable of building ourselves.", 
+        inquest: "What is one inspiration you've witnessed recently that you want to start building in your own unique way?",
+        courage: "Send a brief message of genuine appreciation to that exact person, telling them their journey inspires you, and request a quick 10-minute coffee call."
+      },
+      { 
+        id: "dr_7", 
+        rarity: "Legendary", 
+        insight: "You are choosing safety because you are terrified of the sheer, massive magnitude of your wild, authentic ambitions.", 
+        inquest: "What is the most daring, high-stakes choice you have ever thought about making?",
+        courage: "Take one irreversible, physical step toward that choice today—tell a mentor, draft the resignation, or book the flight."
+      }
+    ] 
+  },
+  PEOPLE: { 
+    title: "People", color: "#EC4899", glow: "shadow-pink-500/10", badge: "👥 ALIGNMENT INSIGHT", icon: <Users className="w-4 h-4" />, 
+    questions: [
+      { 
+        id: "pe_1", 
+        rarity: "Common", 
+        insight: "Your loyalty to others is a deep and beautiful quality. As you grow, it is natural to seek out relationships that not only celebrate where you have been, but actively call you forward into your next horizon.", 
+        inquest: "Who in your network consistently expands your vision, and how can you connect with them this week?",
+        courage: "Intentionally mute, distance yourself from, or decline invitations from one long-term acquaintance who drains your focus baseline."
+      },
+      { 
+        id: "pe_2", 
+        rarity: "Common", 
+        insight: "Your kindness is a powerful gift, but it requires clear, respectful boundaries. True alignment is built on transparent agreements rather than silent accommodations.", 
+        inquest: "What is a gentle but firm boundary you need to communicate to a collaborator today?",
+        courage: "Send an incredibly polite, clear, and un-apologetic message establishing this boundary, without explaining or softening the impact."
+      },
+      { 
+        id: "pe_3", 
+        rarity: "Common", 
+        insight: "You are carrying old resentments like hot coals, expecting the other person to burn while you damage your own progress and focus.", 
+        inquest: "Who are you holding a grudge against, and what is that grudge costing your focus?",
+        courage: "Write a raw, unfiltered letter of forgiveness to this person. Burn or delete it. This is for your release, not their approval."
+      },
+      { 
+        id: "pe_4", 
+        rarity: "Rare", 
+        insight: "You are isolated, trying to carry a kingdom-scale vision entirely on your own fragile shoulders to avoid relying on others.", 
+        inquest: "Who in your immediate network is currently challenging you to grow to your absolute limit?",
+        courage: "Reach out to this exact person and ask: 'What is my greatest operational blindspot that I am currently avoiding?'"
+      },
+      { 
+        id: "pe_5", 
+        rarity: "Rare", 
+        insight: "You are hiding your thoughts from the people who care about you, creating an island of isolation under the guise of strength.", 
+        inquest: "What is one thing you have been meaning to say to someone close to you but haven't?",
+        courage: "Call or schedule a meet with them today. Speak your absolute raw truth with love, without wrapping it in diplomacy."
+      },
+      { 
+        id: "pe_6", 
+        rarity: "Common", 
+        insight: "You are hoarding your magic, refusing to be the generous leader your community desperately needs.", 
+        inquest: "Who is the most generous person you know? How can you emulate them today?",
+        courage: "Spend 25 minutes writing a detailed, unsolicited recommendation or public reference of appreciation for a peer or teammate."
+      },
+      { 
+        id: "pe_7", 
+        rarity: "Legendary", 
+        insight: "True leadership involves the courage to look at ourselves clearly. Inviting honest perspective from those we trust is a powerful way to accelerate our growth.", 
+        inquest: "What is an area of your leadership or workflow where you would value constructive, growth-oriented feedback?",
+        courage: "Text your closest friend this exact question right now, with the absolute promise that you will only listen and say 'Thank you.'"
+      }
+    ] 
+  },
+  CONNECTION: { 
+    title: "Connection", color: "#14B8A6", glow: "shadow-teal-500/10", badge: "❤️ RAW TRUTH", icon: <Heart className="w-4 h-4" />, 
+    questions: [
+      { 
+        id: "co_1", 
+        rarity: "Common", 
+        insight: "You have a rare, beautiful soul depth. However, you are confusing your public broadcast armor with authentic presence. People see your shield, not you.", 
+        inquest: "How can you develop deeper, unfiltered presence in your interactions today?",
+        courage: "Go through your next 3 major conversations without checking your phone, interrupting, or planning your reply."
+      },
+      { 
+        id: "co_2", 
+        rarity: "Common", 
+        insight: "You are surrounded by noise, but completely starved of genuine, quiet, soul-level communion.", 
+        inquest: "Who do you need to have a deep, completely honest conversation with right now?",
+        courage: "Call them right now and say: 'I was thinking about you, let's skip the small talk—how are you actually doing?'"
+      },
+      { 
+        id: "co_3", 
+        rarity: "Common", 
+        insight: "You are presenting a carefully edited version of yourself, verified that your raw, unfiltered truth is highly compelling and worthy of deep respect.", 
+        inquest: "When do you feel most seen and understood by the world?",
+        courage: "Share an unedited, raw realization or current struggle with your community or network—let them see your messy draft progress."
+      },
+      { 
+        id: "co_4", 
+        rarity: "Rare", 
+        insight: "You are actively blocking intimacy, using business, humor, or hyper-independence as a defense mechanism to stay safe.", 
+        inquest: "How do you currently block intimacy or deep connection when people get close?",
+        courage: "Admit one vulnerability, weakness, or struggle to someone close to you today, and explicitly ask for their support."
+      },
+      { 
+        id: "co_5", 
+        rarity: "Rare", 
+        insight: "You are lonely in crowded rooms because you refuse to lower your drawbridge and let anyone in.", 
+        inquest: "Where in your life are you lonely, even when people are around?",
+        courage: "Secure a seat at a curated physical mastermind, meetup, or physical workspace today where professional posturing is banned."
+      },
+      { 
+        id: "co_6", 
+        rarity: "Common", 
+        insight: "You are waiting for others to be vulnerable first, trapped in an emotional standoff of safety.", 
+        inquest: "What would happen if you were 10% more vulnerable today?",
+        courage: "Share an honest fear or mistake you made in a recent project with your key collaborator or partner today."
+      },
+      { 
+        id: "co_7", 
+        rarity: "Legendary", 
+        insight: "Your public avatar is thriving, but your private self is neglected, starved of true spiritual alignment.", 
+        inquest: "What is the main difference between your public self and your private self?",
+        courage: "Dedicate 60 minutes tonight to a completely private alignment ritual—meditation, writing, or resting—with no screens and no intent to share it."
+      }
+    ] 
+  }
+};
+
+const ALL_QUESTIONS = Object.values(DOMAINS).flatMap(d => d.questions.map(q => ({ 
+  ...q, 
+  domainTitle: d.title, 
+  domainColor: d.color, 
+  domainGlow: d.glow,
+  badge: d.badge, 
+  icon: d.icon 
+})));
 
 // --- HIGH-FIDELITY VECTOR COMPONENT FOR THE PREMIUM "DIVER" MASCOT ---
 function DiverMascot({ size = 80, className = "" }) {
@@ -565,6 +617,183 @@ function DiverMascot({ size = 80, className = "" }) {
   );
 }
 
+// --- GLOBAL PROCEDURAL CANVAS DRAWING PIPELINE FOR THE DETAILED "DIVER" ---
+const drawCanvasDiver = (ctx, x, y, size) => {
+  ctx.save();
+  ctx.translate(x, y);
+
+  const rScale = size / 80;
+
+  // Glowing underwater backlight halo
+  const haloGrad = ctx.createRadialGradient(0, 0, 10 * rScale, 0, 0, 45 * rScale);
+  haloGrad.addColorStop(0, 'rgba(56, 189, 248, 0.45)');
+  haloGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+  ctx.fillStyle = haloGrad;
+  ctx.beginPath();
+  ctx.arc(0, 0, 45 * rScale, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Air Tank
+  ctx.fillStyle = '#1e222b';
+  ctx.strokeStyle = '#0b0d10';
+  ctx.lineWidth = 2 * rScale;
+  ctx.beginPath();
+  ctx.roundRect(-14 * rScale, 10 * rScale, 28 * rScale, 34 * rScale, 10 * rScale);
+  ctx.fill();
+  ctx.stroke();
+
+  // Body Suit
+  const suitGrad = ctx.createLinearGradient(-25 * rScale, 10 * rScale, 25 * rScale, 54 * rScale);
+  suitGrad.addColorStop(0, '#2c303b');
+  suitGrad.addColorStop(0.5, '#1e222b');
+  suitGrad.addColorStop(1, '#12141a');
+  ctx.fillStyle = suitGrad;
+  ctx.strokeStyle = '#0f1115';
+  ctx.lineWidth = 3 * rScale;
+  ctx.beginPath();
+  ctx.ellipse(0, 30 * rScale, 25 * rScale, 23 * rScale, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+
+  // Arms
+  ctx.strokeStyle = suitGrad;
+  ctx.lineWidth = 11 * rScale;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.quadraticCurveTo(-20 * rScale, 30 * rScale, -32 * rScale, 40 * rScale);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.quadraticCurveTo(20 * rScale, 30 * rScale, 32 * rScale, 40 * rScale);
+  ctx.stroke();
+
+  // Flippers
+  ctx.fillStyle = '#12141a';
+  ctx.save();
+  ctx.translate(-13 * rScale, 54 * rScale);
+  ctx.rotate(-0.2);
+  ctx.beginPath();
+  ctx.ellipse(0, 0, 8 * rScale, 5.5 * rScale, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  ctx.save();
+  ctx.translate(13 * rScale, 54 * rScale);
+  ctx.rotate(0.2);
+  ctx.beginPath();
+  ctx.ellipse(0, 0, 8 * rScale, 5.5 * rScale, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  // Neon Shoulder Spirals
+  ctx.strokeStyle = 'rgba(216, 180, 254, 0.9)';
+  ctx.lineWidth = 1.2 * rScale;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.arc(-22 * rScale, 31 * rScale, 2 * rScale, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(22 * rScale, 31 * rScale, 2 * rScale, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Spiral Chest Badge
+  ctx.fillStyle = '#1f242e';
+  ctx.strokeStyle = '#0f1115';
+  ctx.lineWidth = 1.5 * rScale;
+  ctx.beginPath();
+  ctx.arc(0, 29 * rScale, 6 * rScale, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.strokeStyle = '#c084fc';
+  ctx.lineWidth = 1.2 * rScale;
+  ctx.beginPath();
+  ctx.arc(0, 29 * rScale, 2.5 * rScale, 0, Math.PI * 0.85);
+  ctx.stroke();
+
+  // Helmet Metallic Chrome Outer Ring
+  const chromeGrad = ctx.createLinearGradient(-30 * rScale, -39 * rScale, 30 * rScale, 21 * rScale);
+  chromeGrad.addColorStop(0, '#5f6775');
+  chromeGrad.addColorStop(0.35, '#a1abbc');
+  chromeGrad.addColorStop(0.5, '#ffffff');
+  chromeGrad.addColorStop(0.65, '#7a8596');
+  chromeGrad.addColorStop(1, '#2d333f');
+  ctx.fillStyle = chromeGrad;
+  ctx.beginPath();
+  ctx.arc(0, -9 * rScale, 30 * rScale, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Visor Shield Glass
+  const glassGrad = ctx.createLinearGradient(-26 * rScale, -35 * rScale, 26 * rScale, 17 * rScale);
+  glassGrad.addColorStop(0, '#334155');
+  glassGrad.addColorStop(0.3, '#1e293b');
+  glassGrad.addColorStop(1, '#0f172a');
+  ctx.fillStyle = glassGrad;
+  ctx.strokeStyle = '#0b0d10';
+  ctx.lineWidth = 1.5 * rScale;
+  ctx.beginPath();
+  ctx.arc(0, -9 * rScale, 26 * rScale, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+
+  // Face Plate
+  ctx.fillStyle = '#fffdf9';
+  ctx.beginPath();
+  ctx.arc(0, -9 * rScale, 23 * rScale, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Blushing cheeks
+  const blushGrad1 = ctx.createRadialGradient(-15 * rScale, -3 * rScale, 0, -15 * rScale, -3 * rScale, 5 * rScale);
+  blushGrad1.addColorStop(0, 'rgba(251, 113, 133, 0.8)');
+  blushGrad1.addColorStop(1, 'rgba(251, 113, 133, 0)');
+  ctx.fillStyle = blushGrad1;
+  ctx.beginPath();
+  ctx.arc(-15 * rScale, -3 * rScale, 5 * rScale, 0, Math.PI * 2);
+  ctx.fill();
+
+  const blushGrad2 = ctx.createRadialGradient(15 * rScale, -3 * rScale, 0, 15 * rScale, -3 * rScale, 5 * rScale);
+  blushGrad2.addColorStop(0, 'rgba(251, 113, 133, 0.8)');
+  blushGrad2.addColorStop(1, 'rgba(251, 113, 133, 0)');
+  ctx.fillStyle = blushGrad2;
+  ctx.beginPath();
+  ctx.arc(15 * rScale, -3 * rScale, 5 * rScale, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Big Adorable Visor Eyes
+  ctx.fillStyle = '#13151b';
+  ctx.beginPath();
+  ctx.arc(-9 * rScale, -10 * rScale, 4.5 * rScale, 0, Math.PI * 2);
+  ctx.arc(9 * rScale, -10 * rScale, 4.5 * rScale, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = '#FFFFFF';
+  ctx.beginPath();
+  ctx.arc(-6.5 * rScale, -12.5 * rScale, 1.6 * rScale, 0, Math.PI * 2);
+  ctx.arc(11.5 * rScale, -12.5 * rScale, 1.6 * rScale, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Smiling Mouth
+  ctx.strokeStyle = '#13151b';
+  ctx.lineWidth = 2.5 * rScale;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.arc(0, -4 * rScale, 4 * rScale, 0.1 * Math.PI, 0.9 * Math.PI);
+  ctx.stroke();
+
+  // Upper Glass Visor gloss reflections
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+  ctx.lineWidth = 3 * rScale;
+  ctx.beginPath();
+  ctx.arc(0, -9 * rScale, 22 * rScale, -0.6 * Math.PI, -0.15 * Math.PI);
+  ctx.stroke();
+
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+  ctx.beginPath();
+  ctx.arc(16 * rScale, -17 * rScale, 1.5 * rScale, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.restore();
+};
+
 export default function App() {
   const [isSpinning, setIsSpinning] = useState(false);
   const [showGachaResult, setShowGachaResult] = useState(false);
@@ -583,6 +812,11 @@ export default function App() {
   const [reflectionText, setReflectionText] = useState('');
   const [marqueeIndex, setMarqueeIndex] = useState(0);
 
+  // Quick Start Onboarding Guide Toggle
+  const [showGuide, setShowGuide] = useState(() => {
+    return localStorage.getItem('lym_guide_dismissed') !== 'true';
+  });
+
   // Custom Toast State
   const [toastMessage, setToastMessage] = useState('');
 
@@ -596,7 +830,7 @@ export default function App() {
   const [timeRemaining, setTimeRemaining] = useState('');
 
   // Personalized Motto & Header Focus of the Day
-  const [messageOfTheDay, setMessageOfTheDay] = useState('True Self & Action');
+  const [messageOfTheDay, setMessageOfTheDay] = useState('TruSelf & Action');
 
   // Fixed brand theme color matching luxury slate gold
   const [beanColor] = useState('#D97706');
@@ -665,16 +899,13 @@ export default function App() {
     const storedDiscoveries = JSON.parse(localStorage.getItem('lym_discovered_ids') || '[]');
     const storedCoins = localStorage.getItem('lym_gacha_coins');
     const storedJournal = JSON.parse(localStorage.getItem('lym_journal_logs') || '[]');
-    const savedMOTD = localStorage.getItem('lym_motd') || 'True Self & Action';
+    const savedMOTD = localStorage.getItem('lym_motd') || 'TruSelf & Action';
     const storedRecharge = localStorage.getItem('lym_last_recharge');
 
-    // Pre-populate streak history on Day 1 with 7 consecutive dates so progress instantly reads 7/7!
+    // Pre-populate streak history on Day 1 with 1 active date (D1) so left-to-right filling starts chronologically at D1!
     let storedHistory = JSON.parse(localStorage.getItem('lym_streak_history') || '[]');
     if (storedHistory.length === 0) {
-      const defaultHistory = [];
-      for (let i = 0; i < 7; i++) {
-        defaultHistory.push(getLocalDateString(i));
-      }
+      const defaultHistory = [getLocalDateString(0)]; // Holds only today's date initially
       localStorage.setItem('lym_streak_history', JSON.stringify(defaultHistory));
       storedHistory = defaultHistory;
     }
@@ -685,7 +916,7 @@ export default function App() {
         return {
           ...log,
           inquest: log.question,
-          horoscope: log.horoscope || "Focus alignment mark pulled from archive.",
+          insight: log.insight || log.horoscope || "Focus alignment mark pulled from archive.",
           badge: log.badge || "🔮 ALIGNMENT INQUEST",
           courage: log.courage || "Commit to taking immediate aligned action today."
         };
@@ -936,332 +1167,18 @@ export default function App() {
     };
   }, [isSpinning, activeTab]);
 
-  // --- PROCEDURAL CANVAS DRAWING PIPELINE FOR THE DETAILED "DIVER" ---
-  // Placed in parent component scope so both wallpaper downloaders can access it safely
-  const drawCanvasDiver = (ctx, x, y, size) => {
-    ctx.save();
-    ctx.translate(x, y);
-
-    const rScale = size / 80;
-
-    // Glowing underwater backlight halo
-    const haloGrad = ctx.createRadialGradient(0, 0, 10 * rScale, 0, 0, 45 * rScale);
-    haloGrad.addColorStop(0, 'rgba(56, 189, 248, 0.45)');
-    haloGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
-    ctx.fillStyle = haloGrad;
-    ctx.beginPath();
-    ctx.arc(0, 0, 45 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Air Tank
-    ctx.fillStyle = '#1e222b';
-    ctx.strokeStyle = '#0b0d10';
-    ctx.lineWidth = 2 * rScale;
-    ctx.beginPath();
-    ctx.roundRect(-14 * rScale, 10 * rScale, 28 * rScale, 34 * rScale, 10 * rScale);
-    ctx.fill();
-    ctx.stroke();
-
-    // Body Suit
-    const suitGrad = ctx.createLinearGradient(-25 * rScale, 10 * rScale, 25 * rScale, 54 * rScale);
-    suitGrad.addColorStop(0, '#2c303b');
-    suitGrad.addColorStop(0.5, '#1e222b');
-    suitGrad.addColorStop(1, '#12141a');
-    ctx.fillStyle = suitGrad;
-    ctx.strokeStyle = '#0f1115';
-    ctx.lineWidth = 3 * rScale;
-    ctx.beginPath();
-    ctx.ellipse(0, 30 * rScale, 25 * rScale, 23 * rScale, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-
-    // Arms
-    ctx.strokeStyle = suitGrad;
-    ctx.lineWidth = 11 * rScale;
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    ctx.quadraticCurveTo(-20 * rScale, 30 * rScale, -32 * rScale, 40 * rScale);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.quadraticCurveTo(20 * rScale, 30 * rScale, 32 * rScale, 40 * rScale);
-    ctx.stroke();
-
-    // Flippers
-    ctx.fillStyle = '#12141a';
-    ctx.save();
-    ctx.translate(-13 * rScale, 54 * rScale);
-    ctx.rotate(-0.2);
-    ctx.beginPath();
-    ctx.ellipse(0, 0, 8 * rScale, 5.5 * rScale, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-
-    ctx.save();
-    ctx.translate(13 * rScale, 54 * rScale);
-    ctx.rotate(0.2);
-    ctx.beginPath();
-    ctx.ellipse(0, 0, 8 * rScale, 5.5 * rScale, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-
-    // Neon Shoulder Spirals
-    ctx.strokeStyle = 'rgba(216, 180, 254, 0.9)';
-    ctx.lineWidth = 1.2 * rScale;
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    ctx.arc(-22 * rScale, 31 * rScale, 2 * rScale, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(22 * rScale, 31 * rScale, 2 * rScale, 0, Math.PI * 2);
-    ctx.stroke();
-
-    // Spiral Chest Badge
-    ctx.fillStyle = '#1f242e';
-    ctx.strokeStyle = '#0f1115';
-    ctx.lineWidth = 1.5 * rScale;
-    ctx.beginPath();
-    ctx.arc(0, 29 * rScale, 6 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-
-    ctx.strokeStyle = '#c084fc';
-    ctx.lineWidth = 1.2 * rScale;
-    ctx.beginPath();
-    ctx.arc(0, 29 * rScale, 2.5 * rScale, 0, Math.PI * 0.85);
-    ctx.stroke();
-
-    // Helmet Metallic Chrome Outer Ring
-    const chromeGrad = ctx.createLinearGradient(-30 * rScale, -39 * rScale, 30 * rScale, 21 * rScale);
-    chromeGrad.addColorStop(0, '#5f6775');
-    chromeGrad.addColorStop(0.35, '#a1abbc');
-    chromeGrad.addColorStop(0.5, '#ffffff');
-    chromeGrad.addColorStop(0.65, '#7a8596');
-    chromeGrad.addColorStop(1, '#2d333f');
-    ctx.fillStyle = chromeGrad;
-    ctx.beginPath();
-    ctx.arc(0, -9 * rScale, 30 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Visor Shield Glass
-    const glassGrad = ctx.createLinearGradient(-26 * rScale, -35 * rScale, 26 * rScale, 17 * rScale);
-    glassGrad.addColorStop(0, '#334155');
-    glassGrad.addColorStop(0.3, '#1e293b');
-    glassGrad.addColorStop(1, '#0f172a');
-    ctx.fillStyle = glassGrad;
-    ctx.strokeStyle = '#0b0d10';
-    ctx.lineWidth = 1.5 * rScale;
-    ctx.beginPath();
-    ctx.arc(0, -9 * rScale, 26 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-
-    // Face Plate
-    ctx.fillStyle = '#fffdf9';
-    ctx.beginPath();
-    ctx.arc(0, -9 * rScale, 23 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Blushing cheeks
-    const blushGrad1 = ctx.createRadialGradient(-15 * rScale, -3 * rScale, 0, -15 * rScale, -3 * rScale, 5 * rScale);
-    blushGrad1.addColorStop(0, 'rgba(251, 113, 133, 0.8)');
-    blushGrad1.addColorStop(1, 'rgba(251, 113, 133, 0)');
-    ctx.fillStyle = blushGrad1;
-    ctx.beginPath();
-    ctx.arc(-15 * rScale, -3 * rScale, 5 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-
-    const blushGrad2 = ctx.createRadialGradient(15 * rScale, -3 * rScale, 0, 15 * rScale, -3 * rScale, 5 * rScale);
-    blushGrad2.addColorStop(0, 'rgba(251, 113, 133, 0.8)');
-    blushGrad2.addColorStop(1, 'rgba(251, 113, 133, 0)');
-    ctx.fillStyle = blushGrad2;
-    ctx.beginPath();
-    ctx.arc(15 * rScale, -3 * rScale, 5 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Big Adorable Visor Eyes
-    ctx.fillStyle = '#13151b';
-    ctx.beginPath();
-    ctx.arc(-9 * rScale, -10 * rScale, 4.5 * rScale, 0, Math.PI * 2);
-    ctx.arc(9 * rScale, -10 * rScale, 4.5 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.fillStyle = '#FFFFFF';
-    ctx.beginPath();
-    ctx.arc(-6.5 * rScale, -12.5 * rScale, 1.6 * rScale, 0, Math.PI * 2);
-    ctx.arc(11.5 * rScale, -12.5 * rScale, 1.6 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Smiling Mouth
-    ctx.strokeStyle = '#13151b';
-    ctx.lineWidth = 2.5 * rScale;
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    ctx.arc(0, -4 * rScale, 4 * rScale, 0.1 * Math.PI, 0.9 * Math.PI);
-    ctx.stroke();
-
-    // Upper Glass Visor gloss reflections
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
-    ctx.lineWidth = 3 * rScale;
-    ctx.beginPath();
-    ctx.arc(0, -9 * rScale, 22 * rScale, -0.6 * Math.PI, -0.15 * Math.PI);
-    ctx.stroke();
-
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-    ctx.beginPath();
-    ctx.arc(16 * rScale, -17 * rScale, 1.5 * rScale, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.restore();
-  };
-
-  // --- UPGRADED 8-WAY ARCHETYPE SYNTHESIS ENGINE ---
-  const generateArchetypeSynthesis = () => {
-    const activeSamplePool = journalLogs.length > 0 ? journalLogs : ALL_QUESTIONS.filter(q => discoveredIds.includes(q.id));
-
-    if (activeSamplePool.length === 0) {
-      return { 
-        title: "The Core Initiate", 
-        focus: "Core Alignment Base",
-        strengths: ["Highly curious and receptive", "Pragmatic search pattern metrics", "Calm alignment capacity"],
-        growth: "Waiting for external feedback loops to confirm your raw, latent instincts.",
-        directive: "Spin the alignment wheel 3 times to log your first set of behavioral coordinates.",
-        desc: "You are standing at the threshold of structural self-alignment. Begin pulling true alignment capsules to construct your cognitive map." 
-      };
-    }
-    
-    const tallies = { Creation: 0, Advancement: 0, Achievement: 0, Resources: 0, Vitality: 0, Dreams: 0, People: 0, Connection: 0 };
-    
-    activeSamplePool.forEach(log => {
-      const d = log.domain || log.domainTitle || "";
-      if (d.includes("Creation")) tallies.Creation++;
-      else if (d.includes("Advancement")) tallies.Advancement++;
-      else if (d.includes("Achievement")) tallies.Achievement++;
-      else if (d.includes("Resource")) tallies.Resources++;
-      else if (d.includes("Vitality")) tallies.Vitality++;
-      else if (d.includes("Dreams")) tallies.Dreams++;
-      else if (d.includes("People")) tallies.People++;
-      else if (d.includes("Connection")) tallies.Connection++;
-    });
-
-    const sorted = Object.entries(tallies).sort((a, b) => b[1] - a[1]);
-    const primary = sorted[0][0];
-    const secondary = sorted[1]?.[0] || "Advancement";
-
-    if ((primary === "Creation" || primary === "Dreams") && (secondary === "Advancement" || secondary === "Achievement")) {
-      return {
-        title: "The Maverick Executioner",
-        focus: "Creation & Advancement Alignment",
-        strengths: [
-          "Ability to translate grand abstract visions into scalable, step-by-step master plans",
-          "An extremely high tolerance for ambiguous, unpaved professional territories",
-          "Rapid conceptual agility that allows you to out-iterate standard slow systems"
-        ],
-        growth: "A subtle tendency to wait for 'perfect' structural clarity before letting a draft see real-world sunlight, hiding behind additional polish.",
-        directive: "Select one incomplete draft or concept you are currently hoarding and publish it, pitch it, or share it raw within the next 4 hours.",
-        desc: "You possess a rare combination of radical visionary architecture and tactical execution power. Your pattern signals that you don't just dream—you build empires at high velocity."
-      };
-    } 
-    else if ((primary === "Creation" || primary === "Dreams") && (secondary === "People" || secondary === "Connection")) {
-      return {
-        title: "The Cultural Catalyst",
-        focus: "Creation & People Alignment",
-        strengths: [
-          "Highly magnetic brand storytelling that bypasses transactional friction",
-          "Natural capacity to sense other people's unspoken psychological blocks",
-          "Creative empathy that structures safe, inspiring communities for high-caliber peers"
-        ],
-        growth: "Spending excessive vital energy editing your raw truth to match the lukewarm temperature of a conventional workspace.",
-        directive: "In your next main meeting or public statement, skip the diplomatic preamble. Speak your raw, unfiltered perspective with conviction.",
-        desc: "You lead through deep narrative empathy and artistic authority. People are naturally drawn to your orbit because you articulate hidden truths they cannot voice themselves."
-      };
-    }
-    else if ((primary === "Advancement" || primary === "Achievement") && secondary === "Resources") {
-      return {
-        title: "The Industrial Mastermind",
-        focus: "Advancement & Resource Gaining Alignment",
-        strengths: [
-          "Pragmatic focus on operational scalability and automated leverage systems",
-          "Elite capability to spot hidden opportunity structures inside chaotic markets",
-          "Uncompromising standard of excellence that purges waste from systems"
-        ],
-        growth: "Treating micro-management as high-value work, quietly spending elite cognitive spacing on low-return administrative tasks.",
-        directive: "Decline, automate, or delegate at least two non-essential tasks from your plate today to force strategic space open.",
-        desc: "You are an absolute infrastructure powerhouse. You are wired for high scalability, structural systems, and cold metrics of return-on-investment."
-      };
-    }
-    else if ((primary === "Advancement" || primary === "Achievement") && secondary === "Vitality") {
-      return {
-        title: "The High-Stamina Gladiator",
-        focus: "Advancement & Vitality Alignment",
-        strengths: [
-          "Vast physiological resilience that allows you to sustain focus under extreme pressure",
-          "Strong daily metabolic momentum that generates independent action vectors",
-          "Willingness to take hard physical steps toward long-term goals"
-        ],
-        growth: "Allowing work execution to override your physiological recovery baseline, treating burnout as a necessary tax for victory.",
-        directive: "Set a non-negotiable hard stop time for your work tonight. Dedicate the evening strictly to biological replenishment.",
-        desc: "You view your leadership and workflow as a high-performance sport. You run your engine at maximum capacity, making conscious recovery your highest leverage task."
-      };
-    }
-    else if ((primary === "People" || primary === "Connection") && (secondary === "Creation" || secondary === "Dreams")) {
-      return {
-        title: "The Intuitive Guide",
-        focus: "People & Creation Alignment",
-        strengths: [
-          "Capacity to hold massive, safe holding spaces for complex teams and creative individuals",
-          "Highly receptive attention that naturally dissolves defensive posture in others",
-          "Deep, clean understanding of human development archetypes and pathways"
-        ],
-        growth: "Tolerating subtle boundary overlaps to protect immediate personal peace, creating slow-burning energetic drains.",
-        directive: "Identify one active relationship or project where boundary lines are blurred, and define them clearly today.",
-        desc: "You excel at engineering profound psychological safety and unlocking hidden blocks in your network. Your presence naturally recalibrates chaotic rooms."
-      };
-    }
-    else if ((primary === "People" || primary === "Connection") && secondary === "Resources") {
-      return {
-        title: "The Strategic Ally",
-        focus: "People & Resource Gaining Alignment",
-        strengths: [
-          "Masterful networking capability that seamlessly links capital, talent, and vision",
-          "Strong capacity to negotiate high-value, mutually aligned alliances",
-          "Clean understanding of personal leverage and positional authority"
-        ],
-        growth: "Keeping historic companions in your inner strategic circle whose current standards act as subtle anchors on your future vision.",
-        directive: "Audit your immediate network of collaborators. Distance yourself from one drainage vector and set a coffee call with a rocket-tier peer.",
-        desc: "You are a masterful relationship architect who knows precisely how to merge capital, human talent, and massive visions together seamlessly."
-      };
-    }
-    else if (primary === "Resources" && secondary === "Vitality") {
-      return {
-        title: "The Baseline Optimizer",
-        focus: "Resource Gaining & Vitality Alignment",
-        strengths: [
-          "Exceptional focus on long-term sustainability and personal asset preservation",
-          "Ability to construct wealthy environments that support calm, low-stress focus",
-          "Analytical precision when tracking personal health and capital statistics"
-        ],
-        growth: "Over-calculating risk and delaying bold, high-stakes leaps out of a desire for absolute structural safety.",
-        directive: "Deploy a small, strategic block of capital or vital time into an environment that forces you to stretch past comfortable targets.",
-        desc: "You are highly focused on personal asset preservation, daily metabolic efficiency, and absolute wealth-generating leverage."
-      };
-    }
-    else {
-      return {
-        title: "The High-Vibrancy Alchemist",
-        focus: "Vitality & Passion Alignment",
-        strengths: [
-          "Radical commitment to self-respect and physiological alignment",
-          "High spiritual bandwidth that translates health alignment directly into focus",
-          "Ability to manifest creative projects out of pure passion-flow"
-        ],
-        growth: "Occasionally operating from isolated standard baselines, separating yourself from high-caliber networks that could scale your influence.",
-        directive: "Connect your personal health or artistic practice with a larger professional strategy or community room today.",
-        desc: "You violently reject traditional corporate burnout. You forge massive professional dreams out of a pure baseline of biological alignment and self-respect."
-      };
-    }
-  };
-
-  const currentArchetype = generateArchetypeSynthesis();
+  // Cycle the ambient marquee billboard announcements
+  useEffect(() => {
+    const messages = [
+      `🔮 MARKS UNLOCKED: ${discoveredIds.length}/56 TRUSELF DIALS ARCHIVED 🔮`,
+      `🎪 CO-ACTION: TRUSELF SUMMIT Live • 27 & 28 June 2026 • Secure Your Seat Now 🎪`,
+      `📸 Follow us on Instagram: @live.your.mark`
+    ];
+    const interval = setInterval(() => {
+      setMarqueeIndex((prev) => (prev + 1) % messages.length);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [discoveredIds]);
 
   // Spin core logic (True Randomization with Variety memory)
   const spinGacha = useCallback(() => {
@@ -1316,6 +1233,15 @@ export default function App() {
     const currentStreak = computeStreak(updatedHistory);
     setStreakCount(currentStreak);
 
+    // Dynamic Focus Phrase Intercept & Allocation
+    try {
+      const activeDomain = selectedQuestion.domainTitle;
+      const phrases = FOCUS_PHRASES[activeDomain] || ["TruSelf & Action"];
+      const randomizedFocus = phrases[Math.floor(Math.random() * phrases.length)];
+      setMessageOfTheDay(randomizedFocus);
+      localStorage.setItem('lym_motd', randomizedFocus);
+    } catch (e) {}
+
     setTotalSpins(nextSpinCount);
     setDiscoveredIds(updatedDiscoveries);
     setCoins(nextCoins);
@@ -1345,7 +1271,7 @@ export default function App() {
       domain: gachaResult.domainTitle,
       domainColor: gachaResult.domainColor,
       badge: gachaResult.badge,
-      horoscope: gachaResult.horoscope,
+      insight: gachaResult.insight,
       inquest: gachaResult.inquest,
       courage: gachaResult.courage,
       reflection: reflectionText || "Self-guided reflection session.",
@@ -1373,7 +1299,7 @@ export default function App() {
   const copyJournalToClipboard = () => {
     playSound('click');
     const text = journalLogs.map(log => 
-      `--- ${log.date} | Focus: ${log.motto || 'None'} | [${log.domain}] ---\nObservation: ${log.horoscope}\nInquest: ${log.inquest}\nCourage Step: ${log.courage}\nReflection: ${log.reflection}\n`
+      `--- ${log.date} | Focus: ${log.motto || 'None'} | [${log.domain}] ---\nObservation: ${log.insight || log.horoscope || ''}\nInquest: ${log.inquest}\nCourage Step: ${log.courage}\nReflection: ${log.reflection}\n`
     ).join('\n');
 
     const textarea = document.createElement('textarea');
@@ -1428,7 +1354,7 @@ export default function App() {
     ctx.lineWidth = 8;
     ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
 
-    // Inner gold-threaded delicate line
+    // Inner line
     ctx.strokeStyle = '#D9770630';
     ctx.lineWidth = 2;
     ctx.strokeRect(55, 55, canvas.width - 110, canvas.height - 110);
@@ -1469,7 +1395,7 @@ export default function App() {
       return currentY;
     };
 
-    // Draw our Custom Diver Mascot at the top center of the wallpaper
+    // Draw our lovely Custom Diver Mascot at the top center of the wallpaper
     drawCanvasDiver(ctx, 600, 175, 80);
 
     const drawLogoAndCardText = (startY) => {
@@ -1486,7 +1412,7 @@ export default function App() {
       ctx.fillText('L I V E   Y O U R   M A R K', canvas.width / 2, startY + 36);
 
       // --- LUXURY PERSONAL FOCUS EMBOSSED GOLD BOARD ---
-      const activeMotto = (messageOfTheDay || 'True Self & Action').trim();
+      const activeMotto = (messageOfTheDay || 'TruSelf & Action').trim();
       ctx.fillStyle = '#111827';
       ctx.fillRect(200, startY + 80, canvas.width - 400, 110);
       
@@ -1534,10 +1460,10 @@ export default function App() {
 
       ctx.fillStyle = '#E2E8F0';
       ctx.font = 'italic 28px Georgia, serif';
-      const lastHoroscopeY = wrapText(ctx, `"${gachaResult.horoscope}"`, canvas.width / 2, textStartY + 55, 780, 44);
+      const lastInsightY = wrapText(ctx, `"${gachaResult.insight}"`, canvas.width / 2, textStartY + 55, 780, 44);
 
       // --- SECTION 2: ASK YOURSELF? ---
-      const inquestStartY = lastHoroscopeY + 110;
+      const inquestStartY = lastInsightY + 110;
       ctx.fillStyle = '#D97706';
       ctx.font = '900 16px sans-serif';
       ctx.letterSpacing = '3px';
@@ -1629,7 +1555,7 @@ export default function App() {
     ctx.lineWidth = 8;
     ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
 
-    // Inner gold-threaded delicate line
+    // Inner gold-threaded line
     ctx.strokeStyle = '#D9770630';
     ctx.lineWidth = 2;
     ctx.strokeRect(55, 55, canvas.width - 110, canvas.height - 110);
@@ -1758,7 +1684,7 @@ export default function App() {
 
     const dataUrl = canvas.toDataURL('image/png');
     const link = document.createElement('a');
-    link.download = `TrueSelf_Archetype_${Date.now()}.png`;
+    link.download = `TruSelf_Archetype_${Date.now()}.png`;
     link.href = dataUrl;
     link.click();
     playSound('success');
@@ -1812,9 +1738,9 @@ export default function App() {
       {/* AMBIENT ARCADE BILLBOARD MARQUEE */}
       <div className="w-full bg-[#0B0F19]/90 border-b border-white/5 py-2.5 overflow-hidden relative z-40 flex items-center justify-center">
         <div className="text-[10px] font-black tracking-widest text-center text-indigo-300 uppercase opacity-80 px-4">
-          {marqueeIndex === 0 && `🔮 MARKS UNLOCKED: ${discoveredIds.length}/56 TRUE SELF DIALS ARCHIVED 🔮`}
+          {marqueeIndex === 0 && `🔮 MARKS UNLOCKED: ${discoveredIds.length}/56 TRUSELF DIALS ARCHIVED 🔮`}
           {marqueeIndex === 1 && `🎪 CO-ACTION: TRUSELF SUMMIT Live • 27 & 28 June 2026 • Secure Your Seat Now 🎪`}
-          {marqueeIndex === 2 && `⚡ FOLLOW US ON INSTAGRAM - @LIVE.YOUR.MARK ⚡`}
+          {marqueeIndex === 2 && `📸 Follow us on Instagram: @live.your.mark`}
         </div>
       </div>
 
@@ -1837,6 +1763,32 @@ export default function App() {
         {/* TAB 1: machine view */}
         {activeTab === 'machine' && (
           <div className="flex flex-col items-center w-full animate-in fade-in slide-in-from-bottom-5 duration-300">
+            
+            {/* --- QUICK START GUIDE PANEL (MOVED TO TOP FOR MOBILE ADAPTABILITY) --- */}
+            {showGuide && (
+              <div className="w-full max-w-[290px] mb-6 p-4 rounded-2xl bg-indigo-950/40 border border-indigo-500/20 relative animate-in fade-in duration-300">
+                <button 
+                  onClick={() => {
+                    playSound('click');
+                    setShowGuide(false);
+                    localStorage.setItem('lym_guide_dismissed', 'true');
+                  }}
+                  className="absolute top-3 right-3 text-slate-400 hover:text-white cursor-pointer"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+                <h4 className="text-xs font-black uppercase text-indigo-300 tracking-wider flex items-center gap-1.5 mb-2">
+                  <HelpCircle className="w-3.5 h-3.5 text-amber-500" /> Quick Start Guide
+                </h4>
+                <ul className="space-y-2 text-[10px] text-slate-300 leading-normal font-sans">
+                  <li><strong>1. Spin the Wheel:</strong> Pull the golden dial to reveal your daily assessment card. (Strictly 3 spins per day).</li>
+                  <li><strong>2. Reflect & Save:</strong> Type your thoughts in the modal reflection box and click <strong>Save Log</strong> to archive your insights.</li>
+                  <li><strong>3. Stickers & Journal:</strong> Track progress on the <strong>Stickers</strong> tab. Tap any unlocked card to review questions or view logs in your <strong>Journal</strong>.</li>
+                  <li><strong>4. Pattern Synthesis:</strong> Build your 7-day streak to see what it reveals about the patterns you are running in life, and download your TruSelf report!</li>
+                </ul>
+              </div>
+            )}
+
             <div className="w-full aspect-[3/4.2] relative max-w-[310px] mt-4">
               
               <div className="w-full h-full bg-white rounded-[45px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] border-[10px] border-[#1E1B4B] overflow-hidden flex flex-col relative">
@@ -1891,11 +1843,10 @@ export default function App() {
                 <span className="text-xs font-black text-amber-500 tracking-tight">{streakCount} Days Active</span>
               </div>
 
-              {/* Progress nodes chronological layout (Filling forward D1 -> D7) */}
+              {/* Progress nodes chronological layout (Filling forward left-to-right D1 -> D7) */}
               <div className="flex items-center justify-between gap-1 pt-1">
                 {Array.from({ length: 7 }).map((_, index) => {
-                  const nodeDate = getLocalDateString(index); 
-                  const isChecked = streakHistory.includes(nodeDate);
+                  const isChecked = index < streakCount;
                   const isToday = index === Math.min(6, streakCount); 
                   return (
                     <div key={index} className="flex flex-col items-center flex-1">
@@ -1913,6 +1864,11 @@ export default function App() {
                 Your streak has been initialized at <strong className="text-white">7 Days</strong>. Tap below to unlock your patterns based on your daily inputs!
               </div>
 
+              <div className="p-3 bg-black/40 border border-white/5 rounded-xl text-[10px] text-slate-400 leading-normal font-sans text-left">
+                <strong className="text-indigo-400 block mb-1">🎯 Why Complete 7 Days Straight?</strong>
+                Keep your streak going to see what it reveals about the patterns you are running in life. Reaching Day 7 unlocks your complete **TruSelf Synthesis** report!
+              </div>
+
               <button
                 onClick={() => { playSound('click'); setShowStreakModal(true); }}
                 className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-[9px] font-black tracking-widest uppercase transition-all shadow-md cursor-pointer"
@@ -1928,7 +1884,7 @@ export default function App() {
                 <div>
                   <h5 className="text-[10px] font-black text-slate-200 uppercase tracking-wider">Privacy Guarantee</h5>
                   <p className="text-[9px] text-slate-400 leading-normal mt-0.5 font-sans">
-                    No data is ever stored by us. All horoscopes, logs, and reflections remain 100% inside your local device memory (<code className="text-emerald-400 font-bold font-mono">localStorage</code>). Your privacy is uncompromised.
+                    No data is ever stored by us. All logs, journals, and reflections remain 100% inside your local device memory (<code className="text-emerald-400 font-bold font-mono">localStorage</code>). Your privacy is uncompromised.
                   </p>
                 </div>
               </div>
@@ -1941,7 +1897,7 @@ export default function App() {
           <div className="w-full mt-2 space-y-6 animate-in fade-in slide-in-from-bottom-5 duration-300">
             <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 text-center">
               <span className="text-[10px] font-black tracking-widest text-amber-500 uppercase block">Discovered Marks</span>
-              <h3 className="text-lg font-bold text-white tracking-tight mt-1">True Self Library Grid</h3>
+              <h3 className="text-lg font-bold text-white tracking-tight mt-1">TruSelf Library Grid</h3>
               
               <div className="mt-4 bg-slate-950 rounded-full h-2.5 overflow-hidden border border-white/5 relative">
                 <div 
@@ -2006,7 +1962,7 @@ export default function App() {
                   href="https://liveyourmark.com/truself-summit/" 
                   target="_blank" 
                   rel="noreferrer"
-                  className="mt-3.5 inline-block bg-amber-500 hover:bg-amber-600 text-slate-950 text-[10px] font-black uppercase px-4 py-2 rounded-xl tracking-wider transition-colors"
+                  className="mt-3.5 inline-block bg-amber-500 hover:bg-amber-600 text-slate-950 text-[10px] font-black uppercase px-4 py-2 rounded-xl tracking-wider transition-colors animate-pulse"
                 >
                   Enter Live TruSelf Summit
                 </a>
@@ -2038,7 +1994,7 @@ export default function App() {
               <div>
                 <h5 className="text-[10px] font-black text-slate-200 uppercase tracking-wider">Privacy Guarantee</h5>
                 <p className="text-[9px] text-slate-400 leading-normal mt-0.5 font-sans">
-                  The logs shown below are stored locally on your device. We do not maintain any cloud trackers, logging cookies, or database servers. No private details are ever shared.
+                  No data is ever stored by us. All logs, journals, and reflections remain 100% inside your local device memory (<code className="text-emerald-400 font-bold font-mono">localStorage</code>). Your privacy is uncompromised.
                 </p>
               </div>
             </div>
@@ -2062,7 +2018,7 @@ export default function App() {
                     </div>
 
                     <p className="text-xs italic text-slate-400 leading-normal border-l border-white/10 pl-3">
-                      "{log.horoscope}"
+                      "{log.insight || log.horoscope || ''}"
                     </p>
 
                     <p className="text-sm font-bold text-white leading-snug">
@@ -2146,7 +2102,7 @@ export default function App() {
               <div className="bg-black/40 p-5 rounded-2xl border border-white/5 mb-4 relative font-sans">
                 <span className="absolute -top-2 left-4 px-2 py-0.5 bg-slate-800 rounded text-[8px] font-black tracking-wider text-indigo-400 uppercase">Message of the Day</span>
                 <p className="text-xs leading-relaxed text-slate-300 italic pt-1">
-                  "{gachaResult.horoscope}"
+                  "{gachaResult.insight}"
                 </p>
               </div>
 
@@ -2190,6 +2146,7 @@ export default function App() {
                 </button>
               </div>
 
+              {/* Conversion Footer updating summit dates and exact CTA requirements without duplicate strings */}
               <div className="mt-6 pt-5 border-t border-white/5 flex flex-col items-center text-center font-sans">
                 <span className="text-[10px] text-amber-500 font-bold uppercase tracking-widest flex items-center gap-1.5">
                   <Calendar className="w-3.5 h-3.5" /> Join our TruSelf Summit: 27 and 28 June 2026
@@ -2201,7 +2158,7 @@ export default function App() {
                   href="https://liveyourmark.com/truself-summit/" 
                   target="_blank" 
                   rel="noreferrer" 
-                  className="mt-2 text-xs text-white font-bold hover:text-amber-400 transition-colors inline-flex items-center gap-1"
+                  className="mt-2 text-xs text-white font-bold hover:text-amber-400 transition-colors inline-flex items-center gap-1 cursor-pointer"
                 >
                   Find out more about the TruSelf Summit <ArrowRight className="w-3 h-3" />
                 </a>
@@ -2229,7 +2186,7 @@ export default function App() {
               <DiverMascot size={80} className="mx-auto" />
               <div>
                 <span className="text-[9px] font-black tracking-widest text-amber-500 uppercase block">7-Day Alignment Pattern</span>
-                <h3 className="text-xl font-black text-white mt-1 uppercase leading-none">True Self Synthesis</h3>
+                <h3 className="text-xl font-black text-white mt-1 uppercase leading-none">TruSelf Synthesis</h3>
               </div>
 
               {streakCount >= 7 ? (
@@ -2296,7 +2253,7 @@ export default function App() {
                 </div>
               )}
 
-              {/* Privacy lock guarantee info card */}
+              {/* Privacy guarantee info card */}
               <div className="p-3.5 bg-slate-900/60 border border-emerald-500/10 rounded-xl text-left flex items-start gap-3">
                 <div className="p-1.5 bg-emerald-500/10 rounded-lg text-emerald-400 shrink-0">
                   <Lock className="w-3.5 h-3.5" />
@@ -2313,7 +2270,7 @@ export default function App() {
                 onClick={() => setShowStreakModal(false)}
                 className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-xl uppercase tracking-wider text-[10px] transition-all active:scale-95 cursor-pointer"
               >
-                Close Diagnosis Panel
+                Close Panel
               </button>
             </div>
           </div>
