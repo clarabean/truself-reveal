@@ -563,19 +563,16 @@ function DiverMascot({ size = 80, className = "" }) {
       className={`select-none pointer-events-none drop-shadow-2xl ${className}`}
     >
       <defs>
-        {/* Soft, gorgeous underwater glow backlighting */}
+        {/* Soft glow backlighting */}
         <radialGradient id="diverGlow" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.4" />
           <stop offset="100%" stopColor="#38BDF8" stopOpacity="0" />
         </radialGradient>
-
-        {/* Dynamic metallic ring & body-suit gradients */}
         <linearGradient id="suitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#2c303b" />
           <stop offset="50%" stopColor="#1e222b" />
           <stop offset="100%" stopColor="#12141a" />
         </linearGradient>
-
         <linearGradient id="chromeRing" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#5f6775" />
           <stop offset="35%" stopColor="#a1abbc" />
@@ -583,19 +580,15 @@ function DiverMascot({ size = 80, className = "" }) {
           <stop offset="65%" stopColor="#7a8596" />
           <stop offset="100%" stopColor="#2d333f" />
         </linearGradient>
-
         <linearGradient id="visorGlass" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#334155" />
           <stop offset="30%" stopColor="#1e293b" />
           <stop offset="100%" stopColor="#0f172a" />
         </linearGradient>
-
         <radialGradient id="cheekBlush" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#fb7185" stopOpacity="0.8" />
           <stop offset="100%" stopColor="#fb7185" stopOpacity="0" />
         </radialGradient>
-
-        {/* Glow filter for neon shoulder spirals */}
         <filter id="neonSpiralGlow" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="1.5" result="blur" />
           <feMerge>
@@ -639,14 +632,14 @@ function DiverMascot({ size = 80, className = "" }) {
 }
 
 // --- GLOBAL PROCEDURAL CANVAS DRAWING PIPELINE FOR THE DETAILED "DIVER" ---
-// FIX: Replaced ctx.ellipse with standard coordinate scale transformation matrices + ctx.arc to achieve 100% legacy mobile WebKit/Safari rendering stability.
+// Replaced nested scale matrices with standard, high-performance feature-guarded context ellipse drawing APIs
 const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.save();
   ctx.translate(x, y);
 
   const rScale = size / 80;
 
-  // Glowing underwater backlight halo
+  // Glowing backlight halo
   const haloGrad = ctx.createRadialGradient(0, 0, 10 * rScale, 0, 0, 45 * rScale);
   haloGrad.addColorStop(0, 'rgba(56, 189, 248, 0.45)');
   haloGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
@@ -680,13 +673,7 @@ const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.fill();
   ctx.stroke();
 
-  // Body Suit (Using scaled arc instead of ctx.ellipse to avoid legacy mobile Safari crashes)
-  ctx.save();
-  ctx.translate(0, 30 * rScale);
-  ctx.scale(25 * rScale, 23 * rScale);
-  ctx.beginPath();
-  ctx.arc(0, 0, 1, 0, Math.PI * 2);
-  ctx.restore();
+  // Body Suit (Guarded standard ellipse drawing API is 100% compliant on both mobile & desktop Safari engines)
   const suitGrad = ctx.createLinearGradient(-25 * rScale, 10 * rScale, 25 * rScale, 54 * rScale);
   suitGrad.addColorStop(0, '#2c303b');
   suitGrad.addColorStop(0.5, '#1e222b');
@@ -694,6 +681,12 @@ const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.fillStyle = suitGrad;
   ctx.strokeStyle = '#0f1115';
   ctx.lineWidth = 3 * rScale;
+  ctx.beginPath();
+  if (ctx.ellipse) {
+    ctx.ellipse(0, 30 * rScale, 25 * rScale, 23 * rScale, 0, 0, Math.PI * 2);
+  } else {
+    ctx.arc(0, 30 * rScale, 24 * rScale, 0, Math.PI * 2);
+  }
   ctx.fill();
   ctx.stroke();
 
@@ -708,27 +701,29 @@ const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.quadraticCurveTo(20 * rScale, 30 * rScale, 32 * rScale, 40 * rScale);
   ctx.stroke();
 
-  // Flippers (Using scaled arc instead of ctx.ellipse)
+  // Flippers
   ctx.fillStyle = '#12141a';
   ctx.save();
   ctx.translate(-13 * rScale, 54 * rScale);
   ctx.rotate(-0.2);
-  ctx.save();
-  ctx.scale(8 * rScale, 5.5 * rScale);
   ctx.beginPath();
-  ctx.arc(0, 0, 1, 0, Math.PI * 2);
-  ctx.restore();
+  if (ctx.ellipse) {
+    ctx.ellipse(0, 0, 8 * rScale, 5.5 * rScale, 0, 0, Math.PI * 2);
+  } else {
+    ctx.arc(0, 0, 7 * rScale, 0, Math.PI * 2);
+  }
   ctx.fill();
   ctx.restore();
 
   ctx.save();
   ctx.translate(13 * rScale, 54 * rScale);
   ctx.rotate(0.2);
-  ctx.save();
-  ctx.scale(8 * rScale, 5.5 * rScale);
   ctx.beginPath();
-  ctx.arc(0, 0, 1, 0, Math.PI * 2);
-  ctx.restore();
+  if (ctx.ellipse) {
+    ctx.ellipse(0, 0, 8 * rScale, 5.5 * rScale, 0, 0, Math.PI * 2);
+  } else {
+    ctx.arc(0, 0, 7 * rScale, 0, Math.PI * 2);
+  }
   ctx.fill();
   ctx.restore();
 
@@ -851,7 +846,7 @@ export default function App() {
   const canvasRef = useRef(null);
   const domeCanvasRef = useRef(null);
 
-  // Dynamic state stored in LocalStorage safely
+  // Dynamic state stored safely
   const [totalSpins, setTotalSpins] = useState(0);
   const [discoveredIds, setDiscoveredIds] = useState([]);
   const [coins, setCoins] = useState(3); // Strict 3 spins daily limit
@@ -945,7 +940,7 @@ export default function App() {
       : [...discoveredIds, selectedQuestion.id];
     const nextCoins = coins - 1;
 
-    // Record streak dates in history (Only appends on actual spin action to avoid buggy Day 1 pre-checked states!)
+    // Record streak dates in history (Only appends on actual gacha action to prevent pre-checked Day 1 anomalies)
     const todayStr = getLocalDateString(0);
     let updatedHistory = [...streakHistory];
     if (!updatedHistory.includes(todayStr)) {
@@ -2037,7 +2032,7 @@ export default function App() {
                     </div>
 
                     <p className="text-xs italic text-slate-400 leading-normal border-l border-white/10 pl-3">
-                      "{log.insight || log.horoscope || ''}"
+                      "{log.insight || ''}"
                     </p>
 
                     <p className="text-sm font-bold text-white leading-snug">
