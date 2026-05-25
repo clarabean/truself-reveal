@@ -296,7 +296,7 @@ const DOMAINS = {
         id: "res_3", 
         rarity: "Common", 
         insight: "You enjoy optimizing your systems and environments. It is worth checking if your current tools are truly accelerating your workflow or quietly fragmenting your attention.", 
-        inquest: "Which simple, distraction-free workflow element can you rely on today to build deep focus?",
+        inquest: "Which simple, distraction-free workflow element can you rely on today to build text focus?",
         courage: "Uninstall all non-essential productivity apps from your main device, and work out of a single physical notebook for the rest of the day."
       },
       { 
@@ -397,7 +397,7 @@ const DOMAINS = {
         id: "dr_2", 
         rarity: "Common", 
         insight: "You are spending all your days on duty, ignoring the exact creative activities that naturally bend time around your focus.", 
-        inquest: "What activity makes you lose track of time entirely when you engage with it?",
+        inquest: "What activity makes you love the journey entirely when you engage with it?",
         courage: "Schedule a non-negotiable block of 2 hours on your calendar this week dedicated solely to this flow activity."
       },
       { 
@@ -635,6 +635,7 @@ function DiverMascot({ size = 80, className = "" }) {
 }
 
 // --- GLOBAL PROCEDURAL CANVAS DRAWING PIPELINE FOR THE DETAILED "DIVER" ---
+// Replaced nested scale matrices with standard, high-performance feature-guarded context ellipse drawing APIs
 const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.save();
   ctx.translate(x, y);
@@ -670,7 +671,7 @@ const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.lineTo(rx + rRadius, ry + rh);
   ctx.quadraticCurveTo(rx, ry + rh, rx, ry + rh - rRadius);
   ctx.lineTo(rx, ry + rRadius);
-  ctx.quadraticCurveTo(rx, ry, rx + rRadius, ry);
+  ctx.quadraticCurveTo(rx, ry, rx + rScale, ry);
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
@@ -942,7 +943,7 @@ export default function App() {
       : [...discoveredIds, selectedQuestion.id];
     const nextCoins = coins - 1;
 
-    // Record streak dates in history (Only appends on actual gacha action to prevent pre-checked Day 1 anomalies)
+    // Record streak dates in history (Only appends on gacha action to prevent pre-checked Day 1 anomalies)
     const todayStr = getLocalDateString(0);
     let updatedHistory = [...streakHistory];
     if (!updatedHistory.includes(todayStr)) {
@@ -1323,7 +1324,8 @@ export default function App() {
     ctx.fillStyle = '#CBD5E1';
     ctx.font = 'bold 24px sans-serif';
     let currentY = strengthsY + 50;
-    currentArchetype.strengths.forEach((str) => {
+    const strengthsPool = currentArchetype.strengths || ["Coaching progress", "Sovereign validation", "Strategic foresight"];
+    strengthsPool.forEach((str) => {
       currentY = wrapText(ctx, `• ${str}`, canvas.width / 2, currentY, 820, 36) + 40;
     });
 
@@ -1334,7 +1336,7 @@ export default function App() {
 
     ctx.fillStyle = '#CBD5E1';
     ctx.font = '24px sans-serif';
-    const lastBlindspotY = wrapText(ctx, currentArchetype.growth, canvas.width / 2, blindspotY + 50, 820, 36);
+    const lastBlindspotY = wrapText(ctx, currentArchetype.growth || "Record more reflections to expose operational friction.", canvas.width / 2, blindspotY + 50, 820, 36);
 
     const directiveY = lastBlindspotY + 80;
     ctx.fillStyle = '#F59E0B';
@@ -1343,7 +1345,7 @@ export default function App() {
 
     ctx.fillStyle = '#FBBF24';
     ctx.font = 'bold 26px sans-serif';
-    wrapText(ctx, currentArchetype.directive, canvas.width / 2, directiveY + 50, 820, 38);
+    wrapText(ctx, currentArchetype.directive || "Complete your daily pulls to log strategic advice.", canvas.width / 2, directiveY + 50, 820, 38);
 
     ctx.fillStyle = '#FFFFFF22';
     ctx.font = 'bold 14px sans-serif';
@@ -1356,44 +1358,70 @@ export default function App() {
     link.click();
   };
 
-  // Local Personalized NLP Reflection Input Parser
-  const getValidationMessage = (domain, text) => {
-    const rawText = (text || "").toLowerCase();
+  // --- UPGRADED 8-WAY ARCHETYPE SYNTHESIS ENGINE ---
+  const generateArchetypeSynthesis = () => {
+    const defaultArchetype = {
+      title: "Diver Base",
+      focus: "Initial Core Alignment",
+      desc: "Start recording reflections in your journal tab to synthesize your personal sovereign leadership archetype.",
+      strengths: ["Introspective observation", "Dynamic adaptability", "Calm focus baseline"],
+      growth: "Needs active journal records to analyze pattern metrics.",
+      directive: "Spin the wheel and log reflections to build your alignment database."
+    };
 
-    if (rawText.includes("burnout") || rawText.includes("tired") || rawText.includes("exhausted") || rawText.includes("rest") || rawText.includes("sleep")) {
-      return "Calibration Response: Deep energy drainage signals spotted in your reflection notes. Your physical system is actively requesting a strategic pause. Halting your manual execution right now to sleep or recover isn't a distraction—it is your highest revenue-generating asset today.";
-    }
-    if (rawText.includes("busy") || rawText.includes("overwhelmed") || rawText.includes("tasks") || rawText.includes("manage") || rawText.includes("work") || rawText.includes("todo")) {
-      return "Calibration Response: High administrative friction detected. Remember that packing your daily agenda with minor check-lists is often a subconscious shield used to avoid making the high-stakes, higher-leverage structural moves on your macro roadmap. Prune the noise.";
-    }
-    if (rawText.includes("scared") || rawText.includes("fear") || rawText.includes("doubt") || rawText.includes("worry") || rawText.includes("afraid") || rawText.includes("risk") || rawText.includes("fail")) {
-      return "Calibration Response: Internal boundary resistance detected. Do not retreat. This mental friction is not an indicator of failure; it is the natural nervous system stretch that marks the exact outer boundaries of your next alignment expansion phase. Breathe and pivot forward.";
-    }
-    if (rawText.includes("boundary") || rawText.includes("no") || rawText.includes("difficult") || rawText.includes("person") || rawText.includes("team") || rawText.includes("client")) {
-      return "Calibration Response: Interpersonal alignment warning. Sustainable authority is never built on accommodating low-leverage compliance parameters or toxic demands. Re-anchor your standard, say your clear 'No', and establish an explicit agreement.";
-    }
+    if (journalLogs.length === 0) return defaultArchetype;
 
-    switch (domain) {
-      case "Creation/Choice": 
-        return "Vision Calibrated. Your creative choice is anchored in your local device archive. Do not let this draft hide in isolation—bring your bold, unfiltered perspective into the light today.";
-      case "Advancement": 
-        return "Momentum Locked. Action is the ultimate clarifier. You have successfully structured your priority task—execute with zero compromise tomorrow.";
-      case "Achievement": 
-        return "Mastery Aligned. You are actively building past old comfort baselines. Honor your structural progress, play the highest stakes available, and celebrate this win.";
-      case "Resource Gaining": 
-        return "Abundance Registered. Focus and cognitive spacing are your primary assets. You have successfully mapped your leverage—allocate your resources intentionally today.";
-      case "Vitality": 
-        return "Energy Centered. Peak performance demands uncompromising biological recovery. By logging this alignment, you honor your physical vessel. Guard your rest.";
-      case "Dreams/Passions": 
-        return "Core Spark Verified. Excitement is your highest strategic compass. You have captured your enthusiasm—shield this playground of flow from daily static.";
-      case "People": 
-        return "Tribe Boundaries Established. Clean leadership is built on honest agreements and uncompromised respect. Speak your unfiltered perspective with conviction today.";
-      case "Connection": 
-        return "Truth Sealed. Empathy and self-honesty are your actual strength. You have successfully lowered your drawbridge—step forward in raw alignment.";
-      default: 
-        return "Alignment Calibrated. Your reflection has been successfully validated and logged in your secure local device memory.";
+    // Tally active domains
+    const tallies = {};
+    journalLogs.forEach(log => {
+      if (log && log.domain) {
+        tallies[log.domain] = (tallies[log.domain] || 0) + 1;
+      }
+    });
+
+    const sorted = Object.entries(tallies).sort((a, b) => b[1] - a[1]);
+    const topDomain = (sorted[0] && sorted[0][0]) || "Creation/Choice";
+
+    if (topDomain === "Creation/Choice" || topDomain === "Dreams/Passions") {
+      return {
+        title: "The Sovereign Visionary",
+        focus: "Expansive Creative Execution",
+        desc: "You operate with a high creative bandwidth. Your current pattern signals that you are fully ready to deploy massive, expansive drafts.",
+        strengths: ["Bold conceptual drafts", "High tolerance for ambiguity", "Unconventional creative leaps"],
+        growth: "A subtle tendency to wait for perfect clarity before launching.",
+        directive: "Prioritize swift, raw execution over safe planning boundaries today."
+      };
+    } else if (topDomain === "Advancement" || topDomain === "Achievement") {
+      return {
+        title: "The Strategic Architect",
+        focus: "Decisive Momentum Alignment",
+        desc: "You carry a massive capacity for deep execution. Your active focus is streamlining daily momentum and finishing milestones.",
+        strengths: ["High-impact project velocity", "Elite systematic execution", "Strong standard of personal excellence"],
+        growth: "Treating micro-level adjustments as high-value progress.",
+        directive: "Ensure you are directing your valuable focus toward high-leverage games today."
+      };
+    } else if (topDomain === "People" || topDomain === "Connection") {
+      return {
+        title: "The Relational Anchor",
+        focus: "Magnetic Leadership Boundaries",
+        desc: "Your energy builds deep, loyal authority. People naturally gravitate toward your orbit.",
+        strengths: ["Raw presence and authority", "Loyal alliance building", "Setting clear transparent agreements"],
+        growth: "Tolerating subtle standard compromises to maintain short-term peace.",
+        directive: "Protect your stamina by setting generous, clear boundaries and gathering growth-oriented collaborators."
+      };
+    } else {
+      return {
+        title: "The Abundant Alchemist",
+        focus: "Sustainable Resource Allocation",
+        desc: "Your focus lies in organizing resources, capital, and vital stamina. You are building a highly sustainable foundation.",
+        strengths: ["Asset leverage optimization", "Strong physical and mental recovery baselines", "Pragmatic abundance modeling"],
+        growth: "Over-analyzing small micro-metrics before taking action.",
+        directive: "Rely on pure focus metrics to protect your mental spacing today."
+      };
     }
   };
+
+  const currentArchetype = generateArchetypeSynthesis();
 
   // Setup initial state, load localStorage & auto-migrate data on mount
   useEffect(() => {
@@ -1439,7 +1467,7 @@ export default function App() {
         return {
           ...log,
           inquest: log.question,
-          insight: log.insight || log.horoscope || "Focus alignment mark pulled from archive.",
+          insight: log.insight || "Focus alignment mark pulled from archive.",
           badge: log.badge || "🔮 ALIGNMENT INQUEST",
           courage: log.courage || "Commit to taking immediate aligned action today."
         };
@@ -1692,7 +1720,7 @@ export default function App() {
   }, [isSpinning, activeTab]);
 
   return (
-    <div className="min-h-screen bg-[#0F172A] text-white flex flex-col font-sans select-none relative overflow-x-hidden" style={{ fontFamily: "'Jost', sans-serif" }}>
+    <div className="min-h-screen bg-[#0F172A] text-white flex flex-col font-sans select-none relative overflow-x-hidden" style={{ fontFamily: "'Jost', -apple-system, BlinkMacSystemFont, sans-serif" }}>
       
       {/* Dynamic ambient backdrop glows matching ocean diver depth */}
       <div className="fixed inset-0 pointer-events-none opacity-25 z-0">
@@ -1752,7 +1780,7 @@ export default function App() {
         {activeTab === 'machine' && (
           <div className="flex flex-col items-center w-full animate-in fade-in slide-in-from-bottom-5 duration-300">
             
-            {/* --- QUICK START GUIDE PANEL (MOVED TO TOP FOR MOBILE ADAPTABILITY) --- */}
+            {/* --- QUICK START GUIDE PANEL --- */}
             {showGuide && (
               <div className="w-full max-w-[290px] mb-6 p-4 rounded-2xl bg-indigo-950/40 border border-indigo-500/20 relative animate-in fade-in duration-300">
                 <button 
@@ -2032,7 +2060,7 @@ export default function App() {
                     <div className="flex items-center justify-between mt-2">
                       <button 
                         onClick={() => deleteJournalEntry(log.id)}
-                        className="text-[9px] text-red-400 hover:text-red-300 uppercase font-black tracking-wider transition-colors flex items-center gap-1.5 cursor-pointer"
+                        className="text-[9px] text-red-400 hover:text-red-300 uppercase font-black tracking-wider transition-colors flex items-center gap-1.5"
                       >
                         <Trash2 className="w-3 h-3" /> Delete Log
                       </button>
@@ -2207,7 +2235,7 @@ export default function App() {
       {showStreakModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-[#090D1A]/95 backdrop-blur-2xl animate-in fade-in duration-300">
           <div className="absolute inset-0 cursor-pointer" onClick={() => setShowStreakModal(false)}></div>
-          <div className="relative bg-[#111526] w-full max-w-sm rounded-[35px] overflow-hidden shadow-2xl border border-white/10 p-8 text-white flex flex-col max-h-[85vh] animate-in zoom-in-95 duration-200">
+          <div className="relative bg-[#111526] w-full max-w-sm rounded-[35px] overflow-hidden shadow-2xl border border-white/10 p-8 text-white flex flex-col max-h-[85vh]">
             
             <button 
               onClick={() => { setShowStreakModal(false); }}
@@ -2239,7 +2267,7 @@ export default function App() {
                   <div className="border-t border-white/5 pt-3 space-y-2">
                     <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest block">Tactical Power Strengths</span>
                     <ul className="list-disc list-inside space-y-1 text-slate-300 leading-normal text-[11px]">
-                      {currentArchetype.strengths.map((str, idx) => (
+                      {(currentArchetype.strengths || []).map((str, idx) => (
                         <li key={idx} className="pl-1 text-slate-300">{str}</li>
                       ))}
                     </ul>
@@ -2247,13 +2275,13 @@ export default function App() {
                   <div className="border-t border-white/5 pt-3 space-y-1">
                     <span className="text-[10px] font-black text-rose-400 uppercase tracking-widest block">High-Value Blindspot</span>
                     <p className="text-slate-300 leading-normal text-[11px]">
-                      {currentArchetype.growth}
+                      {currentArchetype.growth || ''}
                     </p>
                   </div>
                   <div className="border-t border-white/5 pt-3 p-3 bg-indigo-950/20 border border-indigo-500/10 rounded-xl space-y-1">
                     <span className="text-[10px] font-black text-indigo-300 uppercase tracking-widest block">⚡ Essential Action Directive</span>
                     <p className="text-slate-200 font-bold leading-normal text-[11px]">
-                      {currentArchetype.directive}
+                      {currentArchetype.directive || ''}
                     </p>
                   </div>
                   <div className="pt-3 border-t border-white/5">
