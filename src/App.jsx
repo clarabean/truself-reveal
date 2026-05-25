@@ -5,6 +5,25 @@ import {
   BookOpen, Lock, Download, Clipboard, Trash2, X, RefreshCw
 } from 'lucide-react';
 
+// --- BULLETPROOF SAFE LOCAL STORAGE UTILITY LAYER FOR SAFARI COMPATIBILITY ---
+const safeLocalStorage = {
+  getItem: (key) => {
+    try {
+      return localStorage.getItem(key);
+    } catch (e) {
+      console.warn("Storage item fetch blocked by WebKit sandbox policies:", e);
+      return null;
+    }
+  },
+  setItem: (key, value) => {
+    try {
+      localStorage.setItem(key, value);
+    } catch (e) {
+      console.warn("Storage item save blocked by WebKit sandbox policies:", e);
+    }
+  }
+};
+
 // --- GLOBAL UTILITY STREAK HELPER FUNCTIONS ---
 const getLocalDateString = (offsetDays = 0) => {
   const d = new Date();
@@ -13,6 +32,8 @@ const getLocalDateString = (offsetDays = 0) => {
 };
 
 const computeStreak = (history) => {
+  if (!Array.isArray(history)) return 0;
+  
   const todayStr = getLocalDateString(0);
   const yesterdayStr = getLocalDateString(1);
   
@@ -542,16 +563,19 @@ function DiverMascot({ size = 80, className = "" }) {
       className={`select-none pointer-events-none drop-shadow-2xl ${className}`}
     >
       <defs>
-        {/* Soft glow backlighting */}
+        {/* Soft, gorgeous underwater glow backlighting */}
         <radialGradient id="diverGlow" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.4" />
           <stop offset="100%" stopColor="#38BDF8" stopOpacity="0" />
         </radialGradient>
+
+        {/* Dynamic metallic ring & body-suit gradients */}
         <linearGradient id="suitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#2c303b" />
           <stop offset="50%" stopColor="#1e222b" />
           <stop offset="100%" stopColor="#12141a" />
         </linearGradient>
+
         <linearGradient id="chromeRing" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#5f6775" />
           <stop offset="35%" stopColor="#a1abbc" />
@@ -559,15 +583,19 @@ function DiverMascot({ size = 80, className = "" }) {
           <stop offset="65%" stopColor="#7a8596" />
           <stop offset="100%" stopColor="#2d333f" />
         </linearGradient>
+
         <linearGradient id="visorGlass" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#334155" />
           <stop offset="30%" stopColor="#1e293b" />
           <stop offset="100%" stopColor="#0f172a" />
         </linearGradient>
+
         <radialGradient id="cheekBlush" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#fb7185" stopOpacity="0.8" />
           <stop offset="100%" stopColor="#fb7185" stopOpacity="0" />
         </radialGradient>
+
+        {/* Glow filter for neon shoulder spirals */}
         <filter id="neonSpiralGlow" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="1.5" result="blur" />
           <feMerge>
@@ -594,24 +622,16 @@ function DiverMascot({ size = 80, className = "" }) {
 
       <circle cx="50" cy="83" r="6" fill="#1f242e" stroke="#0f1115" strokeWidth="1.5" />
       <path d="M 50 83 A 2.2 2.2 0 1 0 52 85 A 1.2 1.2 0 1 0 50.5 84" stroke="#c084fc" strokeWidth="1.2" fill="none" strokeLinecap="round" filter="url(#neonSpiralGlow)" />
-
       <circle cx="50" cy="45" r="30" fill="url(#chromeRing)" />
-      
       <circle cx="50" cy="45" r="26" fill="url(#visorGlass)" stroke="#0b0d10" strokeWidth="1.5" />
-      
       <circle cx="50" cy="45" r="23" fill="#fffdf9" />
-
       <circle cx="35" cy="51" r="5" fill="url(#cheekBlush)" />
       <circle cx="65" cy="51" r="5" fill="url(#cheekBlush)" />
-
       <circle cx="41" cy="44" r="4.5" fill="#13151b" />
       <circle cx="43.5" cy="41.5" r="1.6" fill="#ffffff" />
-      
       <circle cx="59" cy="44" r="4.5" fill="#13151b" />
       <circle cx="61.5" cy="41.5" r="1.6" fill="#ffffff" />
-
       <path d="M 46.5 50 Q 50 53.2 53.5 50" stroke="#13151b" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-
       <path d="M 29 34 A 21 21 0 0 1 45 25" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" fill="none" opacity="0.8" />
       <circle cx="66" cy="37" r="1.5" fill="#ffffff" opacity="0.6" />
     </svg>
@@ -619,7 +639,7 @@ function DiverMascot({ size = 80, className = "" }) {
 }
 
 // --- GLOBAL PROCEDURAL CANVAS DRAWING PIPELINE FOR THE DETAILED "DIVER" ---
-// Replaced context roundRect with canvas rounded-path drawings to secure legacy iPhone Safari stability!
+// FIX: Replaced ctx.ellipse with standard coordinate scale transformation matrices + ctx.arc to achieve 100% legacy mobile WebKit/Safari rendering stability.
 const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.save();
   ctx.translate(x, y);
@@ -660,7 +680,13 @@ const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.fill();
   ctx.stroke();
 
-  // Body Suit
+  // Body Suit (Using scaled arc instead of ctx.ellipse to avoid legacy mobile Safari crashes)
+  ctx.save();
+  ctx.translate(0, 30 * rScale);
+  ctx.scale(25 * rScale, 23 * rScale);
+  ctx.beginPath();
+  ctx.arc(0, 0, 1, 0, Math.PI * 2);
+  ctx.restore();
   const suitGrad = ctx.createLinearGradient(-25 * rScale, 10 * rScale, 25 * rScale, 54 * rScale);
   suitGrad.addColorStop(0, '#2c303b');
   suitGrad.addColorStop(0.5, '#1e222b');
@@ -668,8 +694,6 @@ const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.fillStyle = suitGrad;
   ctx.strokeStyle = '#0f1115';
   ctx.lineWidth = 3 * rScale;
-  ctx.beginPath();
-  ctx.ellipse(0, 30 * rScale, 25 * rScale, 23 * rScale, 0, 0, Math.PI * 2);
   ctx.fill();
   ctx.stroke();
 
@@ -684,21 +708,27 @@ const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.quadraticCurveTo(20 * rScale, 30 * rScale, 32 * rScale, 40 * rScale);
   ctx.stroke();
 
-  // Flippers
+  // Flippers (Using scaled arc instead of ctx.ellipse)
   ctx.fillStyle = '#12141a';
   ctx.save();
   ctx.translate(-13 * rScale, 54 * rScale);
   ctx.rotate(-0.2);
+  ctx.save();
+  ctx.scale(8 * rScale, 5.5 * rScale);
   ctx.beginPath();
-  ctx.ellipse(0, 0, 8 * rScale, 5.5 * rScale, 0, 0, Math.PI * 2);
+  ctx.arc(0, 0, 1, 0, Math.PI * 2);
+  ctx.restore();
   ctx.fill();
   ctx.restore();
 
   ctx.save();
   ctx.translate(13 * rScale, 54 * rScale);
   ctx.rotate(0.2);
+  ctx.save();
+  ctx.scale(8 * rScale, 5.5 * rScale);
   ctx.beginPath();
-  ctx.ellipse(0, 0, 8 * rScale, 5.5 * rScale, 0, 0, Math.PI * 2);
+  ctx.arc(0, 0, 1, 0, Math.PI * 2);
+  ctx.restore();
   ctx.fill();
   ctx.restore();
 
@@ -821,7 +851,7 @@ export default function App() {
   const canvasRef = useRef(null);
   const domeCanvasRef = useRef(null);
 
-  // Dynamic state stored in LocalStorage
+  // Dynamic state stored in LocalStorage safely
   const [totalSpins, setTotalSpins] = useState(0);
   const [discoveredIds, setDiscoveredIds] = useState([]);
   const [coins, setCoins] = useState(3); // Strict 3 spins daily limit
@@ -832,15 +862,16 @@ export default function App() {
   // Calibration Success Overlay state
   const [isCalibrated, setIsCalibrated] = useState(false);
 
-  // Quick Start Onboarding Guide Toggle
+  // Onboarding Guide Toggle (wrapped in storage safe-checks)
   const [showGuide, setShowGuide] = useState(() => {
-    return localStorage.getItem('lym_guide_dismissed') !== 'true';
+    const value = safeLocalStorage.getItem('lym_guide_dismissed');
+    return value !== 'true';
   });
 
   // Custom Toast State
   const [toastMessage, setToastMessage] = useState('');
 
-  // Streak State Tracker (Starts empty so Day 1 is grey/pulsing until spun)
+  // Streak State Tracker (Starts at 0 so Day 1 is grey/pulsing until spun)
   const [streakCount, setStreakCount] = useState(0);
   const [streakHistory, setStreakHistory] = useState([]);
   const [showStreakModal, setShowStreakModal] = useState(false);
@@ -867,316 +898,7 @@ export default function App() {
     }, 4500);
   }, []);
 
-  // Setup initial state, load localStorage & auto-migrate data on mount
-  useEffect(() => {
-    let storedSpins = 0;
-    let storedDiscoveries = [];
-    let storedCoins = null;
-    let storedJournal = [];
-    let savedMOTD = 'TruSelf & Action';
-    let storedRecharge = null;
-    let storedHistory = [];
-
-    // BULLETPROOF COMPATIBILITY: Secure variables with try-catch block to completely prevent corrupt local state crashes on iOS Safari!
-    try {
-      const rawSpins = localStorage.getItem('lym_total_spins');
-      if (rawSpins) storedSpins = Number(rawSpins);
-
-      const rawDiscoveries = localStorage.getItem('lym_discovered_ids');
-      if (rawDiscoveries) storedDiscoveries = JSON.parse(rawDiscoveries);
-
-      storedCoins = localStorage.getItem('lym_gacha_coins');
-
-      const rawJournal = localStorage.getItem('lym_journal_logs');
-      if (rawJournal) storedJournal = JSON.parse(rawJournal);
-
-      const rawMOTD = localStorage.getItem('lym_motd');
-      if (rawMOTD) savedMOTD = rawMOTD;
-
-      storedRecharge = localStorage.getItem('lym_last_recharge');
-
-      const rawHistory = localStorage.getItem('lym_streak_history');
-      if (rawHistory) storedHistory = JSON.parse(rawHistory);
-    } catch (e) {
-      console.error("Corrupted localStorage entries handled. Resetting safely:", e);
-    }
-
-    if (!Array.isArray(storedHistory)) {
-      storedHistory = [];
-    }
-    setStreakHistory(storedHistory);
-
-    const migratedJournal = storedJournal.map(log => {
-      if (log.question && !log.inquest) {
-        return {
-          ...log,
-          inquest: log.question,
-          insight: log.insight || log.horoscope || "Focus alignment mark pulled from archive.",
-          badge: log.badge || "🔮 ALIGNMENT INQUEST",
-          courage: log.courage || "Commit to taking immediate aligned action today."
-        };
-      }
-      return log;
-    });
-
-    setTotalSpins(storedSpins);
-    setDiscoveredIds(storedDiscoveries);
-    setJournalLogs(migratedJournal);
-    setMessageOfTheDay(savedMOTD);
-
-    let initialRecharge = Date.now();
-    if (storedRecharge) {
-      initialRecharge = Number(storedRecharge);
-    } else {
-      localStorage.setItem('lym_last_recharge', String(initialRecharge));
-    }
-    setLastRecharge(initialRecharge);
-
-    let initialCoins = 3;
-    const msSinceLast = Date.now() - initialRecharge;
-    const twentyFourHours = 24 * 60 * 60 * 1000;
-
-    if (msSinceLast >= twentyFourHours) {
-      initialCoins = 3;
-      initialRecharge = Date.now();
-      localStorage.setItem('lym_gacha_coins', '3');
-      localStorage.setItem('lym_last_recharge', String(initialRecharge));
-      setLastRecharge(initialRecharge);
-    } else if (storedCoins !== null) {
-      initialCoins = Number(storedCoins);
-    } else {
-      localStorage.setItem('lym_gacha_coins', '3');
-    }
-    setCoins(initialCoins);
-
-    const calculatedStreak = computeStreak(storedHistory);
-    setStreakCount(calculatedStreak);
-
-    const width = 280;
-    const height = 240;
-    const domainValues = Object.values(DOMAINS);
-    physicsBallsRef.current = Array.from({ length: 14 }).map((_, i) => {
-      const radius = 19 + Math.round(Math.random() * 4); 
-      return {
-        id: i,
-        x: radius + Math.random() * (width - radius * 2),
-        y: radius + Math.random() * (height / 2),
-        vx: (Math.random() - 0.5) * 2,
-        vy: (Math.random() - 0.5) * 2,
-        radius: radius,
-        color: domainValues[Math.floor(Math.random() * domainValues.length)].color,
-        angle: Math.random() * Math.PI * 2,
-        spinSpeed: (Math.random() - 0.5) * 0.1
-      };
-    });
-  }, []);
-
-  // Strict 24-Hour countdown ticker interval
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const twentyFourHours = 24 * 60 * 60 * 1000;
-      const nextRechargeTime = lastRecharge + twentyFourHours;
-      const now = Date.now();
-      const difference = nextRechargeTime - now;
-
-      if (difference <= 0) {
-        setCoins(3);
-        setLastRecharge(now);
-        localStorage.setItem('lym_gacha_coins', '3');
-        localStorage.setItem('lym_last_recharge', String(now));
-        setTimeRemaining('');
-      } else {
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-        
-        const pad = (num) => String(num).padStart(2, '0');
-        setTimeRemaining(`${pad(hours)}:${pad(minutes)}:${pad(seconds)}`);
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [lastRecharge]);
-
-  // HTML5 Physics engine loop
-  useEffect(() => {
-    if (activeTab !== 'machine') {
-      if (animationFrameIdRef.current) {
-        cancelAnimationFrame(animationFrameIdRef.current);
-      }
-      return;
-    }
-
-    const canvas = domeCanvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let width = canvas.width = 280;
-    let height = canvas.height = 240;
-
-    const runPhysics = () => {
-      ctx.clearRect(0, 0, width, height);
-
-      const backingGrad = ctx.createRadialGradient(width/2, height/2, 20, width/2, height/2, width/2);
-      backingGrad.addColorStop(0, '#1E1B4B44');
-      backingGrad.addColorStop(1, '#00000000');
-      ctx.fillStyle = backingGrad;
-      ctx.fillRect(0, 0, width, height);
-
-      const balls = physicsBallsRef.current;
-      const gravity = 0.25;
-      const friction = 0.985;
-      const bounceRestitution = 0.65;
-      const centerX = width / 2;
-      const centerY = height / 2;
-
-      for (let i = 0; i < balls.length; i++) {
-        const b = balls[i];
-
-        if (isNaN(b.x) || isNaN(b.y) || !isFinite(b.x) || !isFinite(b.y)) {
-          b.x = b.radius + Math.random() * (width - b.radius * 2);
-          b.y = b.radius + Math.random() * (height / 2);
-          b.vx = (Math.random() - 0.5) * 2;
-          b.vy = (Math.random() - 0.5) * 2;
-          b.angle = Math.random() * Math.PI * 2;
-          b.spinSpeed = 0;
-        }
-
-        if (isSpinning) {
-          const dx = b.x - centerX;
-          const dy = b.y - centerY;
-          const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-          const swirlStrength = 2.4;
-          b.vx += (-dy / dist) * swirlStrength + (Math.random() - 0.5) * 5;
-          b.vy += (dx / dist) * swirlStrength - 0.9 + (Math.random() - 0.5) * 5;
-          b.spinSpeed = b.vx * 0.01;
-        } else {
-          b.vy += gravity;
-          b.vx *= friction;
-          b.vy *= friction;
-          b.spinSpeed *= 0.92;
-        }
-
-        const speedLimit = 12;
-        const speed = Math.sqrt(b.vx * b.vx + b.vy * b.vy);
-        if (speed > speedLimit) {
-          b.vx = (b.vx / speed) * speedLimit;
-          b.vy = (b.vy / speed) * speedLimit;
-        }
-
-        b.x += b.vx;
-        b.y += b.vy;
-        b.angle += b.spinSpeed;
-
-        if (b.x < b.radius) {
-          b.x = b.radius;
-          b.vx = Math.abs(b.vx) * bounceRestitution;
-        } else if (b.x > width - b.radius) {
-          b.x = width - b.radius;
-          b.vx = -Math.abs(b.vx) * bounceRestitution;
-        }
-
-        if (b.y < b.radius) {
-          b.y = b.radius;
-          b.vy = Math.abs(b.vy) * bounceRestitution;
-        } else if (b.y > height - b.radius) {
-          b.y = height - b.radius;
-          b.vy = -Math.abs(b.vy) * bounceRestitution;
-          b.vx *= 0.95; 
-        }
-
-        for (let j = i + 1; j < balls.length; j++) {
-          const b2 = balls[j];
-          const dx = b2.x - b.x;
-          const dy = b2.y - b.y;
-          const dist = Math.sqrt(dx * dx + dy * dy) || 0.001;
-          const minDist = b.radius + b2.radius;
-
-          if (dist < minDist) {
-            const overlap = minDist - dist;
-            const nx = dx / dist;
-            const ny = dy / dist;
-
-            b.x -= nx * overlap * 0.5;
-            b.y -= ny * overlap * 0.5;
-            b2.x += nx * overlap * 0.5;
-            b2.y += ny * overlap * 0.5;
-
-            const kx = b.vx - b2.vx;
-            const ky = b.vy - b2.vy;
-            const impulse = 2 * (nx * kx + ny * ky) / 2;
-
-            b.vx -= impulse * nx * 0.75;
-            b.vy -= impulse * ny * 0.75;
-            b2.vx += impulse * nx * 0.75;
-            b2.vy += impulse * ny * 0.75;
-
-            const tempSpin = b.spinSpeed;
-            b.spinSpeed = b2.spinSpeed * 0.8;
-            b2.spinSpeed = tempSpin * 0.8;
-          }
-        }
-
-        ctx.save();
-        ctx.translate(b.x, b.y);
-        ctx.rotate(b.angle);
-
-        ctx.beginPath();
-        ctx.arc(0, 0, b.radius, 0, Math.PI * 2);
-        ctx.fillStyle = b.color;
-        ctx.fill();
-
-        const glossGrad = ctx.createLinearGradient(-b.radius, -b.radius, b.radius, b.radius);
-        glossGrad.addColorStop(0, '#FFFFFF77');
-        glossGrad.addColorStop(0.3, '#FFFFFF11');
-        glossGrad.addColorStop(0.5, '#00000011');
-        glossGrad.addColorStop(1, '#00000099');
-        ctx.fillStyle = glossGrad;
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.moveTo(-b.radius, 0);
-        ctx.lineTo(b.radius, 0);
-        ctx.strokeStyle = '#00000044';
-        ctx.lineWidth = 2.5;
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.arc(0, 0, b.radius * 0.8, -Math.PI * 0.6, -Math.PI * 0.1);
-        ctx.strokeStyle = '#FFFFFF88';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        ctx.restore();
-      }
-
-      animationFrameIdRef.current = requestAnimationFrame(runPhysics);
-    };
-
-    runPhysics();
-
-    return () => {
-      if (animationFrameIdRef.current) {
-        cancelAnimationFrame(animationFrameIdRef.current);
-      }
-    };
-  }, [isSpinning, activeTab]);
-
-  // Cycle the ambient marquee billboard announcements
-  useEffect(() => {
-    const messages = [
-      `🔮 MARKS UNLOCKED: ${discoveredIds.length}/56 TRUSELF DIALS ARCHIVED 🔮`,
-      `🎪 CO-ACTION: TRUSELF SUMMIT Live • 27 & 28 June 2026 • Secure Your Seat Now 🎪`,
-      `📸 Follow us on Instagram: @live.your.mark`
-    ];
-    const interval = setInterval(() => {
-      setMarqueeIndex((prev) => (prev + 1) % messages.length);
-    }, 4500);
-    return () => clearInterval(interval);
-  }, [discoveredIds]);
-
-  // Spin core logic (True Randomization with Variety memory)
+  // --- GLOBAL spinGacha DECLARED SAFELY AT TOP OF BODY IN SCOPE ---
   const spinGacha = useCallback(() => {
     if (isSpinning) return;
     if (coins <= 0) {
@@ -1201,7 +923,14 @@ export default function App() {
     else if (roll > 60) targetRarity = "Rare";
 
     let eligiblePool = ALL_QUESTIONS.filter(q => q.rarity === targetRarity);
-    const recentPulls = JSON.parse(localStorage.getItem('lym_recent_pulls') || '[]');
+    
+    let recentPulls = [];
+    try {
+      recentPulls = JSON.parse(safeLocalStorage.getItem('lym_recent_pulls') || '[]');
+    } catch (e) {
+      recentPulls = [];
+    }
+
     let filteredPool = eligiblePool.filter(q => !recentPulls.includes(q.id));
     
     if (filteredPool.length === 0) filteredPool = eligiblePool; 
@@ -1209,7 +938,7 @@ export default function App() {
 
     const selectedQuestion = filteredPool[Math.floor(Math.random() * filteredPool.length)];
     const nextRecent = [selectedQuestion.id, ...recentPulls].slice(0, 5);
-    localStorage.setItem('lym_recent_pulls', JSON.stringify(nextRecent));
+    safeLocalStorage.setItem('lym_recent_pulls', JSON.stringify(nextRecent));
 
     const updatedDiscoveries = discoveredIds.includes(selectedQuestion.id)
       ? discoveredIds
@@ -1221,7 +950,7 @@ export default function App() {
     let updatedHistory = [...streakHistory];
     if (!updatedHistory.includes(todayStr)) {
       updatedHistory.push(todayStr);
-      localStorage.setItem('lym_streak_history', JSON.stringify(updatedHistory));
+      safeLocalStorage.setItem('lym_streak_history', JSON.stringify(updatedHistory));
       setStreakHistory(updatedHistory);
     }
     const currentStreak = computeStreak(updatedHistory);
@@ -1233,7 +962,7 @@ export default function App() {
       const phrases = FOCUS_PHRASES[activeDomain] || ["TruSelf & Action"];
       const randomizedFocus = phrases[Math.floor(Math.random() * phrases.length)];
       setMessageOfTheDay(randomizedFocus);
-      localStorage.setItem('lym_motd', randomizedFocus);
+      safeLocalStorage.setItem('lym_motd', randomizedFocus);
     } catch (e) {}
 
     setTotalSpins(nextSpinCount);
@@ -1242,9 +971,9 @@ export default function App() {
     setReflectionText(''); 
     setIsCalibrated(false); 
 
-    localStorage.setItem('lym_total_spins', String(nextSpinCount));
-    localStorage.setItem('lym_discovered_ids', JSON.stringify(updatedDiscoveries));
-    localStorage.setItem('lym_gacha_coins', String(nextCoins));
+    safeLocalStorage.setItem('lym_total_spins', String(nextSpinCount));
+    safeLocalStorage.setItem('lym_discovered_ids', JSON.stringify(updatedDiscoveries));
+    safeLocalStorage.setItem('lym_gacha_coins', String(nextCoins));
 
     setTimeout(() => {
       setGachaResult(selectedQuestion);
@@ -1256,7 +985,7 @@ export default function App() {
   // --- FREE COIN REPLENISHMENT ENGINE ---
   const addFreeCoin = () => {
     setCoins(3);
-    localStorage.setItem('lym_gacha_coins', '3');
+    safeLocalStorage.setItem('lym_gacha_coins', '3');
     showToast("Energy balance refreshed! Daily spins reset to 3.");
   };
 
@@ -1280,8 +1009,8 @@ export default function App() {
 
     const updatedLogs = [newLog, ...journalLogs];
     setJournalLogs(updatedLogs);
-    localStorage.setItem('lym_journal_logs', JSON.stringify(updatedLogs));
-    localStorage.setItem('lym_motd', messageOfTheDay);
+    safeLocalStorage.setItem('lym_journal_logs', JSON.stringify(updatedLogs));
+    safeLocalStorage.setItem('lym_motd', messageOfTheDay);
     
     setIsCalibrated(true);
     showToast("Reflection logged! TruSelf alignment validated.");
@@ -1290,7 +1019,7 @@ export default function App() {
   const deleteJournalEntry = (id) => {
     const updated = journalLogs.filter(log => log.id !== id);
     setJournalLogs(updated);
-    localStorage.setItem('lym_journal_logs', JSON.stringify(updated));
+    safeLocalStorage.setItem('lym_journal_logs', JSON.stringify(updated));
     showToast("Entry deleted successfully.");
   };
 
@@ -1576,6 +1305,7 @@ export default function App() {
     ctx.font = 'bold 16px sans-serif';
     ctx.fillText('L I V E   Y O U R   M A R K', canvas.width / 2, startY + 36);
 
+    // Dynamic Archetype Card Header
     ctx.fillStyle = '#111827';
     ctx.fillRect(200, startY + 80, canvas.width - 400, 110);
     ctx.strokeStyle = '#D97706A0';
@@ -1679,6 +1409,302 @@ export default function App() {
     }
   };
 
+  // Setup initial state, load localStorage & auto-migrate data on mount
+  useEffect(() => {
+    let storedSpins = 0;
+    let storedDiscoveries = [];
+    let storedCoins = null;
+    let storedJournal = [];
+    let savedMOTD = 'TruSelf & Action';
+    let storedRecharge = null;
+    let storedHistory = [];
+
+    // BULLETPROOF COMPATIBILITY: Secure variables with try-catch block to completely prevent corrupt local state crashes on iOS Safari!
+    try {
+      const rawSpins = safeLocalStorage.getItem('lym_total_spins');
+      if (rawSpins) storedSpins = Number(rawSpins);
+
+      const rawDiscoveries = safeLocalStorage.getItem('lym_discovered_ids');
+      if (rawDiscoveries) storedDiscoveries = JSON.parse(rawDiscoveries);
+
+      storedCoins = safeLocalStorage.getItem('lym_gacha_coins');
+
+      const rawJournal = safeLocalStorage.getItem('lym_journal_logs');
+      if (rawJournal) storedJournal = JSON.parse(rawJournal);
+
+      const rawMOTD = safeLocalStorage.getItem('lym_motd');
+      if (rawMOTD) savedMOTD = rawMOTD;
+
+      storedRecharge = safeLocalStorage.getItem('lym_last_recharge');
+
+      const rawHistory = safeLocalStorage.getItem('lym_streak_history');
+      if (rawHistory) storedHistory = JSON.parse(rawHistory);
+    } catch (e) {
+      console.error("Corrupted localStorage entries handled. Resetting safely:", e);
+    }
+
+    if (!Array.isArray(storedHistory)) {
+      storedHistory = [];
+    }
+    setStreakHistory(storedHistory);
+
+    const migratedJournal = storedJournal.map(log => {
+      if (log.question && !log.inquest) {
+        return {
+          ...log,
+          inquest: log.question,
+          insight: log.insight || log.horoscope || "Focus alignment mark pulled from archive.",
+          badge: log.badge || "🔮 ALIGNMENT INQUEST",
+          courage: log.courage || "Commit to taking immediate aligned action today."
+        };
+      }
+      return log;
+    });
+
+    setTotalSpins(storedSpins);
+    setDiscoveredIds(storedDiscoveries);
+    setJournalLogs(migratedJournal);
+    setMessageOfTheDay(savedMOTD);
+
+    let initialRecharge = Date.now();
+    if (storedRecharge) {
+      initialRecharge = Number(storedRecharge);
+    } else {
+      safeLocalStorage.setItem('lym_last_recharge', String(initialRecharge));
+    }
+    setLastRecharge(initialRecharge);
+
+    let initialCoins = 3;
+    const msSinceLast = Date.now() - initialRecharge;
+    const twentyFourHours = 24 * 60 * 60 * 1000;
+
+    if (msSinceLast >= twentyFourHours) {
+      initialCoins = 3;
+      initialRecharge = Date.now();
+      safeLocalStorage.setItem('lym_gacha_coins', '3');
+      safeLocalStorage.setItem('lym_last_recharge', String(initialRecharge));
+      setLastRecharge(initialRecharge);
+    } else if (storedCoins !== null) {
+      initialCoins = Number(storedCoins);
+    } else {
+      safeLocalStorage.setItem('lym_gacha_coins', '3');
+    }
+    setCoins(initialCoins);
+
+    const calculatedStreak = computeStreak(storedHistory);
+    setStreakCount(calculatedStreak);
+
+    const width = 280;
+    const height = 240;
+    const domainValues = Object.values(DOMAINS);
+    physicsBallsRef.current = Array.from({ length: 14 }).map((_, i) => {
+      const radius = 19 + Math.round(Math.random() * 4); 
+      return {
+        id: i,
+        x: radius + Math.random() * (width - radius * 2),
+        y: radius + Math.random() * (height / 2),
+        vx: (Math.random() - 0.5) * 2,
+        vy: (Math.random() - 0.5) * 2,
+        radius: radius,
+        color: domainValues[Math.floor(Math.random() * domainValues.length)].color,
+        angle: Math.random() * Math.PI * 2,
+        spinSpeed: (Math.random() - 0.5) * 0.1
+      };
+    });
+  }, []);
+
+  // Strict 24-Hour countdown ticker interval
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const twentyFourHours = 24 * 60 * 60 * 1000;
+      const nextRechargeTime = lastRecharge + twentyFourHours;
+      const now = Date.now();
+      const difference = nextRechargeTime - now;
+
+      if (difference <= 0) {
+        setCoins(3);
+        setLastRecharge(now);
+        safeLocalStorage.setItem('lym_gacha_coins', '3');
+        safeLocalStorage.setItem('lym_last_recharge', String(now));
+        setTimeRemaining('');
+      } else {
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        
+        const pad = (num) => String(num).padStart(2, '0');
+        setTimeRemaining(`${pad(hours)}:${pad(minutes)}:${pad(seconds)}`);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [lastRecharge]);
+
+  // HTML5 Physics engine loop
+  useEffect(() => {
+    if (activeTab !== 'machine') {
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+      }
+      return;
+    }
+
+    const canvas = domeCanvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = canvas.width = 280;
+    let height = canvas.height = 240;
+
+    const runPhysics = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      const backingGrad = ctx.createRadialGradient(width/2, height/2, 20, width/2, height/2, width/2);
+      backingGrad.addColorStop(0, '#1E1B4B44');
+      backingGrad.addColorStop(1, '#00000000');
+      ctx.fillStyle = backingGrad;
+      ctx.fillRect(0, 0, width, height);
+
+      const balls = physicsBallsRef.current;
+      const gravity = 0.25;
+      const friction = 0.985;
+      const bounceRestitution = 0.65;
+      const centerX = width / 2;
+      const centerY = height / 2;
+
+      for (let i = 0; i < balls.length; i++) {
+        const b = balls[i];
+
+        if (isNaN(b.x) || isNaN(b.y) || !isFinite(b.x) || !isFinite(b.y)) {
+          b.x = b.radius + Math.random() * (width - b.radius * 2);
+          b.y = b.radius + Math.random() * (height / 2);
+          b.vx = (Math.random() - 0.5) * 2;
+          b.vy = (Math.random() - 0.5) * 2;
+          b.angle = Math.random() * Math.PI * 2;
+          b.spinSpeed = 0;
+        }
+
+        if (isSpinning) {
+          const dx = b.x - centerX;
+          const dy = b.y - centerY;
+          const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+          const swirlStrength = 2.4;
+          b.vx += (-dy / dist) * swirlStrength + (Math.random() - 0.5) * 5;
+          b.vy += (dx / dist) * swirlStrength - 0.9 + (Math.random() - 0.5) * 5;
+          b.spinSpeed = b.vx * 0.01;
+        } else {
+          b.vy += gravity;
+          b.vx *= friction;
+          b.vy *= friction;
+          b.spinSpeed *= 0.92;
+        }
+
+        const speedLimit = 12;
+        const speed = Math.sqrt(b.vx * b.vx + b.vy * b.vy);
+        if (speed > speedLimit) {
+          b.vx = (b.vx / speed) * speedLimit;
+          b.vy = (b.vy / speed) * speedLimit;
+        }
+
+        b.x += b.vx;
+        b.y += b.vy;
+        b.angle += b.spinSpeed;
+
+        if (b.x < b.radius) {
+          b.x = b.radius;
+          b.vx = Math.abs(b.vx) * bounceRestitution;
+        } else if (b.x > width - b.radius) {
+          b.x = width - b.radius;
+          b.vx = -Math.abs(b.vx) * bounceRestitution;
+        }
+
+        if (b.y < b.radius) {
+          b.y = b.radius;
+          b.vy = Math.abs(b.vy) * bounceRestitution;
+        } else if (b.y > height - b.radius) {
+          b.y = height - b.radius;
+          b.vy = -Math.abs(b.vy) * bounceRestitution;
+          b.vx *= 0.95; 
+        }
+
+        for (let j = i + 1; j < balls.length; j++) {
+          const b2 = balls[j];
+          const dx = b2.x - b.x;
+          const dy = b2.y - b.y;
+          const dist = Math.sqrt(dx * dx + dy * dy) || 0.001;
+          const minDist = b.radius + b2.radius;
+
+          if (dist < minDist) {
+            const overlap = minDist - dist;
+            const nx = dx / dist;
+            const ny = dy / dist;
+
+            b.x -= nx * overlap * 0.5;
+            b.y -= ny * overlap * 0.5;
+            b2.x += nx * overlap * 0.5;
+            b2.y += ny * overlap * 0.5;
+
+            const kx = b.vx - b2.vx;
+            const ky = b.vy - b2.vy;
+            const impulse = 2 * (nx * kx + ny * ky) / 2;
+
+            b.vx -= impulse * nx * 0.75;
+            b.vy -= impulse * ny * 0.75;
+            b2.vx += impulse * nx * 0.75;
+            b2.vy += impulse * ny * 0.75;
+
+            const tempSpin = b.spinSpeed;
+            b.spinSpeed = b2.spinSpeed * 0.8;
+            b2.spinSpeed = tempSpin * 0.8;
+          }
+        }
+
+        ctx.save();
+        ctx.translate(b.x, b.y);
+        ctx.rotate(b.angle);
+
+        ctx.beginPath();
+        ctx.arc(0, 0, b.radius, 0, Math.PI * 2);
+        ctx.fillStyle = b.color;
+        ctx.fill();
+
+        const glossGrad = ctx.createLinearGradient(-b.radius, -b.radius, b.radius, b.radius);
+        glossGrad.addColorStop(0, '#FFFFFF77');
+        glossGrad.addColorStop(0.3, '#FFFFFF11');
+        glossGrad.addColorStop(0.5, '#00000011');
+        glossGrad.addColorStop(1, '#00000099');
+        ctx.fillStyle = glossGrad;
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(-b.radius, 0);
+        ctx.lineTo(b.radius, 0);
+        ctx.strokeStyle = '#00000044';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(0, 0, b.radius * 0.8, -Math.PI * 0.6, -Math.PI * 0.1);
+        ctx.strokeStyle = '#FFFFFF88';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
+      animationFrameIdRef.current = requestAnimationFrame(runPhysics);
+    };
+
+    runPhysics();
+
+    return () => {
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+      }
+    };
+  }, [isSpinning, activeTab]);
+
   return (
     <div className="min-h-screen bg-[#0F172A] text-white flex flex-col font-sans select-none relative overflow-x-hidden" style={{ fontFamily: "'Jost', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600;700;900&display=swap" rel="stylesheet" />
@@ -1723,7 +1749,7 @@ export default function App() {
       {/* Ambient Arcade Billboard Marquee */}
       <div className="w-full bg-[#0B0F19]/90 border-b border-white/5 py-2.5 overflow-hidden relative z-40 flex items-center justify-center">
         <div className="text-[10px] font-black tracking-widest text-center text-indigo-300 uppercase opacity-80 px-4">
-          {marqueeIndex === 0 && `🔮 MARKS UNLOCKED: ${discoveredIds.length}/56 TRUSELF DIALS ARCHIVED 🔮`}
+          {marqueeIndex === 0 && `🔮 MARKS UNLOCKED: ${discoveredIds.length}/56 TRUE SELF DIALS ARCHIVED 🔮`}
           {marqueeIndex === 1 && `🎪 CO-ACTION: TRUSELF SUMMIT Live • 27 & 28 June 2026 • Secure Your Seat Now 🎪`}
           {marqueeIndex === 2 && `📸 Follow us on Instagram: @live.your.mark`}
         </div>
@@ -1755,7 +1781,7 @@ export default function App() {
                 <button 
                   onClick={() => {
                     setShowGuide(false);
-                    localStorage.setItem('lym_guide_dismissed', 'true');
+                    safeLocalStorage.setItem('lym_guide_dismissed', 'true');
                   }}
                   className="absolute top-3 right-3 text-slate-400 hover:text-white cursor-pointer"
                 >
@@ -2133,7 +2159,7 @@ export default function App() {
                     value={messageOfTheDay}
                     onChange={(e) => {
                       setMessageOfTheDay(e.target.value);
-                      localStorage.setItem('lym_motd', e.target.value);
+                      safeLocalStorage.setItem('lym_motd', e.target.value);
                     }}
                   />
                 </div>
