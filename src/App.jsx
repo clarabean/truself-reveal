@@ -285,7 +285,7 @@ const DOMAINS = {
       { 
         id: "res_2", 
         rarity: "Common", 
-        insight: "Your potential for abundance is massive. True alignment comes from establishing clear, calm financial systems that empower you to take calculated risks with complete peace of mind.", 
+        insight: "True alignment comes from establishing clear, calm financial systems that empower you to take calculated risks with complete peace of mind.", 
         inquest: "How stable is your current financial foundation, rated honestly on a scale of 1-10?",
         courage: "Transfer a specific, small sum of capital into a high-yield savings or investment account today as a physical seed of abundance."
       },
@@ -632,7 +632,6 @@ function DiverMascot({ size = 80, className = "" }) {
 }
 
 // --- GLOBAL PROCEDURAL CANVAS DRAWING PIPELINE FOR THE DETAILED "DIVER" ---
-// Replaced nested scale matrices with standard, high-performance feature-guarded context ellipse drawing APIs
 const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.save();
   ctx.translate(x, y);
@@ -673,7 +672,7 @@ const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.fill();
   ctx.stroke();
 
-  // Body Suit (Guarded standard ellipse drawing API is 100% compliant on both mobile & desktop Safari engines)
+  // Body Suit
   const suitGrad = ctx.createLinearGradient(-25 * rScale, 10 * rScale, 25 * rScale, 54 * rScale);
   suitGrad.addColorStop(0, '#2c303b');
   suitGrad.addColorStop(0.5, '#1e222b');
@@ -1976,7 +1975,7 @@ export default function App() {
                   href="https://liveyourmark.com/truself-summit/" 
                   target="_blank" 
                   rel="noreferrer"
-                  className="mt-3.5 inline-block bg-amber-500 hover:bg-amber-600 text-slate-950 text-[10px] font-black uppercase px-4 py-2 rounded-xl tracking-wider transition-colors animate-pulse"
+                  className="mt-3.5 inline-block bg-amber-500 hover:bg-amber-600 text-slate-950 text-[10px] font-black uppercase px-4 py-2 rounded-xl tracking-wider transition-colors"
                 >
                   Enter Live TruSelf Summit
                 </a>
@@ -2183,7 +2182,7 @@ export default function App() {
                 <div className="space-y-2 mb-6">
                   <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block font-sans">Input your raw alignment reflection:</label>
                   <textarea
-                    className="w-full bg-black/40 border border-white/10 rounded-2xl p-4 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 resize-none h-18"
+                    className="w-full bg-[#111526] border border-white/10 rounded-2xl p-4 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 resize-none h-18"
                     placeholder="Your first thought is usually your highest, most honest alignment..."
                     value={reflectionText}
                     onChange={(e) => setReflectionText(e.target.value)}
