@@ -979,13 +979,6 @@ export default function App() {
     }, 1800);
   }, [isSpinning, totalSpins, discoveredIds, coins, timeRemaining, streakHistory, showToast]);
 
-  // --- FREE COIN REPLENISHMENT ENGINE ---
-  const addFreeCoin = () => {
-    setCoins(3);
-    safeLocalStorage.setItem('lym_gacha_coins', '3');
-    showToast("Energy balance refreshed! Daily spins reset to 3.");
-  };
-
   // Save Reflection
   const saveReflection = () => {
     if (!gachaResult) return;
@@ -1131,10 +1124,6 @@ export default function App() {
       ctx.strokeStyle = '#D97706A0';
       ctx.lineWidth = 3;
       ctx.strokeRect(200, startY + 80, canvas.width - 400, 110);
-
-      ctx.strokeStyle = '#FFFFFF0D';
-      ctx.lineWidth = 1;
-      ctx.strokeRect(210, 90, canvas.width - 420, 90);
 
       ctx.fillStyle = '#D97706';
       ctx.font = '900 13px sans-serif';
@@ -1887,14 +1876,6 @@ export default function App() {
                 </div>
               </div>
             </div>
-
-            {/* Reload Balance link */}
-            <button 
-              onClick={addFreeCoin} 
-              className="mt-6 text-[10px] text-amber-500/50 font-bold tracking-widest uppercase hover:text-amber-500 flex items-center gap-1 transition-colors cursor-pointer"
-            >
-              + Refresh Energy Balance
-            </button>
 
           </div>
         )}
