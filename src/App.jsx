@@ -17,7 +17,7 @@ const computeStreak = (history) => {
   const yesterdayStr = getLocalDateString(1);
   
   if (!history.includes(todayStr) && !history.includes(yesterdayStr)) {
-    return 0; // Streak broken
+    return 0; 
   }
   
   let streak = 0;
@@ -542,7 +542,7 @@ function DiverMascot({ size = 80, className = "" }) {
       className={`select-none pointer-events-none drop-shadow-2xl ${className}`}
     >
       <defs>
-        {/* Soft underwater glow backlighting */}
+        {/* Soft, gorgeous underwater glow backlighting */}
         <radialGradient id="diverGlow" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.4" />
           <stop offset="100%" stopColor="#38BDF8" stopOpacity="0" />
@@ -618,6 +618,7 @@ function DiverMascot({ size = 80, className = "" }) {
 }
 
 // --- GLOBAL PROCEDURAL CANVAS DRAWING PIPELINE FOR THE DETAILED "DIVER" ---
+// Replaced context roundRect with canvas rounded-path drawings to secure legacy iPhone Safari stability!
 const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.save();
   ctx.translate(x, y);
@@ -633,16 +634,27 @@ const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.arc(0, 0, 45 * rScale, 0, Math.PI * 2);
   ctx.fill();
 
-  // Air Tank
+  // Air Tank Base drawing configuration
   ctx.fillStyle = '#1e222b';
   ctx.strokeStyle = '#0b0d10';
   ctx.lineWidth = 2 * rScale;
   ctx.beginPath();
-  ctx.roundRect(-14 * rScale, 10 * rScale, 28 * rScale, 34 * rScale, 10 * rScale);
+  
+  // Custom manual calculation mapping rounded corner parameters to satisfy core legacy browser rendering loops
+  const rx = -14 * rScale, ry = 10 * rScale, rw = 28 * rScale, rh = 34 * rScale, rRadius = 8 * rScale;
+  ctx.moveTo(rx + rRadius, ry);
+  ctx.lineTo(rx + rw - rRadius, ry);
+  ctx.quadraticCurveTo(rx + rw, ry, rx + rw, ry + rRadius);
+  ctx.lineTo(rx + rw, ry + rh - rRadius);
+  ctx.quadraticCurveTo(rx + rw, ry + rh, rx + rw - rRadius, ry + rh);
+  ctx.lineTo(rx + rRadius, ry + rh);
+  ctx.quadraticCurveTo(rx, ry + rh, rx, ry + rh - rRadius);
+  ctx.lineTo(rx, ry + rRadius);
+  ctx.quadraticCurveTo(rx, ry, rx + rRadius, ry);
+  ctx.closePath();
   ctx.fill();
   ctx.stroke();
 
-  // Body Suit
   const suitGrad = ctx.createLinearGradient(-25 * rScale, 10 * rScale, 25 * rScale, 54 * rScale);
   suitGrad.addColorStop(0, '#2c303b');
   suitGrad.addColorStop(0.5, '#1e222b');
@@ -655,7 +667,6 @@ const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.fill();
   ctx.stroke();
 
-  // Arms
   ctx.strokeStyle = suitGrad;
   ctx.lineWidth = 11 * rScale;
   ctx.lineCap = 'round';
@@ -666,7 +677,6 @@ const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.quadraticCurveTo(20 * rScale, 30 * rScale, 32 * rScale, 40 * rScale);
   ctx.stroke();
 
-  // Flippers
   ctx.fillStyle = '#12141a';
   ctx.save();
   ctx.translate(-13 * rScale, 54 * rScale);
@@ -823,7 +833,7 @@ export default function App() {
   // Custom Toast State
   const [toastMessage, setToastMessage] = useState('');
 
-  // Streak State Tracker
+  // Streak State Tracker (Starts at 0 so Day 1 displays empty/grey before first spin!)
   const [streakCount, setStreakCount] = useState(0);
   const [streakHistory, setStreakHistory] = useState([]);
   const [showStreakModal, setShowStreakModal] = useState(false);
@@ -905,7 +915,7 @@ export default function App() {
     const savedMOTD = localStorage.getItem('lym_motd') || 'TruSelf & Action';
     const storedRecharge = localStorage.getItem('lym_last_recharge');
 
-    // Load streak history chronologically (Starts empty for clean D1 tick after first spin!)
+    // Load actual streak history cleanly from storage (starts empty for clean D1 state)
     let storedHistory = JSON.parse(localStorage.getItem('lym_streak_history') || '[]');
     setStreakHistory(storedHistory);
 
@@ -1178,7 +1188,7 @@ export default function App() {
     return () => clearInterval(interval);
   }, [discoveredIds]);
 
-  // Spin core logic (True Randomization with Variety memory)
+  // Spin gacha logic
   const spinGacha = useCallback(() => {
     if (isSpinning) return;
     if (coins <= 0) {
@@ -1220,7 +1230,7 @@ export default function App() {
       : [...discoveredIds, selectedQuestion.id];
     const nextCoins = coins - 1;
 
-    // Record streak dates in history
+    // Record streak dates in history (Only appends on actual spin action to avoid buggy Day 1 pre-checked states!)
     const todayStr = getLocalDateString(0);
     let updatedHistory = [...streakHistory];
     if (!updatedHistory.includes(todayStr)) {
@@ -1244,7 +1254,7 @@ export default function App() {
     setDiscoveredIds(updatedDiscoveries);
     setCoins(nextCoins);
     setReflectionText(''); 
-    setIsCalibrated(false); // Reset calibration success screen
+    setIsCalibrated(false); 
 
     localStorage.setItem('lym_total_spins', String(nextSpinCount));
     localStorage.setItem('lym_discovered_ids', JSON.stringify(updatedDiscoveries));
@@ -1258,7 +1268,7 @@ export default function App() {
     }, 1800);
   }, [isSpinning, totalSpins, discoveredIds, coins, playSound, timeRemaining, streakHistory, showToast]);
 
-  // Save Reflection with immersive calibration validation feedback
+  // Save Reflection
   const saveReflection = () => {
     if (!gachaResult) return;
     playSound('click');
@@ -1282,7 +1292,6 @@ export default function App() {
     localStorage.setItem('lym_journal_logs', JSON.stringify(updatedLogs));
     localStorage.setItem('lym_motd', messageOfTheDay);
     
-    // Trigger immersive success validation view
     setIsCalibrated(true);
     playSound('success');
     showToast("Reflection logged! TruSelf alignment validated.");
@@ -1299,7 +1308,7 @@ export default function App() {
   const copyJournalToClipboard = () => {
     playSound('click');
     const text = journalLogs.map(log => 
-      `--- ${log.date} | Focus: ${log.motto || 'None'} | [${log.domain}] ---\nObservation: ${log.insight || log.horoscope || ''}\nInquest: ${log.inquest}\nCourage Step: ${log.courage}\nReflection: ${log.reflection}\n`
+      `--- ${log.date} | Focus: ${log.motto || 'None'} | [${log.domain}] ---\nObservation: ${log.insight || ''}\nInquest: ${log.inquest}\nCourage Step: ${log.courage}\nReflection: ${log.reflection}\n`
     ).join('\n');
 
     const textarea = document.createElement('textarea');
@@ -1320,7 +1329,7 @@ export default function App() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Ultra HD Canvas dimensions for crisp mobile wallpapers
+    // Ultra HD Canvas dimensions for high-fidelity mobile wallpapers
     canvas.width = 1200;
     canvas.height = 1800;
 
@@ -1354,7 +1363,7 @@ export default function App() {
     ctx.lineWidth = 8;
     ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
 
-    // Inner delicate gold-threaded line
+    // Inner line
     ctx.strokeStyle = '#D9770630';
     ctx.lineWidth = 2;
     ctx.strokeRect(55, 55, canvas.width - 110, canvas.height - 110);
@@ -1374,6 +1383,7 @@ export default function App() {
     drawCornerMarks(70, canvas.height - 70, 1, -1);
     drawCornerMarks(canvas.width - 70, canvas.height - 70, -1, -1);
 
+    // Wrapping helper
     const wrapText = (context, text, x, y, maxWidth, lineHeight) => {
       const words = text.split(' ');
       let line = '';
@@ -1442,7 +1452,6 @@ export default function App() {
 
       ctx.fillStyle = '#FFFFFF';
       ctx.font = '900 18px sans-serif';
-      ctx.letterSpacing = '1px';
       ctx.fillText(`${gachaResult.badge} • ${gachaResult.domainTitle.toUpperCase()}`, canvas.width / 2, startY + 265);
 
       // --- SECTION 1: MESSAGE OF THE DAY ---
@@ -1554,7 +1563,7 @@ export default function App() {
     ctx.lineWidth = 8;
     ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
 
-    // Inner line
+    // Inner gold-threaded line
     ctx.strokeStyle = '#D9770630';
     ctx.lineWidth = 2;
     ctx.strokeRect(55, 55, canvas.width - 110, canvas.height - 110);
@@ -1594,21 +1603,17 @@ export default function App() {
       return currentY;
     };
 
-    // Draw Diver Mascot
     drawCanvasDiver(ctx, 600, 175, 85);
 
     const startY = 280;
 
-    // Header Brand Text
     ctx.fillStyle = '#FFFFFF';
     ctx.font = '900 32px sans-serif';
-    ctx.letterSpacing = '1px';
     ctx.textAlign = 'center';
     ctx.fillText('TRUSELF REVEAL', canvas.width / 2, startY);
 
     ctx.fillStyle = '#6366F1';
     ctx.font = 'bold 16px sans-serif';
-    ctx.letterSpacing = '4px';
     ctx.fillText('L I V E   Y O U R   M A R K', canvas.width / 2, startY + 36);
 
     // Dynamic Archetype Card Header
@@ -1620,29 +1625,24 @@ export default function App() {
 
     ctx.fillStyle = '#D97706';
     ctx.font = '900 13px sans-serif';
-    ctx.letterSpacing = '2px';
     ctx.fillText('CORE PATTERN SYNTHESIS PROFILE', canvas.width / 2, startY + 115);
 
     ctx.fillStyle = '#FFFFFF';
     ctx.font = 'bold 28px sans-serif';
     ctx.fillText(currentArchetype.title.toUpperCase(), canvas.width / 2, startY + 160);
 
-    // Profile Summary Section
     const profileY = startY + 230;
     ctx.fillStyle = '#FFFFFF';
     ctx.font = '900 16px sans-serif';
-    ctx.letterSpacing = '3px';
     ctx.fillText('ALIGNMENT DIAGNOSIS', canvas.width / 2, profileY);
 
     ctx.fillStyle = '#E2E8F0';
     ctx.font = 'italic 26px Georgia, serif';
     const lastSummaryY = wrapText(ctx, `"${currentArchetype.desc}"`, canvas.width / 2, profileY + 55, 800, 42);
 
-    // Tactical Power Strengths Section
     const strengthsY = lastSummaryY + 80;
     ctx.fillStyle = '#10B981';
     ctx.font = '900 16px sans-serif';
-    ctx.letterSpacing = '3px';
     ctx.fillText('TACTICAL POWER STRENGTHS', canvas.width / 2, strengthsY);
 
     ctx.fillStyle = '#CBD5E1';
@@ -1652,32 +1652,26 @@ export default function App() {
       currentY = wrapText(ctx, `• ${str}`, canvas.width / 2, currentY, 820, 36) + 40;
     });
 
-    // High-Value Blindspots Section
     const blindspotY = currentY + 40;
     ctx.fillStyle = '#EF4444';
     ctx.font = '900 16px sans-serif';
-    ctx.letterSpacing = '3px';
     ctx.fillText('HIGH-VALUE BLINDSPOT', canvas.width / 2, blindspotY);
 
     ctx.fillStyle = '#CBD5E1';
     ctx.font = '24px sans-serif';
     const lastBlindspotY = wrapText(ctx, currentArchetype.growth, canvas.width / 2, blindspotY + 50, 820, 36);
 
-    // Action Directive Section
     const directiveY = lastBlindspotY + 80;
     ctx.fillStyle = '#F59E0B';
     ctx.font = '900 16px sans-serif';
-    ctx.letterSpacing = '3px';
     ctx.fillText('⚡ ESSENTIAL ACTION DIRECTIVE ⚡', canvas.width / 2, directiveY);
 
     ctx.fillStyle = '#FBBF24';
     ctx.font = 'bold 26px sans-serif';
     wrapText(ctx, currentArchetype.directive, canvas.width / 2, directiveY + 50, 820, 38);
 
-    // Branded Editorial Footer
     ctx.fillStyle = '#FFFFFF22';
     ctx.font = 'bold 14px sans-serif';
-    ctx.letterSpacing = '1px';
     ctx.fillText('TRUSELF REVEAL • PATTERN ARCHETYPES: 27 & 28 JUNE 2026', canvas.width / 2, canvas.height - 110);
 
     const dataUrl = canvas.toDataURL('image/png');
@@ -1688,32 +1682,23 @@ export default function App() {
     playSound('success');
   };
 
-  // Helper dictionary delivering dynamic personalized validation responses inside the modal
-  // Scanning user typed input for key trigger words to formulate customized validation feedback
+  // Local Personalized NLP Reflection Input Parser
   const getValidationMessage = (domain, text) => {
     const rawText = (text || "").toLowerCase();
 
-    // 1. Vitality Drain Checks
     if (rawText.includes("burnout") || rawText.includes("tired") || rawText.includes("exhausted") || rawText.includes("rest") || rawText.includes("sleep")) {
-      return "Calibration Alert: We detected deep drainage triggers in your reflection. Your physical vital engine is requesting immediate, uncompromising structural recovery. Halting your schedule to replenish is not a luxury—it is your primary operational asset.";
+      return "Calibration Response: Deep energy drainage signals spotted in your reflection notes. Your physical system is actively requesting a strategic pause. Halting your manual execution right now to intentionally sleep or recover isn't a distraction—it is your highest revenue-generating asset today.";
     }
-
-    // 2. Schedule micro-tasking Checks
     if (rawText.includes("busy") || rawText.includes("overwhelmed") || rawText.includes("tasks") || rawText.includes("manage") || rawText.includes("work") || rawText.includes("todo")) {
-      return "Calibration Alert: Your reflection signals high task friction. Remind yourself that packing your schedule with administrative micro-work is often a safe, subconscious shield to avoid pulling the high-stakes operational levers in your business. Pivot your focus immediately.";
+      return "Calibration Response: High administrative friction detected. Remember that packing your daily agenda with minor check-lists is often a subconscious shield used to avoid making the high-stakes, higher-leverage structural moves on your macro roadmap. Prune the noise.";
     }
-
-    // 3. Nervous system alignment checks
     if (rawText.includes("scared") || rawText.includes("fear") || rawText.includes("doubt") || rawText.includes("worry") || rawText.includes("afraid") || rawText.includes("risk") || rawText.includes("fail")) {
-      return "Calibration Alert: Nervous system resistance detected. Do not pull back. Your fear is not a crisis of capability; it is the physiological indicator marking the exact boundary of your next major expansion phase. Step forward.";
+      return "Calibration Response: Internal boundary resistance detected. Do not retreat. This mental friction is not an indicator of failure; it is the natural nervous system stretch that marks the exact outer boundaries of your next major expansion phase. Breathe and pivot forward.";
     }
-
-    // 4. Boundary friction checks
     if (rawText.includes("boundary") || rawText.includes("no") || rawText.includes("difficult") || rawText.includes("person") || rawText.includes("team") || rawText.includes("client")) {
-      return "Calibration Alert: Relational friction detected. Clean leadership is not built on accommodating the average metrics of others; it is built on clear Agreements and protected spacing. Enforce your boundary cleanly today.";
+      return "Calibration Response: Interpersonal alignment warning. Sustainable authority is never built on accommodating low-leverage compliance parameters or toxic demands. Re-anchor your standard, say your clear 'No', and establish an explicit agreement.";
     }
 
-    // Default categorical fallback validations if no keywords are matched
     switch (domain) {
       case "Creation/Choice": 
         return "Vision Calibrated. Your creative choice is anchored in your local device archive. Do not let this draft hide in isolation—bring your bold, unfiltered perspective into the light today.";
@@ -1748,13 +1733,13 @@ export default function App() {
         </div>
       )}
 
-      {/* Dynamic ambient backdrop glows matching ocean diver depth */}
+      {/* Ambient depth background layout */}
       <div className="fixed inset-0 pointer-events-none opacity-25 z-0">
         <div className="absolute top-1/4 left-1/4 w-[380px] h-[380px] bg-sky-900 rounded-full blur-[150px]"></div>
         <div className="absolute bottom-1/4 right-1/4 w-[380px] h-[380px] bg-indigo-950 rounded-full blur-[150px]"></div>
       </div>
 
-      {/* Luxury Minimalist Header Sticky Navigation */}
+      {/* Sticky Top Header Bar */}
       <nav className="relative z-50 flex items-center justify-between px-6 py-5 border-b border-white/5 backdrop-blur-md bg-[#0F172A]/40 sticky top-0">
         <div className="flex items-center gap-3">
           <DiverMascot size={32} />
@@ -1781,10 +1766,10 @@ export default function App() {
         </div>
       </nav>
 
-      {/* AMBIENT ARCADE BILLBOARD MARQUEE */}
+      {/* Ambient Arcade Billboard Marquee */}
       <div className="w-full bg-[#0B0F19]/90 border-b border-white/5 py-2.5 overflow-hidden relative z-40 flex items-center justify-center">
         <div className="text-[10px] font-black tracking-widest text-center text-indigo-300 uppercase opacity-80 px-4">
-          {marqueeIndex === 0 && `🔮 MARKS UNLOCKED: ${discoveredIds.length}/56 TRUSELF DIALS ARCHIVED 🔮`}
+          {marqueeIndex === 0 && `🔮 MARKS UNLOCKED: ${discoveredIds.length}/56 TRUE SELF DIALS ARCHIVED 🔮`}
           {marqueeIndex === 1 && `🎪 CO-ACTION: TRUSELF SUMMIT Live • 27 & 28 June 2026 • Secure Your Seat Now 🎪`}
           {marqueeIndex === 2 && `📸 Follow us on Instagram: @live.your.mark`}
         </div>
@@ -1830,7 +1815,7 @@ export default function App() {
                   <li><strong>1. Spin the Wheel:</strong> Pull the golden dial to reveal your daily gacha assessment card. (Strictly 3 spins per day).</li>
                   <li><strong>2. Reflect & Save:</strong> Type your thoughts in the modal reflection box and click <strong>Save Log</strong> to archive your insights.</li>
                   <li><strong>3. Stickers & Journal:</strong> Track progress on the <strong>Stickers</strong> tab. Tap any unlocked card to review questions or view logs in your <strong>Journal</strong>.</li>
-                  <li><strong>4. Pattern Synthesis:</strong> Keep your streak going to see what it reveals about the patterns you are running in life. Reaching Day 7 unlocks your complete **TruSelf Synthesis** report!</li>
+                  <li><strong>4. Pattern Synthesis:</strong> Build your 7-day streak to see what it reveals about the patterns you are running in life, and download your TruSelf report!</li>
                 </ul>
               </div>
             )}
@@ -1875,6 +1860,13 @@ export default function App() {
               </div>
             </div>
 
+            {coins <= 0 && timeRemaining && (
+              <div className="mt-5 p-3.5 bg-indigo-950/30 border border-indigo-500/20 rounded-2xl text-center w-full max-w-[280px] animate-pulse">
+                <span className="text-[11px] font-bold text-indigo-300 block">⏳ 24h Gacha Battery Empty</span>
+                <span className="text-xs text-amber-500 font-mono font-bold mt-1 block">Recharges 3 coins in {timeRemaining}</span>
+              </div>
+            )}
+
             {/* --- LOCALIZED 7-DAY ALIGNMENT STREAK VIEW --- */}
             <div className="mt-6 w-full max-w-[290px] p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3.5">
               <div className="flex items-center justify-between">
@@ -1882,7 +1874,7 @@ export default function App() {
                 <span className="text-xs font-black text-amber-500 tracking-tight">{streakCount} Days Active</span>
               </div>
 
-              {/* Progress nodes chronological layout (Filling forward left-to-right D1 -> D7) */}
+              {/* Progress nodes chronological layout (Filling forward D1 -> D7) */}
               <div className="flex items-center justify-between gap-1 pt-1">
                 {Array.from({ length: 7 }).map((_, index) => {
                   const isChecked = index < streakCount;
@@ -1959,7 +1951,7 @@ export default function App() {
                       if (isUnlocked) {
                         playSound('click');
                         setGachaResult(q);
-                        setIsCalibrated(true); // Treat reopened stickers as fully aligned/calibrated for nice wallpaper exports
+                        setIsCalibrated(true); 
                         setShowGachaResult(true);
                       }
                     }}
@@ -2002,7 +1994,7 @@ export default function App() {
                   href="https://liveyourmark.com/truself-summit/" 
                   target="_blank" 
                   rel="noreferrer"
-                  className="mt-3.5 inline-block bg-amber-500 hover:bg-amber-600 text-slate-950 text-[10px] font-black uppercase px-4 py-2 rounded-xl tracking-wider transition-colors"
+                  className="mt-3.5 inline-block bg-amber-500 hover:bg-amber-600 text-slate-950 text-[10px] font-black uppercase px-4 py-2 rounded-xl tracking-wider transition-colors animate-pulse"
                 >
                   Enter Live TruSelf Summit
                 </a>
@@ -2034,7 +2026,7 @@ export default function App() {
               <div>
                 <h5 className="text-[10px] font-black text-slate-200 uppercase tracking-wider">Privacy Guarantee</h5>
                 <p className="text-[9px] text-slate-400 leading-normal mt-0.5 font-sans">
-                  No data is ever stored by us. All logs, journals, and reflections remain 100% inside your local device memory (<code className="text-emerald-400 font-bold font-mono">localStorage</code>). Your privacy is uncompromised.
+                  The logs shown below are stored locally on your device. We do not maintain any cloud trackers, logging cookies, or database servers. No private details are ever shared.
                 </p>
               </div>
             </div>
@@ -2120,7 +2112,6 @@ export default function App() {
                 <div className="w-20 h-20 rounded-full bg-emerald-500/10 border-4 border-emerald-500 flex items-center justify-center shadow-[0_0_30px_rgba(16,185,129,0.3)] mb-6 animate-bounce">
                   <Sparkles className="w-10 h-10 text-emerald-400 animate-pulse" />
                 </div>
-
                 <span className="text-[10px] font-black tracking-widest text-emerald-400 uppercase block">TruSelf Calibration Complete</span>
                 <h3 className="text-2xl font-black text-slate-100 tracking-tight mt-1 mb-4">ALIGNMENT SEALED</h3>
 
@@ -2178,7 +2169,6 @@ export default function App() {
                   <input
                     type="text"
                     className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500 font-bold"
-                    placeholder="e.g. Speed & Decisiveness"
                     value={messageOfTheDay}
                     onChange={(e) => {
                       setMessageOfTheDay(e.target.value);
@@ -2225,7 +2215,6 @@ export default function App() {
                   >
                     <Bookmark className="w-4 h-4" /> Save Log
                   </button>
-
                   <button 
                     onClick={downloadManifestationCard}
                     className="py-3.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black rounded-2xl uppercase tracking-wider text-[10px] shadow-lg transition-all active:scale-95 flex items-center justify-center gap-1 cursor-pointer"
@@ -2258,12 +2247,12 @@ export default function App() {
         </div>
       )}
 
-      {/* --- STREAK PATTERN SYNTHESIS MODAL PANEL --- */}
+      {/* --- STREAK PATTERN DIAGNOSIS MODAL PANEL --- */}
       {showStreakModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-[#090D1A]/95 backdrop-blur-2xl animate-in fade-in duration-300">
           <div className="absolute inset-0 cursor-pointer" onClick={() => setShowStreakModal(false)}></div>
-          
           <div className="relative bg-[#111526] w-full max-w-sm rounded-[35px] overflow-hidden shadow-2xl border border-white/10 p-8 text-white flex flex-col max-h-[85vh] animate-in zoom-in-95 duration-200">
+            
             <button 
               onClick={() => { playSound('click'); setShowStreakModal(false); }}
               className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 bg-slate-900/60 rounded-full border border-white/10 z-50 cursor-pointer"
@@ -2285,14 +2274,12 @@ export default function App() {
                     <h4 className="text-base font-black text-amber-400 font-sans mt-0.5">{currentArchetype.title}</h4>
                     <span className="text-[9px] font-bold text-slate-400 block mt-0.5 uppercase tracking-wider">Dynamic Alignment: {currentArchetype.focus}</span>
                   </div>
-
                   <div className="border-t border-white/5 pt-3 space-y-2">
                     <span className="text-[10px] font-black text-amber-500 uppercase tracking-widest block">Core Alignment Profile</span>
                     <p className="text-slate-300 leading-relaxed italic text-[11px]">
                       {currentArchetype.desc}
                     </p>
                   </div>
-
                   <div className="border-t border-white/5 pt-3 space-y-2">
                     <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest block">Tactical Power Strengths</span>
                     <ul className="list-disc list-inside space-y-1 text-slate-300 leading-normal text-[11px]">
@@ -2301,21 +2288,18 @@ export default function App() {
                       ))}
                     </ul>
                   </div>
-
                   <div className="border-t border-white/5 pt-3 space-y-1">
                     <span className="text-[10px] font-black text-rose-400 uppercase tracking-widest block">High-Value Blindspot</span>
                     <p className="text-slate-300 leading-normal text-[11px]">
                       {currentArchetype.growth}
                     </p>
                   </div>
-
                   <div className="border-t border-white/5 pt-3 p-3 bg-indigo-950/20 border border-indigo-500/10 rounded-xl space-y-1">
                     <span className="text-[10px] font-black text-indigo-300 uppercase tracking-widest block">⚡ Essential Action Directive</span>
                     <p className="text-slate-200 font-bold leading-normal text-[11px]">
                       {currentArchetype.directive}
                     </p>
                   </div>
-
                   <div className="pt-3 border-t border-white/5">
                     <button 
                       onClick={downloadArchetypeCard}
@@ -2332,7 +2316,6 @@ export default function App() {
                   <p className="text-xs text-slate-400 leading-normal font-sans">
                     You have currently completed <strong className="text-white font-bold">{streakCount} out of 7 consecutive days</strong>. Keep drawing marks to align your focal patterns and unlock your synthesis diagnosis!
                   </p>
-                  
                   <div className="bg-slate-950 rounded-full h-2 overflow-hidden border border-white/5 mt-2">
                     <div 
                       className="bg-amber-500 h-full transition-all duration-500"
@@ -2342,7 +2325,6 @@ export default function App() {
                 </div>
               )}
 
-              {/* Privacy guarantee info card */}
               <div className="p-3.5 bg-slate-900/60 border border-emerald-500/10 rounded-xl text-left flex items-start gap-3">
                 <div className="p-1.5 bg-emerald-500/10 rounded-lg text-emerald-400 shrink-0">
                   <Lock className="w-3.5 h-3.5" />
