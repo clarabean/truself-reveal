@@ -542,19 +542,16 @@ function DiverMascot({ size = 80, className = "" }) {
       className={`select-none pointer-events-none drop-shadow-2xl ${className}`}
     >
       <defs>
-        {/* Soft, gorgeous underwater glow backlighting */}
+        {/* Soft glow backlighting */}
         <radialGradient id="diverGlow" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.4" />
           <stop offset="100%" stopColor="#38BDF8" stopOpacity="0" />
         </radialGradient>
-
-        {/* Dynamic metallic ring & body-suit gradients */}
         <linearGradient id="suitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#2c303b" />
           <stop offset="50%" stopColor="#1e222b" />
           <stop offset="100%" stopColor="#12141a" />
         </linearGradient>
-
         <linearGradient id="chromeRing" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#5f6775" />
           <stop offset="35%" stopColor="#a1abbc" />
@@ -562,19 +559,15 @@ function DiverMascot({ size = 80, className = "" }) {
           <stop offset="65%" stopColor="#7a8596" />
           <stop offset="100%" stopColor="#2d333f" />
         </linearGradient>
-
         <linearGradient id="visorGlass" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#334155" />
           <stop offset="30%" stopColor="#1e293b" />
           <stop offset="100%" stopColor="#0f172a" />
         </linearGradient>
-
         <radialGradient id="cheekBlush" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#fb7185" stopOpacity="0.8" />
           <stop offset="100%" stopColor="#fb7185" stopOpacity="0" />
         </radialGradient>
-
-        {/* Glow filter for neon shoulder spirals */}
         <filter id="neonSpiralGlow" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="1.5" result="blur" />
           <feMerge>
@@ -583,7 +576,6 @@ function DiverMascot({ size = 80, className = "" }) {
           </feMerge>
         </filter>
       </defs>
-
       <circle cx="50" cy="55" r="45" fill="url(#diverGlow)" />
       <rect x="36" y="62" width="28" height="34" rx="8" fill="#1e222b" stroke="#0b0d10" strokeWidth="2.5" />
       <rect x="42" y="55" width="16" height="7" rx="1.5" fill="#475569" stroke="#0F172A" strokeWidth="1" />
@@ -593,12 +585,10 @@ function DiverMascot({ size = 80, className = "" }) {
       <path d="M 74 78 Q 86 80 82 90" stroke="url(#suitGrad)" strokeWidth="11" strokeLinecap="round" fill="none" />
       <ellipse cx="37" cy="108" rx="8" ry="5.5" fill="#12141a" transform="rotate(-15 37 108)" />
       <ellipse cx="63" cy="108" rx="8" ry="5.5" fill="#12141a" transform="rotate(15 63 108)" />
-
       <g stroke="#d8b4fe" strokeWidth="1.2" fill="none" strokeLinecap="round" filter="url(#neonSpiralGlow)">
         <path d="M 20 83 A 2 2 0 1 0 21 85 A 1 1 0 1 0 20.5 84" />
         <path d="M 80 83 A 2 2 0 1 0 81 85 A 1 1 0 1 0 80.5 84" />
       </g>
-
       <circle cx="50" cy="83" r="6" fill="#1f242e" stroke="#0f1115" strokeWidth="1.5" />
       <path d="M 50 83 A 2.2 2.2 0 1 0 52 85 A 1.2 1.2 0 1 0 50.5 84" stroke="#c084fc" strokeWidth="1.2" fill="none" strokeLinecap="round" filter="url(#neonSpiralGlow)" />
       <circle cx="50" cy="45" r="30" fill="url(#chromeRing)" />
@@ -618,14 +608,13 @@ function DiverMascot({ size = 80, className = "" }) {
 }
 
 // --- GLOBAL PROCEDURAL CANVAS DRAWING PIPELINE FOR THE DETAILED "DIVER" ---
-// Replaced context roundRect with canvas rounded-path drawings to secure legacy iPhone Safari stability!
 const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.save();
   ctx.translate(x, y);
 
   const rScale = size / 80;
 
-  // Glowing underwater backlight halo
+  // Glowing backlight halo
   const haloGrad = ctx.createRadialGradient(0, 0, 10 * rScale, 0, 0, 45 * rScale);
   haloGrad.addColorStop(0, 'rgba(56, 189, 248, 0.45)');
   haloGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
@@ -640,8 +629,12 @@ const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.lineWidth = 2 * rScale;
   ctx.beginPath();
   
-  // Custom manual calculation mapping rounded corner parameters to satisfy core legacy browser rendering loops
-  const rx = -14 * rScale, ry = 10 * rScale, rw = 28 * rScale, rh = 34 * rScale, rRadius = 8 * rScale;
+  // Custom manual path calculation to satisfy older mobile WKWebView rendering loops (no roundRect!)
+  const rx = -14 * rScale;
+  const ry = 10 * rScale;
+  const rw = 28 * rScale;
+  const rh = 34 * rScale;
+  const rRadius = 8 * rScale;
   ctx.moveTo(rx + rRadius, ry);
   ctx.lineTo(rx + rw - rRadius, ry);
   ctx.quadraticCurveTo(rx + rw, ry, rx + rw, ry + rRadius);
@@ -655,6 +648,7 @@ const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.fill();
   ctx.stroke();
 
+  // Body Suit
   const suitGrad = ctx.createLinearGradient(-25 * rScale, 10 * rScale, 25 * rScale, 54 * rScale);
   suitGrad.addColorStop(0, '#2c303b');
   suitGrad.addColorStop(0.5, '#1e222b');
@@ -667,6 +661,7 @@ const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.fill();
   ctx.stroke();
 
+  // Arms
   ctx.strokeStyle = suitGrad;
   ctx.lineWidth = 11 * rScale;
   ctx.lineCap = 'round';
@@ -677,6 +672,7 @@ const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.quadraticCurveTo(20 * rScale, 30 * rScale, 32 * rScale, 40 * rScale);
   ctx.stroke();
 
+  // Flippers
   ctx.fillStyle = '#12141a';
   ctx.save();
   ctx.translate(-13 * rScale, 54 * rScale);
@@ -805,6 +801,7 @@ const drawCanvasDiver = (ctx, x, y, size) => {
 };
 
 export default function App() {
+  // State definitions must be declared first
   const [isSpinning, setIsSpinning] = useState(false);
   const [showGachaResult, setShowGachaResult] = useState(false);
   const [gachaResult, setGachaResult] = useState(null);
@@ -833,7 +830,7 @@ export default function App() {
   // Custom Toast State
   const [toastMessage, setToastMessage] = useState('');
 
-  // Streak State Tracker (Starts at 0 so Day 1 displays empty/grey before first spin!)
+  // Streak State Tracker (Starts empty so Day 1 is grey/pulsing until spun)
   const [streakCount, setStreakCount] = useState(0);
   const [streakHistory, setStreakHistory] = useState([]);
   const [showStreakModal, setShowStreakModal] = useState(false);
@@ -905,6 +902,530 @@ export default function App() {
       setToastMessage('');
     }, 4500);
   }, []);
+
+  // --- GLOBAL spinGacha DECLARED SAFELY AT TOP OF BODY IN SCOPE ---
+  const spinGacha = useCallback(() => {
+    if (isSpinning) return;
+    if (coins <= 0) {
+      playSound('click');
+      showToast(`Daily energy exhausted. Resetting back to 3 pulls in ${timeRemaining || "a few moments"}.`);
+      return;
+    }
+
+    setIsSpinning(true);
+    playSound('spin');
+    setLeverAngle(prev => prev + 360);
+
+    // Apply safe velocity to physics balls
+    physicsBallsRef.current.forEach(b => {
+      b.vx = (Math.random() - 0.5) * 15;
+      b.vy = -8 - Math.random() * 8; 
+    });
+
+    const nextSpinCount = totalSpins + 1;
+    
+    const roll = Math.random() * 100;
+    let targetRarity = "Common";
+    if (roll > 90) targetRarity = "Legendary";
+    else if (roll > 60) targetRarity = "Rare";
+
+    let eligiblePool = ALL_QUESTIONS.filter(q => q.rarity === targetRarity);
+    const recentPulls = JSON.parse(localStorage.getItem('lym_recent_pulls') || '[]');
+    let filteredPool = eligiblePool.filter(q => !recentPulls.includes(q.id));
+    
+    if (filteredPool.length === 0) filteredPool = eligiblePool; 
+    if (filteredPool.length === 0) filteredPool = ALL_QUESTIONS; 
+
+    const selectedQuestion = filteredPool[Math.floor(Math.random() * filteredPool.length)];
+    const nextRecent = [selectedQuestion.id, ...recentPulls].slice(0, 5);
+    localStorage.setItem('lym_recent_pulls', JSON.stringify(nextRecent));
+
+    const updatedDiscoveries = discoveredIds.includes(selectedQuestion.id)
+      ? discoveredIds
+      : [...discoveredIds, selectedQuestion.id];
+    const nextCoins = coins - 1;
+
+    // Record streak dates in history (Only appends on actual spin action to avoid buggy Day 1 pre-checked states!)
+    const todayStr = getLocalDateString(0);
+    let updatedHistory = [...streakHistory];
+    if (!updatedHistory.includes(todayStr)) {
+      updatedHistory.push(todayStr);
+      localStorage.setItem('lym_streak_history', JSON.stringify(updatedHistory));
+      setStreakHistory(updatedHistory);
+    }
+    const currentStreak = computeStreak(updatedHistory);
+    setStreakCount(currentStreak);
+
+    // Dynamic Focus Phrase Intercept & Allocation
+    try {
+      const activeDomain = selectedQuestion.domainTitle;
+      const phrases = FOCUS_PHRASES[activeDomain] || ["TruSelf & Action"];
+      const randomizedFocus = phrases[Math.floor(Math.random() * phrases.length)];
+      setMessageOfTheDay(randomizedFocus);
+      localStorage.setItem('lym_motd', randomizedFocus);
+    } catch (e) {}
+
+    setTotalSpins(nextSpinCount);
+    setDiscoveredIds(updatedDiscoveries);
+    setCoins(nextCoins);
+    setReflectionText(''); 
+    setIsCalibrated(false); 
+
+    localStorage.setItem('lym_total_spins', String(nextSpinCount));
+    localStorage.setItem('lym_discovered_ids', JSON.stringify(updatedDiscoveries));
+    localStorage.setItem('lym_gacha_coins', String(nextCoins));
+
+    setTimeout(() => {
+      setGachaResult(selectedQuestion);
+      setShowGachaResult(true);
+      setIsSpinning(false);
+      playSound('success');
+    }, 1800);
+  }, [isSpinning, totalSpins, discoveredIds, coins, playSound, timeRemaining, streakHistory, showToast]);
+
+  // --- FREE COIN REPLENISHMENT ENGINE ---
+  const addFreeCoin = () => {
+    playSound('click');
+    setCoins(3);
+    localStorage.setItem('lym_gacha_coins', '3');
+    showToast("Energy balance refreshed! Daily spins reset to 3.");
+  };
+
+  // Save Reflection
+  const saveReflection = () => {
+    if (!gachaResult) return;
+    playSound('click');
+
+    const newLog = {
+      id: Date.now().toString(),
+      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      questionId: gachaResult.id,
+      domain: gachaResult.domainTitle,
+      domainColor: gachaResult.domainColor,
+      badge: gachaResult.badge,
+      insight: gachaResult.insight,
+      inquest: gachaResult.inquest,
+      courage: gachaResult.courage,
+      reflection: reflectionText || "Self-guided reflection session.",
+      motto: messageOfTheDay
+    };
+
+    const updatedLogs = [newLog, ...journalLogs];
+    setJournalLogs(updatedLogs);
+    localStorage.setItem('lym_journal_logs', JSON.stringify(updatedLogs));
+    localStorage.setItem('lym_motd', messageOfTheDay);
+    
+    setIsCalibrated(true);
+    playSound('success');
+    showToast("Reflection logged! TruSelf alignment validated.");
+  };
+
+  const deleteJournalEntry = (id) => {
+    playSound('click');
+    const updated = journalLogs.filter(log => log.id !== id);
+    setJournalLogs(updated);
+    localStorage.setItem('lym_journal_logs', JSON.stringify(updated));
+    showToast("Entry deleted successfully.");
+  };
+
+  const copyJournalToClipboard = () => {
+    playSound('click');
+    const text = journalLogs.map(log => 
+      `--- ${log.date} | Focus: ${log.motto || 'None'} | [${log.domain}] ---\nObservation: ${log.insight || log.horoscope || ''}\nInquest: ${log.inquest}\nCourage Step: ${log.courage}\nReflection: ${log.reflection}\n`
+    ).join('\n');
+
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+
+    showToast("Entire reflection archive copied to clipboard!");
+  };
+
+  // --- PREMIUM CHIC MOBILE WALLPAPER GENERATOR ---
+  const downloadManifestationCard = () => {
+    if (!gachaResult) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Ultra HD Canvas dimensions for high-fidelity mobile wallpapers
+    canvas.width = 1200;
+    canvas.height = 1800;
+
+    // Background base layer (Luxury deep space black)
+    ctx.fillStyle = '#090D16';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Dynamic Luxury Aurora Radial Lighting Glow matching domain category
+    const gradient = ctx.createRadialGradient(600, 900, 100, 600, 900, 900);
+    gradient.addColorStop(0, gachaResult.domainColor + '2F'); 
+    gradient.addColorStop(0.5, '#D977060A'); 
+    gradient.addColorStop(1, '#00000000');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw underwater beams of light streaming from top center
+    const beamGrad = ctx.createLinearGradient(600, 0, 600, 550);
+    beamGrad.addColorStop(0, 'rgba(56, 189, 248, 0.28)');
+    beamGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+    ctx.fillStyle = beamGrad;
+    ctx.beginPath();
+    ctx.moveTo(350, 0);
+    ctx.lineTo(850, 0);
+    ctx.lineTo(1000, 550);
+    ctx.lineTo(200, 550);
+    ctx.closePath();
+    ctx.fill();
+
+    // Double Gilded Premium Borders
+    ctx.strokeStyle = gachaResult.domainColor;
+    ctx.lineWidth = 8;
+    ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
+
+    // Inner line
+    ctx.strokeStyle = '#D9770630';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(55, 55, canvas.width - 110, canvas.height - 110);
+
+    // Corner geometric alignment marks
+    const drawCornerMarks = (x, y, xDir, yDir) => {
+      ctx.strokeStyle = '#D9770680';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(x, y + yDir * 40);
+      ctx.lineTo(x, y);
+      ctx.lineTo(x + xDir * 40, y);
+      ctx.stroke();
+    };
+    drawCornerMarks(70, 70, 1, 1);
+    drawCornerMarks(canvas.width - 70, 70, -1, 1);
+    drawCornerMarks(70, canvas.height - 70, 1, -1);
+    drawCornerMarks(canvas.width - 70, canvas.height - 70, -1, -1);
+
+    const wrapText = (context, text, x, y, maxWidth, lineHeight) => {
+      const words = text.split(' ');
+      let line = '';
+      let currentY = y;
+      for (let n = 0; n < words.length; n++) {
+        let testLine = line + words[n] + ' ';
+        let metrics = context.measureText(testLine);
+        let testWidth = metrics.width;
+        if (testWidth > maxWidth && n > 0) {
+          context.fillText(line, x, currentY);
+          line = words[n] + ' ';
+          currentY += lineHeight;
+        } else {
+          line = testLine;
+        }
+      }
+      context.fillText(line, x, currentY);
+      return currentY;
+    };
+
+    // Draw our lovely Custom Diver Mascot at the top center of the wallpaper
+    drawCanvasDiver(ctx, 600, 175, 80);
+
+    const drawLogoAndCardText = (startY) => {
+      // Header Brand Text
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '900 32px sans-serif';
+      ctx.letterSpacing = '1px';
+      ctx.textAlign = 'center';
+      ctx.fillText('TRUSELF REVEAL', canvas.width / 2, startY);
+
+      ctx.fillStyle = gachaResult.domainColor;
+      ctx.font = 'bold 16px sans-serif';
+      ctx.letterSpacing = '4px';
+      ctx.fillText('L I V E   Y O U R   M A R K', canvas.width / 2, startY + 36);
+
+      // --- LUXURY PERSONAL FOCUS EMBOSSED GOLD BOARD ---
+      const activeMotto = (messageOfTheDay || 'TruSelf & Action').trim();
+      ctx.fillStyle = '#111827';
+      ctx.fillRect(200, startY + 80, canvas.width - 400, 110);
+      
+      ctx.strokeStyle = '#D97706A0';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(200, startY + 80, canvas.width - 400, 110);
+
+      ctx.strokeStyle = '#FFFFFF0D';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(210, 90, canvas.width - 420, 90);
+
+      ctx.fillStyle = '#D97706';
+      ctx.font = '900 13px sans-serif';
+      ctx.letterSpacing = '2px';
+      ctx.fillText('INTENTIONAL FOCUS OF THE DAY', canvas.width / 2, startY + 115);
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 28px sans-serif';
+      ctx.fillText(`"${activeMotto}"`, canvas.width / 2, startY + 160);
+
+      // Category Domain Badge
+      ctx.fillStyle = gachaResult.domainColor + '1C';
+      ctx.fillRect(240, startY + 230, canvas.width - 480, 56);
+      ctx.strokeStyle = gachaResult.domainColor + '50';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(240, startY + 230, canvas.width - 480, 56);
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '900 18px sans-serif';
+      ctx.fillText(`${gachaResult.badge} • ${gachaResult.domainTitle.toUpperCase()}`, canvas.width / 2, startY + 265);
+
+      const textStartY = startY + 360;
+      ctx.fillStyle = '#D9770622';
+      ctx.font = 'bold 180px Georgia, serif';
+      ctx.fillText('“', canvas.width / 2 - 280, textStartY + 100);
+
+      ctx.fillStyle = '#D97706';
+      ctx.font = '900 16px sans-serif';
+      ctx.letterSpacing = '3px';
+      ctx.fillText('MESSAGE OF THE DAY', canvas.width / 2, textStartY);
+
+      ctx.fillStyle = '#E2E8F0';
+      ctx.font = 'italic 28px Georgia, serif';
+      const lastInsightY = wrapText(ctx, `"${gachaResult.insight}"`, canvas.width / 2, textStartY + 55, 780, 44);
+
+      const inquestStartY = lastInsightY + 110;
+      ctx.fillStyle = '#D97706';
+      ctx.font = '900 16px sans-serif';
+      ctx.letterSpacing = '3px';
+      ctx.fillText('ASK YOURSELF?', canvas.width / 2, inquestStartY);
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '900 38px sans-serif';
+      const lastInquestY = wrapText(ctx, gachaResult.inquest, canvas.width / 2, inquestStartY + 65, 820, 56);
+
+      const courageStartY = lastInquestY + 110;
+      ctx.fillStyle = '#EF4444';
+      ctx.font = '900 16px sans-serif';
+      ctx.letterSpacing = '3px';
+      ctx.fillText('⚡ ACT OF COURAGE ⚡', canvas.width / 2, courageStartY);
+
+      ctx.fillStyle = '#FBBF24';
+      ctx.font = 'bold 28px sans-serif';
+      const lastCourageY = wrapText(ctx, gachaResult.courage, canvas.width / 2, courageStartY + 60, 820, 44);
+
+      if (reflectionText.trim().length > 0) {
+        const reflectionStartY = lastCourageY + 110;
+        ctx.fillStyle = gachaResult.domainColor;
+        ctx.font = '900 15px sans-serif';
+        ctx.letterSpacing = '2px';
+        ctx.fillText('MY ALIGNMENT REFLECTION', canvas.width / 2, reflectionStartY);
+
+        ctx.fillStyle = '#94A3B8';
+        ctx.font = 'italic 24px Georgia, serif';
+        wrapText(ctx, `"${reflectionText}"`, canvas.width / 2, reflectionStartY + 45, 800, 38);
+      }
+
+      ctx.fillStyle = '#FFFFFF22';
+      ctx.font = 'bold 14px sans-serif';
+      ctx.fillText('TRUSELF REVEAL • LIVE STRATEGY: 27 & 28 JUNE 2026', canvas.width / 2, canvas.height - 110);
+
+      const dataUrl = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.download = `LYM_Inquest_${gachaResult.id}.png`;
+      link.href = dataUrl;
+      link.click();
+      playSound('success');
+    };
+
+    drawLogoAndCardText(280);
+  };
+
+  // --- DOWNLOAD CORE ARCHETYPE ANALYSIS GRAPHIC ---
+  const downloadArchetypeCard = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = 1200;
+    canvas.height = 1800;
+
+    ctx.fillStyle = '#090D16';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const gradient = ctx.createRadialGradient(600, 900, 100, 600, 900, 900);
+    gradient.addColorStop(0, '#6366F12F'); 
+    gradient.addColorStop(0.5, '#D977060A'); 
+    gradient.addColorStop(1, '#00000000');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const beamGrad = ctx.createLinearGradient(600, 0, 600, 550);
+    beamGrad.addColorStop(0, 'rgba(56, 189, 248, 0.28)');
+    beamGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+    ctx.fillStyle = beamGrad;
+    ctx.beginPath();
+    ctx.moveTo(350, 0);
+    ctx.lineTo(850, 0);
+    ctx.lineTo(1000, 550);
+    ctx.lineTo(200, 550);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.strokeStyle = '#6366F1';
+    ctx.lineWidth = 8;
+    ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
+
+    ctx.strokeStyle = '#D9770630';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(55, 55, canvas.width - 110, canvas.height - 110);
+
+    const drawCornerMarks = (x, y, xDir, yDir) => {
+      ctx.strokeStyle = '#D9770680';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(x, y + yDir * 40);
+      ctx.lineTo(x, y);
+      ctx.lineTo(x + xDir * 40, y);
+      ctx.stroke();
+    };
+    drawCornerMarks(70, 70, 1, 1);
+    drawCornerMarks(canvas.width - 70, 70, -1, 1);
+    drawCornerMarks(70, canvas.height - 70, 1, -1);
+    drawCornerMarks(canvas.width - 70, canvas.height - 70, -1, -1);
+
+    const wrapText = (context, text, x, y, maxWidth, lineHeight) => {
+      const words = text.split(' ');
+      let line = '';
+      let currentY = y;
+      for (let n = 0; n < words.length; n++) {
+        let testLine = line + words[n] + ' ';
+        let metrics = context.measureText(testLine);
+        let testWidth = metrics.width;
+        if (testWidth > maxWidth && n > 0) {
+          context.fillText(line, x, currentY);
+          line = words[n] + ' ';
+          currentY += lineHeight;
+        } else {
+          line = testLine;
+        }
+      }
+      context.fillText(line, x, currentY);
+      return currentY;
+    };
+
+    drawCanvasDiver(ctx, 600, 175, 85);
+
+    const startY = 280;
+
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = '900 32px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('TRUSELF REVEAL', canvas.width / 2, startY);
+
+    ctx.fillStyle = '#6366F1';
+    ctx.font = 'bold 16px sans-serif';
+    ctx.fillText('L I V E   Y O U R   M A R K', canvas.width / 2, startY + 36);
+
+    ctx.fillStyle = '#111827';
+    ctx.fillRect(200, startY + 80, canvas.width - 400, 110);
+    ctx.strokeStyle = '#D97706A0';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(200, startY + 80, canvas.width - 400, 110);
+
+    ctx.fillStyle = '#D97706';
+    ctx.font = '900 13px sans-serif';
+    ctx.fillText('CORE PATTERN SYNTHESIS PROFILE', canvas.width / 2, startY + 115);
+
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 28px sans-serif';
+    ctx.fillText(currentArchetype.title.toUpperCase(), canvas.width / 2, startY + 160);
+
+    const profileY = startY + 230;
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = '900 16px sans-serif';
+    ctx.fillText('ALIGNMENT DIAGNOSIS', canvas.width / 2, profileY);
+
+    ctx.fillStyle = '#E2E8F0';
+    ctx.font = 'italic 26px Georgia, serif';
+    const lastSummaryY = wrapText(ctx, `"${currentArchetype.desc}"`, canvas.width / 2, profileY + 55, 800, 42);
+
+    const strengthsY = lastSummaryY + 80;
+    ctx.fillStyle = '#10B981';
+    ctx.font = '900 16px sans-serif';
+    ctx.fillText('TACTICAL POWER STRENGTHS', canvas.width / 2, strengthsY);
+
+    ctx.fillStyle = '#CBD5E1';
+    ctx.font = 'bold 24px sans-serif';
+    let currentY = strengthsY + 50;
+    currentArchetype.strengths.forEach((str) => {
+      currentY = wrapText(ctx, `• ${str}`, canvas.width / 2, currentY, 820, 36) + 40;
+    });
+
+    const blindspotY = currentY + 40;
+    ctx.fillStyle = '#EF4444';
+    ctx.font = '900 16px sans-serif';
+    ctx.fillText('HIGH-VALUE BLINDSPOT', canvas.width / 2, blindspotY);
+
+    ctx.fillStyle = '#CBD5E1';
+    ctx.font = '24px sans-serif';
+    const lastBlindspotY = wrapText(ctx, currentArchetype.growth, canvas.width / 2, blindspotY + 50, 820, 36);
+
+    const directiveY = lastBlindspotY + 80;
+    ctx.fillStyle = '#F59E0B';
+    ctx.font = '900 16px sans-serif';
+    ctx.fillText('⚡ ESSENTIAL ACTION DIRECTIVE ⚡', canvas.width / 2, directiveY);
+
+    ctx.fillStyle = '#FBBF24';
+    ctx.font = 'bold 26px sans-serif';
+    wrapText(ctx, currentArchetype.directive, canvas.width / 2, directiveY + 50, 820, 38);
+
+    ctx.fillStyle = '#FFFFFF22';
+    ctx.font = 'bold 14px sans-serif';
+    ctx.fillText('TRUSELF REVEAL • PATTERN ARCHETYPES: 27 & 28 JUNE 2026', canvas.width / 2, canvas.height - 110);
+
+    const dataUrl = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.download = `TruSelf_Archetype_${Date.now()}.png`;
+    link.href = dataUrl;
+    link.click();
+    playSound('success');
+  };
+
+  // Local Personalized NLP Reflection Input Parser
+  const getValidationMessage = (domain, text) => {
+    const rawText = (text || "").toLowerCase();
+
+    if (rawText.includes("burnout") || rawText.includes("tired") || rawText.includes("exhausted") || rawText.includes("rest") || rawText.includes("sleep")) {
+      return "Calibration Response: Deep energy drainage signals spotted in your reflection notes. Your physical system is actively requesting a strategic pause. Halting your manual execution right now to intentionally sleep or recover isn't a distraction—it is your highest revenue-generating asset today.";
+    }
+    if (rawText.includes("busy") || rawText.includes("overwhelmed") || rawText.includes("tasks") || rawText.includes("manage") || rawText.includes("work") || rawText.includes("todo")) {
+      return "Calibration Response: High administrative friction detected. Remember that packing your daily agenda with minor check-lists is often a subconscious shield used to avoid making the high-stakes, higher-leverage structural moves on your macro roadmap. Prune the noise.";
+    }
+    if (rawText.includes("scared") || rawText.includes("fear") || rawText.includes("doubt") || rawText.includes("worry") || rawText.includes("afraid") || rawText.includes("risk") || rawText.includes("fail")) {
+      return "Calibration Response: Internal boundary resistance detected. Do not retreat. This mental friction is not an indicator of failure; it is the natural nervous system stretch that marks the exact outer boundaries of your next major expansion phase. Breathe and pivot forward.";
+    }
+    if (rawText.includes("boundary") || rawText.includes("no") || rawText.includes("difficult") || rawText.includes("person") || rawText.includes("team") || rawText.includes("client")) {
+      return "Calibration Response: Interpersonal alignment warning. Sustainable authority is never built on accommodating low-leverage compliance parameters or toxic demands. Re-anchor your standard, say your clear 'No', and establish an explicit agreement.";
+    }
+
+    switch (domain) {
+      case "Creation/Choice": 
+        return "Vision Calibrated. Your creative choice is anchored in your local device archive. Do not let this draft hide in isolation—bring your bold, unfiltered perspective into the light today.";
+      case "Advancement": 
+        return "Momentum Locked. Action is the ultimate clarifier. You have successfully structured your priority task—execute with zero compromise tomorrow.";
+      case "Achievement": 
+        return "Mastery Aligned. You are actively building past old comfort baselines. Honor your structural progress, play the highest stakes available, and celebrate this win.";
+      case "Resource Gaining": 
+        return "Abundance Registered. Focus and cognitive spacing are your primary assets. You have successfully mapped your leverage—allocate your resources intentionally today.";
+      case "Vitality": 
+        return "Energy Centered. Peak performance demands uncompromising biological recovery. By logging this alignment, you honor your physical vessel. Guard your rest.";
+      case "Dreams/Passions": 
+        return "Core Spark Verified. Excitement is your highest strategic compass. You have captured your enthusiasm—shield this playground of flow from daily static.";
+      case "People": 
+        return "Tribe Boundaries Established. Clean leadership is built on honest agreements and uncompromised respect. Speak your unfiltered perspective with conviction today.";
+      case "Connection": 
+        return "Truth Sealed. Empathy and self-honesty are your actual strength. You have successfully lowered your drawbridge—step forward in raw alignment.";
+      default: 
+        return "Alignment Calibrated. Your reflection has been successfully validated and logged in your secure local device memory.";
+    }
+  };
 
   // Setup initial state, load localStorage & auto-migrate data on mount
   useEffect(() => {
@@ -1175,552 +1696,6 @@ export default function App() {
     };
   }, [isSpinning, activeTab]);
 
-  // Cycle the ambient marquee billboard announcements
-  useEffect(() => {
-    const messages = [
-      `🔮 MARKS UNLOCKED: ${discoveredIds.length}/56 TRUSELF DIALS ARCHIVED 🔮`,
-      `🎪 CO-ACTION: TRUSELF SUMMIT Live • 27 & 28 June 2026 • Secure Your Seat Now 🎪`,
-      `📸 Follow us on Instagram: @live.your.mark`
-    ];
-    const interval = setInterval(() => {
-      setMarqueeIndex((prev) => (prev + 1) % messages.length);
-    }, 4500);
-    return () => clearInterval(interval);
-  }, [discoveredIds]);
-
-  // Spin gacha logic
-  const spinGacha = useCallback(() => {
-    if (isSpinning) return;
-    if (coins <= 0) {
-      playSound('click');
-      showToast(`Daily energy exhausted. Resetting back to 3 pulls in ${timeRemaining || "a few moments"}.`);
-      return;
-    }
-
-    setIsSpinning(true);
-    playSound('spin');
-    setLeverAngle(prev => prev + 360);
-
-    // Apply safe velocity to physics balls
-    physicsBallsRef.current.forEach(b => {
-      b.vx = (Math.random() - 0.5) * 15;
-      b.vy = -8 - Math.random() * 8; 
-    });
-
-    const nextSpinCount = totalSpins + 1;
-    
-    const roll = Math.random() * 100;
-    let targetRarity = "Common";
-    if (roll > 90) targetRarity = "Legendary";
-    else if (roll > 60) targetRarity = "Rare";
-
-    let eligiblePool = ALL_QUESTIONS.filter(q => q.rarity === targetRarity);
-    const recentPulls = JSON.parse(localStorage.getItem('lym_recent_pulls') || '[]');
-    let filteredPool = eligiblePool.filter(q => !recentPulls.includes(q.id));
-    
-    if (filteredPool.length === 0) filteredPool = eligiblePool; 
-    if (filteredPool.length === 0) filteredPool = ALL_QUESTIONS; 
-
-    const selectedQuestion = filteredPool[Math.floor(Math.random() * filteredPool.length)];
-    const nextRecent = [selectedQuestion.id, ...recentPulls].slice(0, 5);
-    localStorage.setItem('lym_recent_pulls', JSON.stringify(nextRecent));
-
-    const updatedDiscoveries = discoveredIds.includes(selectedQuestion.id)
-      ? discoveredIds
-      : [...discoveredIds, selectedQuestion.id];
-    const nextCoins = coins - 1;
-
-    // Record streak dates in history (Only appends on actual spin action to avoid buggy Day 1 pre-checked states!)
-    const todayStr = getLocalDateString(0);
-    let updatedHistory = [...streakHistory];
-    if (!updatedHistory.includes(todayStr)) {
-      updatedHistory.push(todayStr);
-      localStorage.setItem('lym_streak_history', JSON.stringify(updatedHistory));
-      setStreakHistory(updatedHistory);
-    }
-    const currentStreak = computeStreak(updatedHistory);
-    setStreakCount(currentStreak);
-
-    // Dynamic Focus Phrase Intercept & Allocation
-    try {
-      const activeDomain = selectedQuestion.domainTitle;
-      const phrases = FOCUS_PHRASES[activeDomain] || ["TruSelf & Action"];
-      const randomizedFocus = phrases[Math.floor(Math.random() * phrases.length)];
-      setMessageOfTheDay(randomizedFocus);
-      localStorage.setItem('lym_motd', randomizedFocus);
-    } catch (e) {}
-
-    setTotalSpins(nextSpinCount);
-    setDiscoveredIds(updatedDiscoveries);
-    setCoins(nextCoins);
-    setReflectionText(''); 
-    setIsCalibrated(false); 
-
-    localStorage.setItem('lym_total_spins', String(nextSpinCount));
-    localStorage.setItem('lym_discovered_ids', JSON.stringify(updatedDiscoveries));
-    localStorage.setItem('lym_gacha_coins', String(nextCoins));
-
-    setTimeout(() => {
-      setGachaResult(selectedQuestion);
-      setShowGachaResult(true);
-      setIsSpinning(false);
-      playSound('success');
-    }, 1800);
-  }, [isSpinning, totalSpins, discoveredIds, coins, playSound, timeRemaining, streakHistory, showToast]);
-
-  // Save Reflection
-  const saveReflection = () => {
-    if (!gachaResult) return;
-    playSound('click');
-
-    const newLog = {
-      id: Date.now().toString(),
-      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-      questionId: gachaResult.id,
-      domain: gachaResult.domainTitle,
-      domainColor: gachaResult.domainColor,
-      badge: gachaResult.badge,
-      insight: gachaResult.insight,
-      inquest: gachaResult.inquest,
-      courage: gachaResult.courage,
-      reflection: reflectionText || "Self-guided reflection session.",
-      motto: messageOfTheDay
-    };
-
-    const updatedLogs = [newLog, ...journalLogs];
-    setJournalLogs(updatedLogs);
-    localStorage.setItem('lym_journal_logs', JSON.stringify(updatedLogs));
-    localStorage.setItem('lym_motd', messageOfTheDay);
-    
-    setIsCalibrated(true);
-    playSound('success');
-    showToast("Reflection logged! TruSelf alignment validated.");
-  };
-
-  const deleteJournalEntry = (id) => {
-    playSound('click');
-    const updated = journalLogs.filter(log => log.id !== id);
-    setJournalLogs(updated);
-    localStorage.setItem('lym_journal_logs', JSON.stringify(updated));
-    showToast("Entry deleted successfully.");
-  };
-
-  const copyJournalToClipboard = () => {
-    playSound('click');
-    const text = journalLogs.map(log => 
-      `--- ${log.date} | Focus: ${log.motto || 'None'} | [${log.domain}] ---\nObservation: ${log.insight || ''}\nInquest: ${log.inquest}\nCourage Step: ${log.courage}\nReflection: ${log.reflection}\n`
-    ).join('\n');
-
-    const textarea = document.createElement('textarea');
-    textarea.value = text;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textarea);
-
-    showToast("Entire reflection archive copied to clipboard!");
-  };
-
-  // --- PREMIUM CHIC MOBILE WALLPAPER GENERATOR ---
-  const downloadManifestationCard = () => {
-    if (!gachaResult) return;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Ultra HD Canvas dimensions for high-fidelity mobile wallpapers
-    canvas.width = 1200;
-    canvas.height = 1800;
-
-    // Background base layer (Luxury deep space black)
-    ctx.fillStyle = '#090D16';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Dynamic Luxury Aurora Radial Lighting Glow matching domain category
-    const gradient = ctx.createRadialGradient(600, 900, 100, 600, 900, 900);
-    gradient.addColorStop(0, gachaResult.domainColor + '2F'); 
-    gradient.addColorStop(0.5, '#D977060A'); 
-    gradient.addColorStop(1, '#00000000');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Draw underwater beams of light streaming from top center
-    const beamGrad = ctx.createLinearGradient(600, 0, 600, 550);
-    beamGrad.addColorStop(0, 'rgba(56, 189, 248, 0.28)');
-    beamGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
-    ctx.fillStyle = beamGrad;
-    ctx.beginPath();
-    ctx.moveTo(350, 0);
-    ctx.lineTo(850, 0);
-    ctx.lineTo(1000, 550);
-    ctx.lineTo(200, 550);
-    ctx.closePath();
-    ctx.fill();
-
-    // Double Gilded Premium Borders
-    ctx.strokeStyle = gachaResult.domainColor;
-    ctx.lineWidth = 8;
-    ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
-
-    // Inner line
-    ctx.strokeStyle = '#D9770630';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(55, 55, canvas.width - 110, canvas.height - 110);
-
-    // Corner geometric alignment marks
-    const drawCornerMarks = (x, y, xDir, yDir) => {
-      ctx.strokeStyle = '#D9770680';
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(x, y + yDir * 40);
-      ctx.lineTo(x, y);
-      ctx.lineTo(x + xDir * 40, y);
-      ctx.stroke();
-    };
-    drawCornerMarks(70, 70, 1, 1);
-    drawCornerMarks(canvas.width - 70, 70, -1, 1);
-    drawCornerMarks(70, canvas.height - 70, 1, -1);
-    drawCornerMarks(canvas.width - 70, canvas.height - 70, -1, -1);
-
-    // Wrapping helper
-    const wrapText = (context, text, x, y, maxWidth, lineHeight) => {
-      const words = text.split(' ');
-      let line = '';
-      let currentY = y;
-      for (let n = 0; n < words.length; n++) {
-        let testLine = line + words[n] + ' ';
-        let metrics = context.measureText(testLine);
-        let testWidth = metrics.width;
-        if (testWidth > maxWidth && n > 0) {
-          context.fillText(line, x, currentY);
-          line = words[n] + ' ';
-          currentY += lineHeight;
-        } else {
-          line = testLine;
-        }
-      }
-      context.fillText(line, x, currentY);
-      return currentY;
-    };
-
-    // Draw our lovely Custom Diver Mascot at the top center of the wallpaper
-    drawCanvasDiver(ctx, 600, 175, 80);
-
-    const drawLogoAndCardText = (startY) => {
-      // Header Brand Text
-      ctx.fillStyle = '#FFFFFF';
-      ctx.font = '900 32px sans-serif';
-      ctx.letterSpacing = '1px';
-      ctx.textAlign = 'center';
-      ctx.fillText('TRUSELF REVEAL', canvas.width / 2, startY);
-
-      ctx.fillStyle = gachaResult.domainColor;
-      ctx.font = 'bold 16px sans-serif';
-      ctx.letterSpacing = '4px';
-      ctx.fillText('L I V E   Y O U R   M A R K', canvas.width / 2, startY + 36);
-
-      // --- LUXURY PERSONAL FOCUS EMBOSSED GOLD BOARD ---
-      const activeMotto = (messageOfTheDay || 'TruSelf & Action').trim();
-      ctx.fillStyle = '#111827';
-      ctx.fillRect(200, startY + 80, canvas.width - 400, 110);
-      
-      ctx.strokeStyle = '#D97706A0';
-      ctx.lineWidth = 3;
-      ctx.strokeRect(200, startY + 80, canvas.width - 400, 110);
-
-      ctx.strokeStyle = '#FFFFFF0D';
-      ctx.lineWidth = 1;
-      ctx.strokeRect(210, 90, canvas.width - 420, 90);
-
-      ctx.fillStyle = '#D97706';
-      ctx.font = '900 13px sans-serif';
-      ctx.letterSpacing = '2px';
-      ctx.fillText('INTENTIONAL FOCUS OF THE DAY', canvas.width / 2, startY + 115);
-
-      ctx.fillStyle = '#FFFFFF';
-      ctx.font = 'bold 28px sans-serif';
-      ctx.letterSpacing = '0px';
-      ctx.fillText(`"${activeMotto}"`, canvas.width / 2, startY + 160);
-
-      // Category Domain Badge
-      ctx.fillStyle = gachaResult.domainColor + '1C';
-      ctx.fillRect(240, startY + 230, canvas.width - 480, 56);
-      ctx.strokeStyle = gachaResult.domainColor + '50';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(240, startY + 230, canvas.width - 480, 56);
-
-      ctx.fillStyle = '#FFFFFF';
-      ctx.font = '900 18px sans-serif';
-      ctx.fillText(`${gachaResult.badge} • ${gachaResult.domainTitle.toUpperCase()}`, canvas.width / 2, startY + 265);
-
-      // --- SECTION 1: MESSAGE OF THE DAY ---
-      const textStartY = startY + 360;
-      
-      ctx.fillStyle = '#D9770622';
-      ctx.font = 'bold 180px Georgia, serif';
-      ctx.fillText('“', canvas.width / 2 - 280, textStartY + 100);
-
-      ctx.fillStyle = '#D97706';
-      ctx.font = '900 16px sans-serif';
-      ctx.letterSpacing = '3px';
-      ctx.fillText('MESSAGE OF THE DAY', canvas.width / 2, textStartY);
-
-      ctx.fillStyle = '#E2E8F0';
-      ctx.font = 'italic 28px Georgia, serif';
-      const lastInsightY = wrapText(ctx, `"${gachaResult.insight}"`, canvas.width / 2, textStartY + 55, 780, 44);
-
-      // --- SECTION 2: ASK YOURSELF? ---
-      const inquestStartY = lastInsightY + 110;
-      ctx.fillStyle = '#D97706';
-      ctx.font = '900 16px sans-serif';
-      ctx.letterSpacing = '3px';
-      ctx.fillText('ASK YOURSELF?', canvas.width / 2, inquestStartY);
-
-      ctx.fillStyle = '#FFFFFF';
-      ctx.font = '900 38px sans-serif';
-      const lastInquestY = wrapText(ctx, gachaResult.inquest, canvas.width / 2, inquestStartY + 65, 820, 56);
-
-      // --- SECTION 3: ACT OF COURAGE ---
-      const courageStartY = lastInquestY + 110;
-      ctx.fillStyle = '#EF4444';
-      ctx.font = '900 16px sans-serif';
-      ctx.letterSpacing = '3px';
-      ctx.fillText('⚡ ACT OF COURAGE ⚡', canvas.width / 2, courageStartY);
-
-      ctx.fillStyle = '#FBBF24';
-      ctx.font = 'bold 28px sans-serif';
-      const lastCourageY = wrapText(ctx, gachaResult.courage, canvas.width / 2, courageStartY + 60, 820, 44);
-
-      // --- SECTION 4: RAW REFLECTION ---
-      if (reflectionText.trim().length > 0) {
-        const reflectionStartY = lastCourageY + 110;
-        ctx.fillStyle = gachaResult.domainColor;
-        ctx.font = '900 15px sans-serif';
-        ctx.letterSpacing = '2px';
-        ctx.fillText('MY ALIGNMENT REFLECTION', canvas.width / 2, reflectionStartY);
-
-        ctx.fillStyle = '#94A3B8';
-        ctx.font = 'italic 24px Georgia, serif';
-        wrapText(ctx, `"${reflectionText}"`, canvas.width / 2, reflectionStartY + 45, 800, 38);
-      }
-
-      // Branded Editorial Footer
-      ctx.fillStyle = '#FFFFFF22';
-      ctx.font = 'bold 14px sans-serif';
-      ctx.letterSpacing = '1px';
-      ctx.fillText('TRUSELF REVEAL • LIVE STRATEGY: 27 & 28 JUNE 2026', canvas.width / 2, canvas.height - 110);
-
-      // Stream download
-      const dataUrl = canvas.toDataURL('image/png');
-      const link = document.createElement('a');
-      link.download = `LYM_Inquest_${gachaResult.id}.png`;
-      link.href = dataUrl;
-      link.click();
-      playSound('success');
-    };
-
-    drawLogoAndCardText(280);
-  };
-
-  // --- DOWNLOAD CORE ARCHETYPE ANALYSIS GRAPHIC ---
-  const downloadArchetypeCard = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    canvas.width = 1200;
-    canvas.height = 1800;
-
-    // Background base layer (Luxury deep space black)
-    ctx.fillStyle = '#090D16';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Dynamic Luxury Aurora Radial Glow
-    const gradient = ctx.createRadialGradient(600, 900, 100, 600, 900, 900);
-    gradient.addColorStop(0, '#6366F12F'); 
-    gradient.addColorStop(0.5, '#D977060A'); 
-    gradient.addColorStop(1, '#00000000');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Draw beams of light streaming from top center
-    const beamGrad = ctx.createLinearGradient(600, 0, 600, 550);
-    beamGrad.addColorStop(0, 'rgba(56, 189, 248, 0.28)');
-    beamGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
-    ctx.fillStyle = beamGrad;
-    ctx.beginPath();
-    ctx.moveTo(350, 0);
-    ctx.lineTo(850, 0);
-    ctx.lineTo(1000, 550);
-    ctx.lineTo(200, 550);
-    ctx.closePath();
-    ctx.fill();
-
-    // Double Gilded Premium Borders
-    ctx.strokeStyle = '#6366F1';
-    ctx.lineWidth = 8;
-    ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
-
-    // Inner gold-threaded line
-    ctx.strokeStyle = '#D9770630';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(55, 55, canvas.width - 110, canvas.height - 110);
-
-    // Corner geometric alignment marks
-    const drawCornerMarks = (x, y, xDir, yDir) => {
-      ctx.strokeStyle = '#D9770680';
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(x, y + yDir * 40);
-      ctx.lineTo(x, y);
-      ctx.lineTo(x + xDir * 40, y);
-      ctx.stroke();
-    };
-    drawCornerMarks(70, 70, 1, 1);
-    drawCornerMarks(canvas.width - 70, 70, -1, 1);
-    drawCornerMarks(70, canvas.height - 70, 1, -1);
-    drawCornerMarks(canvas.width - 70, canvas.height - 70, -1, -1);
-
-    const wrapText = (context, text, x, y, maxWidth, lineHeight) => {
-      const words = text.split(' ');
-      let line = '';
-      let currentY = y;
-      for (let n = 0; n < words.length; n++) {
-        let testLine = line + words[n] + ' ';
-        let metrics = context.measureText(testLine);
-        let testWidth = metrics.width;
-        if (testWidth > maxWidth && n > 0) {
-          context.fillText(line, x, currentY);
-          line = words[n] + ' ';
-          currentY += lineHeight;
-        } else {
-          line = testLine;
-        }
-      }
-      context.fillText(line, x, currentY);
-      return currentY;
-    };
-
-    drawCanvasDiver(ctx, 600, 175, 85);
-
-    const startY = 280;
-
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = '900 32px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('TRUSELF REVEAL', canvas.width / 2, startY);
-
-    ctx.fillStyle = '#6366F1';
-    ctx.font = 'bold 16px sans-serif';
-    ctx.fillText('L I V E   Y O U R   M A R K', canvas.width / 2, startY + 36);
-
-    // Dynamic Archetype Card Header
-    ctx.fillStyle = '#111827';
-    ctx.fillRect(200, startY + 80, canvas.width - 400, 110);
-    ctx.strokeStyle = '#D97706A0';
-    ctx.lineWidth = 3;
-    ctx.strokeRect(200, startY + 80, canvas.width - 400, 110);
-
-    ctx.fillStyle = '#D97706';
-    ctx.font = '900 13px sans-serif';
-    ctx.fillText('CORE PATTERN SYNTHESIS PROFILE', canvas.width / 2, startY + 115);
-
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 28px sans-serif';
-    ctx.fillText(currentArchetype.title.toUpperCase(), canvas.width / 2, startY + 160);
-
-    const profileY = startY + 230;
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = '900 16px sans-serif';
-    ctx.fillText('ALIGNMENT DIAGNOSIS', canvas.width / 2, profileY);
-
-    ctx.fillStyle = '#E2E8F0';
-    ctx.font = 'italic 26px Georgia, serif';
-    const lastSummaryY = wrapText(ctx, `"${currentArchetype.desc}"`, canvas.width / 2, profileY + 55, 800, 42);
-
-    const strengthsY = lastSummaryY + 80;
-    ctx.fillStyle = '#10B981';
-    ctx.font = '900 16px sans-serif';
-    ctx.fillText('TACTICAL POWER STRENGTHS', canvas.width / 2, strengthsY);
-
-    ctx.fillStyle = '#CBD5E1';
-    ctx.font = 'bold 24px sans-serif';
-    let currentY = strengthsY + 50;
-    currentArchetype.strengths.forEach((str) => {
-      currentY = wrapText(ctx, `• ${str}`, canvas.width / 2, currentY, 820, 36) + 40;
-    });
-
-    const blindspotY = currentY + 40;
-    ctx.fillStyle = '#EF4444';
-    ctx.font = '900 16px sans-serif';
-    ctx.fillText('HIGH-VALUE BLINDSPOT', canvas.width / 2, blindspotY);
-
-    ctx.fillStyle = '#CBD5E1';
-    ctx.font = '24px sans-serif';
-    const lastBlindspotY = wrapText(ctx, currentArchetype.growth, canvas.width / 2, blindspotY + 50, 820, 36);
-
-    const directiveY = lastBlindspotY + 80;
-    ctx.fillStyle = '#F59E0B';
-    ctx.font = '900 16px sans-serif';
-    ctx.fillText('⚡ ESSENTIAL ACTION DIRECTIVE ⚡', canvas.width / 2, directiveY);
-
-    ctx.fillStyle = '#FBBF24';
-    ctx.font = 'bold 26px sans-serif';
-    wrapText(ctx, currentArchetype.directive, canvas.width / 2, directiveY + 50, 820, 38);
-
-    ctx.fillStyle = '#FFFFFF22';
-    ctx.font = 'bold 14px sans-serif';
-    ctx.fillText('TRUSELF REVEAL • PATTERN ARCHETYPES: 27 & 28 JUNE 2026', canvas.width / 2, canvas.height - 110);
-
-    const dataUrl = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.download = `TruSelf_Archetype_${Date.now()}.png`;
-    link.href = dataUrl;
-    link.click();
-    playSound('success');
-  };
-
-  // Local Personalized NLP Reflection Input Parser
-  const getValidationMessage = (domain, text) => {
-    const rawText = (text || "").toLowerCase();
-
-    if (rawText.includes("burnout") || rawText.includes("tired") || rawText.includes("exhausted") || rawText.includes("rest") || rawText.includes("sleep")) {
-      return "Calibration Response: Deep energy drainage signals spotted in your reflection notes. Your physical system is actively requesting a strategic pause. Halting your manual execution right now to intentionally sleep or recover isn't a distraction—it is your highest revenue-generating asset today.";
-    }
-    if (rawText.includes("busy") || rawText.includes("overwhelmed") || rawText.includes("tasks") || rawText.includes("manage") || rawText.includes("work") || rawText.includes("todo")) {
-      return "Calibration Response: High administrative friction detected. Remember that packing your daily agenda with minor check-lists is often a subconscious shield used to avoid making the high-stakes, higher-leverage structural moves on your macro roadmap. Prune the noise.";
-    }
-    if (rawText.includes("scared") || rawText.includes("fear") || rawText.includes("doubt") || rawText.includes("worry") || rawText.includes("afraid") || rawText.includes("risk") || rawText.includes("fail")) {
-      return "Calibration Response: Internal boundary resistance detected. Do not retreat. This mental friction is not an indicator of failure; it is the natural nervous system stretch that marks the exact outer boundaries of your next major expansion phase. Breathe and pivot forward.";
-    }
-    if (rawText.includes("boundary") || rawText.includes("no") || rawText.includes("difficult") || rawText.includes("person") || rawText.includes("team") || rawText.includes("client")) {
-      return "Calibration Response: Interpersonal alignment warning. Sustainable authority is never built on accommodating low-leverage compliance parameters or toxic demands. Re-anchor your standard, say your clear 'No', and establish an explicit agreement.";
-    }
-
-    switch (domain) {
-      case "Creation/Choice": 
-        return "Vision Calibrated. Your creative choice is anchored in your local device archive. Do not let this draft hide in isolation—bring your bold, unfiltered perspective into the light today.";
-      case "Advancement": 
-        return "Momentum Locked. Action is the ultimate clarifier. You have successfully structured your priority task—execute with zero compromise tomorrow.";
-      case "Achievement": 
-        return "Mastery Aligned. You are actively building past old comfort baselines. Honor your structural progress, play the highest stakes available, and celebrate this win.";
-      case "Resource Gaining": 
-        return "Abundance Registered. Focus and cognitive spacing are your primary assets. You have successfully mapped your leverage—allocate your resources intentionally today.";
-      case "Vitality": 
-        return "Energy Centered. Peak performance demands uncompromising biological recovery. By logging this alignment, you honor your physical vessel. Guard your rest.";
-      case "Dreams/Passions": 
-        return "Core Spark Verified. Excitement is your highest strategic compass. You have captured your enthusiasm—shield this playground of flow from daily static.";
-      case "People": 
-        return "Tribe Boundaries Established. Clean leadership is built on honest agreements and uncompromised respect. Speak your unfiltered perspective with conviction today.";
-      case "Connection": 
-        return "Truth Sealed. Empathy and self-honesty are your actual strength. You have successfully lowered your drawbridge—step forward in raw alignment.";
-      default: 
-        return "Alignment Calibrated. Your reflection has been successfully validated and logged in your secure local device memory.";
-    }
-  };
-
   return (
     <div className="min-h-screen bg-[#0F172A] text-white flex flex-col font-sans select-none relative overflow-x-hidden" style={{ fontFamily: "'Jost', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600;700;900&display=swap" rel="stylesheet" />
@@ -1769,13 +1744,13 @@ export default function App() {
       {/* Ambient Arcade Billboard Marquee */}
       <div className="w-full bg-[#0B0F19]/90 border-b border-white/5 py-2.5 overflow-hidden relative z-40 flex items-center justify-center">
         <div className="text-[10px] font-black tracking-widest text-center text-indigo-300 uppercase opacity-80 px-4">
-          {marqueeIndex === 0 && `🔮 MARKS UNLOCKED: ${discoveredIds.length}/56 TRUE SELF DIALS ARCHIVED 🔮`}
+          {marqueeIndex === 0 && `🔮 MARKS UNLOCKED: ${discoveredIds.length}/56 TRUSELF DIALS ARCHIVED 🔮`}
           {marqueeIndex === 1 && `🎪 CO-ACTION: TRUSELF SUMMIT Live • 27 & 28 June 2026 • Secure Your Seat Now 🎪`}
           {marqueeIndex === 2 && `📸 Follow us on Instagram: @live.your.mark`}
         </div>
       </div>
 
-      {/* Tab Navigation */}
+      {/* Tab Selectors */}
       <div className="relative z-50 max-w-sm mx-auto w-full px-6 mt-8 flex justify-between border-b border-white/5 pb-2 pointer-events-auto">
         {['machine', 'album', 'journal'].map((tab) => (
           <button 
@@ -1920,6 +1895,15 @@ export default function App() {
                 </div>
               </div>
             </div>
+
+            {/* Reload Balance link */}
+            <button 
+              onClick={addFreeCoin} 
+              className="mt-6 text-[10px] text-amber-500/50 font-bold tracking-widest uppercase hover:text-amber-500 flex items-center gap-1 transition-colors"
+            >
+              + Refresh Energy Balance
+            </button>
+
           </div>
         )}
 
@@ -2325,6 +2309,7 @@ export default function App() {
                 </div>
               )}
 
+              {/* Privacy guarantee info card */}
               <div className="p-3.5 bg-slate-900/60 border border-emerald-500/10 rounded-xl text-left flex items-start gap-3">
                 <div className="p-1.5 bg-emerald-500/10 rounded-lg text-emerald-400 shrink-0">
                   <Lock className="w-3.5 h-3.5" />
