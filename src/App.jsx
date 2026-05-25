@@ -28,7 +28,10 @@ const safeLocalStorage = {
 const getLocalDateString = (offsetDays = 0) => {
   const d = new Date();
   d.setDate(d.getDate() - offsetDays);
-  return d.toISOString().split('T')[0];
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 };
 
 const computeStreak = (history) => {
@@ -1701,23 +1704,14 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#0F172A] text-white flex flex-col font-sans select-none relative overflow-x-hidden" style={{ fontFamily: "'Jost', sans-serif" }}>
-      <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600;700;900&display=swap" rel="stylesheet" />
       
-      {/* Premium Toast Notification Bar */}
-      {toastMessage && (
-        <div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-[200] bg-slate-900/95 border border-indigo-500/30 px-5 py-3 rounded-2xl shadow-[0_15px_30px_rgba(0,0,0,0.5)] flex items-center gap-2.5 animate-in slide-in-from-top duration-300 max-w-xs text-center">
-          <Sparkles className="w-4 h-4 text-amber-400 shrink-0 animate-pulse" />
-          <span className="text-xs font-bold text-slate-100">{toastMessage}</span>
-        </div>
-      )}
-
-      {/* Ambient depth background layout */}
+      {/* Dynamic ambient backdrop glows matching ocean diver depth */}
       <div className="fixed inset-0 pointer-events-none opacity-25 z-0">
         <div className="absolute top-1/4 left-1/4 w-[380px] h-[380px] bg-sky-900 rounded-full blur-[150px]"></div>
         <div className="absolute bottom-1/4 right-1/4 w-[380px] h-[380px] bg-indigo-950 rounded-full blur-[150px]"></div>
       </div>
 
-      {/* Sticky Top Header Bar */}
+      {/* Luxury Minimalist Header Sticky Navigation */}
       <nav className="relative z-50 flex items-center justify-between px-6 py-5 border-b border-white/5 backdrop-blur-md bg-[#0F172A]/40 sticky top-0">
         <div className="flex items-center gap-3">
           <DiverMascot size={32} />
@@ -1740,7 +1734,7 @@ export default function App() {
         </div>
       </nav>
 
-      {/* Ambient Arcade Billboard Marquee */}
+      {/* AMBIENT ARCADE BILLBOARD MARQUEE */}
       <div className="w-full bg-[#0B0F19]/90 border-b border-white/5 py-2.5 overflow-hidden relative z-40 flex items-center justify-center">
         <div className="text-[10px] font-black tracking-widest text-center text-indigo-300 uppercase opacity-80 px-4">
           {marqueeIndex === 0 && `🔮 MARKS UNLOCKED: ${discoveredIds.length}/56 TRUE SELF DIALS ARCHIVED 🔮`}
@@ -2338,6 +2332,7 @@ export default function App() {
       <canvas ref={canvasRef} style={{ display: 'none' }} />
 
       <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;600;700;900&display=swap');
         @keyframes bounce { 
           0%, 100% { transform: translateY(0); } 
           50% { transform: translateY(-16px); } 
