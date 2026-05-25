@@ -395,7 +395,7 @@ const DOMAINS = {
         rarity: "Rare", 
         insight: "You are suppressing your excitement to match the lukewarm temperature of the safe rooms you currently occupy.", 
         inquest: "What currently makes your heart race with pure, unadulterated excitement?",
-        courage: "Reach out to one h-energy teammate or partner, and pitch a joint initiative based around this exact excitement."
+        courage: "Reach out to one high-energy teammate or partner, and pitch a joint initiative based around this exact excitement."
       },
       { 
         id: "dr_6", 
@@ -542,16 +542,19 @@ function DiverMascot({ size = 80, className = "" }) {
       className={`select-none pointer-events-none drop-shadow-2xl ${className}`}
     >
       <defs>
-        {/* Soft glow backlighting */}
+        {/* Soft, gorgeous underwater glow backlighting */}
         <radialGradient id="diverGlow" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.4" />
           <stop offset="100%" stopColor="#38BDF8" stopOpacity="0" />
         </radialGradient>
+
+        {/* Dynamic metallic ring & body-suit gradients */}
         <linearGradient id="suitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#2c303b" />
           <stop offset="50%" stopColor="#1e222b" />
           <stop offset="100%" stopColor="#12141a" />
         </linearGradient>
+
         <linearGradient id="chromeRing" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#5f6775" />
           <stop offset="35%" stopColor="#a1abbc" />
@@ -559,15 +562,19 @@ function DiverMascot({ size = 80, className = "" }) {
           <stop offset="65%" stopColor="#7a8596" />
           <stop offset="100%" stopColor="#2d333f" />
         </linearGradient>
+
         <linearGradient id="visorGlass" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#334155" />
           <stop offset="30%" stopColor="#1e293b" />
           <stop offset="100%" stopColor="#0f172a" />
         </linearGradient>
+
         <radialGradient id="cheekBlush" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#fb7185" stopOpacity="0.8" />
           <stop offset="100%" stopColor="#fb7185" stopOpacity="0" />
         </radialGradient>
+
+        {/* Glow filter for neon shoulder spirals */}
         <filter id="neonSpiralGlow" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="1.5" result="blur" />
           <feMerge>
@@ -576,31 +583,64 @@ function DiverMascot({ size = 80, className = "" }) {
           </feMerge>
         </filter>
       </defs>
+
+      {/* Backlight Aura */}
       <circle cx="50" cy="55" r="45" fill="url(#diverGlow)" />
+
+      {/* Oxygen Cylinder / Backpack */}
       <rect x="36" y="62" width="28" height="34" rx="8" fill="#1e222b" stroke="#0b0d10" strokeWidth="2.5" />
       <rect x="42" y="55" width="16" height="7" rx="1.5" fill="#475569" stroke="#0F172A" strokeWidth="1" />
+
+      {/* Breathing Scuba Air Hose */}
       <path d="M 36 60 Q 18 52 30 42" stroke="#334155" strokeWidth="4.5" fill="none" strokeLinecap="round" />
+
+      {/* Body Suit Torso */}
       <ellipse cx="50" cy="84" rx="25" ry="23" fill="url(#suitGrad)" stroke="#0f1115" strokeWidth="3" />
+      
+      {/* Arms floating organically outward */}
       <path d="M 26 78 Q 14 80 18 90" stroke="url(#suitGrad)" strokeWidth="11" strokeLinecap="round" fill="none" />
       <path d="M 74 78 Q 86 80 82 90" stroke="url(#suitGrad)" strokeWidth="11" strokeLinecap="round" fill="none" />
+      
+      {/* Swimming Flippers dangling down */}
       <ellipse cx="37" cy="108" rx="8" ry="5.5" fill="#12141a" transform="rotate(-15 37 108)" />
       <ellipse cx="63" cy="108" rx="8" ry="5.5" fill="#12141a" transform="rotate(15 63 108)" />
+
+      {/* Shoulder/Arm Glowing Pink Spirals */}
       <g stroke="#d8b4fe" strokeWidth="1.2" fill="none" strokeLinecap="round" filter="url(#neonSpiralGlow)">
+        {/* Left shoulder spiral */}
         <path d="M 20 83 A 2 2 0 1 0 21 85 A 1 1 0 1 0 20.5 84" />
+        {/* Right shoulder spiral */}
         <path d="M 80 83 A 2 2 0 1 0 81 85 A 1 1 0 1 0 80.5 84" />
       </g>
+
+      {/* Spiral Badge Crest on Chest */}
       <circle cx="50" cy="83" r="6" fill="#1f242e" stroke="#0f1115" strokeWidth="1.5" />
       <path d="M 50 83 A 2.2 2.2 0 1 0 52 85 A 1.2 1.2 0 1 0 50.5 84" stroke="#c084fc" strokeWidth="1.2" fill="none" strokeLinecap="round" filter="url(#neonSpiralGlow)" />
+
+      {/* Big Spherical Visor Outer Chrome Ring */}
       <circle cx="50" cy="45" r="30" fill="url(#chromeRing)" />
+      
+      {/* Visor Inner Shield Glass */}
       <circle cx="50" cy="45" r="26" fill="url(#visorGlass)" stroke="#0b0d10" strokeWidth="1.5" />
+      
+      {/* Face Plate */}
       <circle cx="50" cy="45" r="23" fill="#fffdf9" />
+
+      {/* Cozy blushing cheeks */}
       <circle cx="35" cy="51" r="5" fill="url(#cheekBlush)" />
       <circle cx="65" cy="51" r="5" fill="url(#cheekBlush)" />
+
+      {/* Adorable shiny baby eyes */}
       <circle cx="41" cy="44" r="4.5" fill="#13151b" />
       <circle cx="43.5" cy="41.5" r="1.6" fill="#ffffff" />
+      
       <circle cx="59" cy="44" r="4.5" fill="#13151b" />
       <circle cx="61.5" cy="41.5" r="1.6" fill="#ffffff" />
+
+      {/* Cute smile */}
       <path d="M 46.5 50 Q 50 53.2 53.5 50" stroke="#13151b" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+
+      {/* Visor Glare/Gloss highlights */}
       <path d="M 29 34 A 21 21 0 0 1 45 25" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" fill="none" opacity="0.8" />
       <circle cx="66" cy="37" r="1.5" fill="#ffffff" opacity="0.6" />
     </svg>
@@ -608,13 +648,14 @@ function DiverMascot({ size = 80, className = "" }) {
 }
 
 // --- GLOBAL PROCEDURAL CANVAS DRAWING PIPELINE FOR THE DETAILED "DIVER" ---
+// Replaced context roundRect with canvas rounded-path drawings to secure legacy iPhone Safari stability!
 const drawCanvasDiver = (ctx, x, y, size) => {
   ctx.save();
   ctx.translate(x, y);
 
   const rScale = size / 80;
 
-  // Glowing backlight halo
+  // Glowing underwater backlight halo
   const haloGrad = ctx.createRadialGradient(0, 0, 10 * rScale, 0, 0, 45 * rScale);
   haloGrad.addColorStop(0, 'rgba(56, 189, 248, 0.45)');
   haloGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
@@ -801,7 +842,6 @@ const drawCanvasDiver = (ctx, x, y, size) => {
 };
 
 export default function App() {
-  // State definitions must be declared first
   const [isSpinning, setIsSpinning] = useState(false);
   const [showGachaResult, setShowGachaResult] = useState(false);
   const [gachaResult, setGachaResult] = useState(null);
@@ -1031,7 +1071,7 @@ export default function App() {
   const copyJournalToClipboard = () => {
     playSound('click');
     const text = journalLogs.map(log => 
-      `--- ${log.date} | Focus: ${log.motto || 'None'} | [${log.domain}] ---\nObservation: ${log.insight || log.horoscope || ''}\nInquest: ${log.inquest}\nCourage Step: ${log.courage}\nReflection: ${log.reflection}\n`
+      `--- ${log.date} | Focus: ${log.motto || 'None'} | [${log.domain}] ---\nInsight: ${log.insight || ''}\nInquest: ${log.inquest}\nCourage Step: ${log.courage}\nReflection: ${log.reflection}\n`
     ).join('\n');
 
     const textarea = document.createElement('textarea');
@@ -1126,7 +1166,7 @@ export default function App() {
       return currentY;
     };
 
-    // Draw our lovely Custom Diver Mascot at the top center of the wallpaper
+    // Draw our Custom Diver Mascot at the top center of the wallpaper
     drawCanvasDiver(ctx, 600, 175, 80);
 
     const drawLogoAndCardText = (startY) => {
@@ -1189,6 +1229,7 @@ export default function App() {
       ctx.font = 'italic 28px Georgia, serif';
       const lastInsightY = wrapText(ctx, `"${gachaResult.insight}"`, canvas.width / 2, textStartY + 55, 780, 44);
 
+      // --- SECTION 2: ASK YOURSELF? ---
       const inquestStartY = lastInsightY + 110;
       ctx.fillStyle = '#D97706';
       ctx.font = '900 16px sans-serif';
@@ -1199,6 +1240,7 @@ export default function App() {
       ctx.font = '900 38px sans-serif';
       const lastInquestY = wrapText(ctx, gachaResult.inquest, canvas.width / 2, inquestStartY + 65, 820, 56);
 
+      // --- SECTION 3: ACT OF COURAGE ---
       const courageStartY = lastInquestY + 110;
       ctx.fillStyle = '#EF4444';
       ctx.font = '900 16px sans-serif';
@@ -1209,6 +1251,7 @@ export default function App() {
       ctx.font = 'bold 28px sans-serif';
       const lastCourageY = wrapText(ctx, gachaResult.courage, canvas.width / 2, courageStartY + 60, 820, 44);
 
+      // --- SECTION 4: RAW REFLECTION ---
       if (reflectionText.trim().length > 0) {
         const reflectionStartY = lastCourageY + 110;
         ctx.fillStyle = gachaResult.domainColor;
@@ -1221,10 +1264,12 @@ export default function App() {
         wrapText(ctx, `"${reflectionText}"`, canvas.width / 2, reflectionStartY + 45, 800, 38);
       }
 
+      // Branded Editorial Footer
       ctx.fillStyle = '#FFFFFF22';
       ctx.font = 'bold 14px sans-serif';
       ctx.fillText('TRUSELF REVEAL • LIVE STRATEGY: 27 & 28 JUNE 2026', canvas.width / 2, canvas.height - 110);
 
+      // Stream download
       const dataUrl = canvas.toDataURL('image/png');
       const link = document.createElement('a');
       link.download = `LYM_Inquest_${gachaResult.id}.png`;
@@ -1246,9 +1291,11 @@ export default function App() {
     canvas.width = 1200;
     canvas.height = 1800;
 
+    // Background base layer (Luxury deep space black)
     ctx.fillStyle = '#090D16';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    // Dynamic Luxury Aurora Radial Glow
     const gradient = ctx.createRadialGradient(600, 900, 100, 600, 900, 900);
     gradient.addColorStop(0, '#6366F12F'); 
     gradient.addColorStop(0.5, '#D977060A'); 
@@ -1256,6 +1303,7 @@ export default function App() {
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    // Draw underwater beams of light streaming from top center
     const beamGrad = ctx.createLinearGradient(600, 0, 600, 550);
     beamGrad.addColorStop(0, 'rgba(56, 189, 248, 0.28)');
     beamGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
@@ -1268,14 +1316,17 @@ export default function App() {
     ctx.closePath();
     ctx.fill();
 
+    // Double Gilded Premium Borders
     ctx.strokeStyle = '#6366F1';
     ctx.lineWidth = 8;
     ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
 
+    // Inner gold-threaded line
     ctx.strokeStyle = '#D9770630';
     ctx.lineWidth = 2;
     ctx.strokeRect(55, 55, canvas.width - 110, canvas.height - 110);
 
+    // Corner geometric alignment marks
     const drawCornerMarks = (x, y, xDir, yDir) => {
       ctx.strokeStyle = '#D9770680';
       ctx.lineWidth = 3;
@@ -1323,6 +1374,7 @@ export default function App() {
     ctx.font = 'bold 16px sans-serif';
     ctx.fillText('L I V E   Y O U R   M A R K', canvas.width / 2, startY + 36);
 
+    // Dynamic Archetype Card Header
     ctx.fillStyle = '#111827';
     ctx.fillRect(200, startY + 80, canvas.width - 400, 110);
     ctx.strokeStyle = '#D97706A0';
@@ -1376,6 +1428,7 @@ export default function App() {
     ctx.font = 'bold 26px sans-serif';
     wrapText(ctx, currentArchetype.directive, canvas.width / 2, directiveY + 50, 820, 38);
 
+    // Branded Editorial Footer
     ctx.fillStyle = '#FFFFFF22';
     ctx.font = 'bold 14px sans-serif';
     ctx.fillText('TRUSELF REVEAL • PATTERN ARCHETYPES: 27 & 28 JUNE 2026', canvas.width / 2, canvas.height - 110);
@@ -1393,13 +1446,13 @@ export default function App() {
     const rawText = (text || "").toLowerCase();
 
     if (rawText.includes("burnout") || rawText.includes("tired") || rawText.includes("exhausted") || rawText.includes("rest") || rawText.includes("sleep")) {
-      return "Calibration Response: Deep energy drainage signals spotted in your reflection notes. Your physical system is actively requesting a strategic pause. Halting your manual execution right now to intentionally sleep or recover isn't a distraction—it is your highest revenue-generating asset today.";
+      return "Calibration Response: Deep energy drainage signals spotted in your reflection notes. Your physical system is actively requesting a strategic pause. Halting your manual execution right now to sleep or recover isn't a distraction—it is your highest revenue-generating asset today.";
     }
     if (rawText.includes("busy") || rawText.includes("overwhelmed") || rawText.includes("tasks") || rawText.includes("manage") || rawText.includes("work") || rawText.includes("todo")) {
       return "Calibration Response: High administrative friction detected. Remember that packing your daily agenda with minor check-lists is often a subconscious shield used to avoid making the high-stakes, higher-leverage structural moves on your macro roadmap. Prune the noise.";
     }
     if (rawText.includes("scared") || rawText.includes("fear") || rawText.includes("doubt") || rawText.includes("worry") || rawText.includes("afraid") || rawText.includes("risk") || rawText.includes("fail")) {
-      return "Calibration Response: Internal boundary resistance detected. Do not retreat. This mental friction is not an indicator of failure; it is the natural nervous system stretch that marks the exact outer boundaries of your next major expansion phase. Breathe and pivot forward.";
+      return "Calibration Response: Internal boundary resistance detected. Do not retreat. This mental friction is not an indicator of failure; it is the natural nervous system stretch that marks the exact outer boundaries of your next alignment expansion phase. Breathe and pivot forward.";
     }
     if (rawText.includes("boundary") || rawText.includes("no") || rawText.includes("difficult") || rawText.includes("person") || rawText.includes("team") || rawText.includes("client")) {
       return "Calibration Response: Interpersonal alignment warning. Sustainable authority is never built on accommodating low-leverage compliance parameters or toxic demands. Re-anchor your standard, say your clear 'No', and establish an explicit agreement.";
@@ -1846,7 +1899,7 @@ export default function App() {
             <div className="mt-6 w-full max-w-[290px] p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3.5">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-black text-slate-300 tracking-wider uppercase">Alignment Streak Tracker</span>
-                <span className="text-xs font-black text-amber-500 tracking-tight">{streakCount} Days Active</span>
+                <span className="text-xs font-black text-amber-500 tracking-tight">{streakCount} {streakCount === 1 ? 'Day' : 'Days'} Active</span>
               </div>
 
               {/* Progress nodes chronological layout (Filling forward D1 -> D7) */}
@@ -1867,7 +1920,7 @@ export default function App() {
 
               <div className="p-3 bg-black/40 border border-white/5 rounded-xl text-[10px] text-slate-400 leading-normal font-sans text-left">
                 <strong className="text-indigo-400 block mb-1">🎯 Day 1 Alignment Complete</strong>
-                Your streak has been initialized at <strong className="text-white">7 Days</strong>. Tap below to unlock your patterns based on your daily inputs!
+                Your streak is currently active at <strong className="text-white">{streakCount} {streakCount === 1 ? 'Day' : 'Days'}</strong>. Tap below to unlock your patterns based on your daily inputs!
               </div>
 
               <div className="p-3 bg-black/40 border border-white/5 rounded-xl text-[10px] text-slate-400 leading-normal font-sans text-left">
@@ -1899,7 +1952,7 @@ export default function App() {
             {/* Reload Balance link */}
             <button 
               onClick={addFreeCoin} 
-              className="mt-6 text-[10px] text-amber-500/50 font-bold tracking-widest uppercase hover:text-amber-500 flex items-center gap-1 transition-colors"
+              className="mt-6 text-[10px] text-amber-500/50 font-bold tracking-widest uppercase hover:text-amber-500 flex items-center gap-1 transition-colors cursor-pointer"
             >
               + Refresh Energy Balance
             </button>
@@ -2010,7 +2063,7 @@ export default function App() {
               <div>
                 <h5 className="text-[10px] font-black text-slate-200 uppercase tracking-wider">Privacy Guarantee</h5>
                 <p className="text-[9px] text-slate-400 leading-normal mt-0.5 font-sans">
-                  The logs shown below are stored locally on your device. We do not maintain any cloud trackers, logging cookies, or database servers. No private details are ever shared.
+                  No data is ever stored by us. All logs, journals, and reflections remain 100% inside your local device memory (<code className="text-emerald-400 font-bold font-mono">localStorage</code>). Your privacy is uncompromised.
                 </p>
               </div>
             </div>
@@ -2034,7 +2087,7 @@ export default function App() {
                     </div>
 
                     <p className="text-xs italic text-slate-400 leading-normal border-l border-white/10 pl-3">
-                      "{log.insight || log.horoscope || ''}"
+                      "{log.insight || ''}"
                     </p>
 
                     <p className="text-sm font-bold text-white leading-snug">
